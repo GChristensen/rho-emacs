@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>EmacsW32 Installation Wizard</title>
+    <link href="EmacsW32.css" rel="StyleSheet" type="text/css" />
+    <script type="text/javascript">var page_num = 1;</script>
+    <script type="text/javascript" src="EmacsW32.js"></script>
+  </head>
+  <body>
+    <div id="bar"><table id="topmenu0" cellspacing="2"><tr><td class="tb">&nbsp;</td></tr></table></div>
+
+    <div id="emacsw32-small-logo">
+      <img src="img/emacsw32-gnu.png" alt="Emacs Logo" width="128" height="128" />
+    </div>
+
+    <img alt="Sheep - this is just here to make you feel relaxed when facing such troubles as installation" src="img/P1010509-sheep-128.JPG" width="128" height="91"
+         style="position:absolute; left: 0px; top: 330px; " />
+
+    <div id="main">
+    <h1 id="top" style="margin-bottom:0.4em;">EmacsW32 Installation Wizard</h1>
+
+    <!-- Table of contents BEGIN -->
+    <!-- Table of contents min=2 max=3 -->
+    <table id="PAGETOC"><tr><td>
+      <strong>On this page:</strong>
+      <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#overview">Important Installation Steps</a></li>
+        <li class="liul"><ul>
+          <li><a href="#basic-setup">EmacsW32 Basic Setup</a></li>
+          <li><a href="#wininteg">Windows Integration of EmacsW32</a></li>
+          <li><a href="#emacs-custom">Customize EmacsW32</a></li>
+        </ul></li>
+        <li><a href="#what-is-changed">What the EmacsW32 Install Wizard Changes</a></li>
+        <li><a href="#unix-utils">Unix Utils that Emacs might need</a></li>
+        <li><a href="#package">Building New Distributions of Emacs</a></li>
+        <li><a href="#buildEmacsW32">Building EmacsW32</a></li>
+        <li><a href="#ack">Acknowledgements</a></li>
+      </ul>
+    </td></tr></table>
+    <!-- END of Table of contents -->
+
+
+
+    <h2 style="margin-top:2em" id="intro">Introduction</h2>
+
+    <p>
+      <em>EmacsW32 Installation Wizard</em>s are used to install <a
+      href="EmacsW32Util.html">EmacsW32</a> and optionally Emacs itself.
+    </p>
+
+    <p style="margin-top:2em;
+	      ">
+    <span id="download"><a href="http://www.ourcomments.org/Emacs/EmacsW32.html">Download</a></span>
+    </p>
+    <p>
+    Download EmacsW32 and <a href="EmacsW32Util.html#install">get started</a>.
+    </p>
+
+
+    <hr />
+    <h2 style="clear: both;" id="overview">Important Installation Steps</h2>
+    <p style="clear: both">
+      To install EmacsW32 you run the setup program, either in the
+      form that contains Emacs or the one without.  You can actually
+      install Emacs itself with both version (but you have to download
+      the file archive containing the binaries separately if you use
+      the setup program that does not include Emacs itself).
+    </p>
+    <p>
+      In addition to installing Emacs itself the following can be done
+      when you run the setup program:
+    </p>
+
+    <dl class="bolddt" style="margin-left:2em">
+      <dt><a href="#basic-setup">EmacsW32 Basic Setup</a></dt>
+      <dd>
+	This is actually needed to get Emacs working as good as it
+	actually can.  Some people may however want to do this their
+	own way so it is optional.  If you choose to do this basic
+	setup then <a href="EmacsW32Util.html">EmacsW32</a> will be
+	the hub for this and doing the things below (they actually
+	can't be done if you don't choose this step).
+      </dd>
+      <dt><a href="#wininteg">Windows Integration of EmacsW32</a></dt>
+      <dd>
+	Here you can choose to create shortcuts and do file associations.
+      </dd>
+      <dt><a href="#emacs-custom">Customize EmacsW32</a></dt>
+      <dd>
+	After finishing the setup you can do some special
+	customization useful for an MS Windows user.
+      </dd>
+    </dl>
+
+
+
+    <h3 id="basic-setup">EmacsW32 Basic Setup</h3>
+
+    <p>
+      <em>This step installs EmacsW32 files and does some setup necessary for the following steps.</em>
+      It includes lisp files used for the other steps
+      and a call to emacsw32.el from default.el.
+    </p>
+
+    <h4 id="folder-structure">Folder Structure</h4>
+
+    <p>
+      If Emacs is installed in C:\Program Files (this is default) then
+      the folder structure could look something like this (all subdirs
+      to <em>EmacsW32</em> are not shown):
+    </p>
+    <pre>
+Program Files
+    Emacs
+        Emacs (the emacs_dir registry entry)
+            bin
+                emacs.exe
+        <em>EmacsW32</em>
+            <em>lisp</em> (files used when starting emacs)
+        <em>site-lisp</em>
+    </pre>
+    <p>
+      The name Emacs can be changed.  Notice the directories called
+      <em>EmacsW32</em> and <em>site-lisp</em>.  These two directories
+      will be added when you choose <em>Install EmacsW32 Files</em> at
+      the installation.  Note also the subdirectory
+      <em>EmacsW32\lisp</em>.  This contains the lisp files used for
+      startup.  It also contains the files used by emacsw32.el, like
+      htmlize.el.  This directory is first on load-paths so if you
+      download a new version of for example htmlize.el then be sure to
+      think about this.
+    </p>
+
+    <h4 id="gnuserv">Note: Gnuclient/server - not included any more</h4>
+    <p>
+      Since emacsclient/server that comes with Emacs now works on MS
+      Windows gnuclient/server is no longer included in EmacsW32
+      (from version 1.10).
+    </p>
+
+
+
+    <h3 id="wininteg">Windows Integration of EmacsW32</h3>
+    <p>
+      Here you can choose to create shortcuts and do file
+      associations.  Shortcuts are created in Start menu, SendTo (for
+      right-clicking on files), Desktop (drag-and-drop) and Quick
+      Launch.
+    </p>
+    <p>
+      File associations can be done on two levels. You can let Emacs
+      handle all of it (EmacsFile file type) or you can choose to let
+      a certain verb for a file type be handled by Emacs.
+    </p>
+
+
+
+    <h3 id="emacs-custom">Customize EmacsW32</h3>
+
+    <p>
+      When you have finished the setup a special options page are
+      added to the menus in Emacs under <em>Customize EmacsW32</em>.
+      See <a href="EmacsW32Util.html#featsum">EmacsW32</a> for info.
+    </p>
+
+
+    <hr />
+    <h2 id="what-is-changed">What the EmacsW32 Install Wizard Changes</h2>
+    <p>
+      In addition to the changes you choose explicitly (like file
+      associations, which Emacs to run) and the files copied to your
+      pc the wizard only adds uninstall entries to the Registry.
+      (Those are what you see Add/Remove Programs in the Control
+      Panel.)
+    </p>
+
+
+
+    <hr />
+    <h2 id="unix-utils">Unix Utils that Emacs might need</h2>
+    <p>
+      EmacsW32 does not include unix utilities that that you may want
+      to use with Emacs.  Read <a href="w32-unix-progs.html">Unix
+      Utilities for Emacs on MS Windows</a> for information about how
+      to get them.
+    </p>
+
+
+
+
+
+    <hr class="divider" />
+    <h2 id="package">Building New Distributions of Emacs</h2>
+    <p>
+      You may for some reason want to build new distributions of
+      Emacs.  You may for example want to distribute an Emacs CVS
+      snapshot or you may want to distribute Emacs with some modules
+      for a specific purpose.
+    </p>
+    <p>
+      The <b>ReadMe.txt</b> in the EmacsW32 directory has instruction
+      for doing this.  Basically what you do is that you setup your
+      own Emacs with these utilities.  Then you run a command file
+      that is there.
+    </p>
+    <p>
+      You may of course want to enhance this.  It is quite easy to do
+      so by editing the Inno Setup script file that is created for
+      your distribution.
+      If you want to build Emacs from sources you may want to read
+      <a href="w32-build-emacs.html">Building Emacs on MS Windows</a>.
+    </p>
+    <h2 id="buildEmacsW32">Building EmacsW32</h2>
+    <p>
+      Instructions for (re)creation of EmacsW32 distribution can be
+      found in the file <b>ReadMe.txt</b> mentioned above.
+    </p>
+
+    <hr class="divider" />
+    <h2 id="ack">Acknowledgements</h2>
+
+    <p>
+      EmacsW32 Setup Helper and EmacsW32 Installer are built using the excellent
+      Inno Setup free installer for MS Windows. You can find more info about
+      Inno Setup at Jordan Russels web site
+      <a href="http://www.jrsoftware.org/" >http://www.jrsoftware.org/</a>.
+    </p>
+
+    <p>
+      With the permission of Ivan Pavlov 7za.exe from 7-zip is included for
+      unpacking distribution files. 7-zip is an advanced and free "zip
+      program". You can find more information at
+      <a href="http://www.7-zip.org/" >http://www.7-zip.org/</a>.
+    </p>
+    <p>
+      And of course many thanks to all Emacs developers!
+      Without them there would be nothing to install.
+    </p>
+    <p>
+      And I also wants to thank the beta testers.
+      Thansk very much to Fred Kunz for helping me finding problems that made the
+      installation fail in certain cases!
+    </p>
+
+    </div>
+    <p class="footer">
+      Copyright &copy; 2007 OurComments.org
+    </p>
+  </body>
+</html>

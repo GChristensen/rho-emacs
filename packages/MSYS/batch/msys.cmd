@@ -1,0 +1,1 @@
+@call %RHO_DIR%\bin\msys\msys2_shell -defterm -where %HOME%

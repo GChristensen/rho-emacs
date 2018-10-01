@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Building Emacs on MS Windows</title>
+    <link href="EmacsW32.css" rel="StyleSheet" />
+    <script type="text/javascript">var page_num = 3;</script>
+    <script type="text/javascript" src="EmacsW32.js"></script>
+  </head>
+  <body>
+    <div id="bar"><table id="topmenu0" cellspacing="2"><tr><td class="tb">&nbsp;</td></tr></table></div>
+
+
+    <div id="emacsw32-small-logo">
+      <img src="img/emacsw32-gnu.png" alt="Emacs Logo" width="128" height="128" />
+    </div>
+
+
+    <div id="computer-main">
+    <h1 id="top" style="margin-top: 50px">Building Emacs<br /> on MS Windows</h1>
+
+    <!-- Table of contents BEGIN -->
+    <!-- Table of contents min=1 max=3 -->
+    <table id="PAGETOC"><tr><td>
+      <strong>On this page:</strong>
+      <ul>
+        <li><a href="#top">Building Emacs on MS Windows</a></li>
+        <li><a href="#needed">Getting the Tools</a></li>
+        <li class="liul"><ul>
+          <li><a href="#archiver">A File Archiver</a></li>
+          <li><a href="#building-tools">Tools for Building Emacs</a></li>
+          <li class="liul"><ul>
+            <li><a href="#checking-setup">Avoid Problems: Check Your Setup</a></li>
+            <li><a href="#tee-exe">A Useful Tool: tee.exe</a></li>
+            <li><a href="#make-tool">GNU Make: make.exe</a></li>
+            <li><a href="#makeinfo-tool">GNU Makeinfo: makeinfo.exe</a></li>
+            <li><a href="#coreutil-tools">Some Smaller GNU Unix Utilities</a></li>
+            <li><a href="#compiler-tools">GNU C compiler: gcc.exe</a></li>
+          </ul></li>
+          <li><a href="#cvstools">Tools to Get the Latest Emacs Sources</a></li>
+          <li class="liul"><ul>
+            <li><a href="#cvstools-cvs">GNU Command Line CVS: cvs.exe</a></li>
+            <li><a href="#cvstools-ssh">SSH Helper for cvs.exe: Putty</a></li>
+          </ul></li>
+        </ul></li>
+        <li><a href="#source">Getting Emacs Source</a></li>
+        <li class="liul"><ul>
+          <li><a href="#getting-cvs">How to Download a Copy of Emacs CVS</a></li>
+        </ul></li>
+        <li><a href="#building-emacs">How to Build Emacs</a></li>
+        <li class="liul"><ul>
+          <li><a href="#imagesupport">How to Get Images Support (Optional)</a></li>
+          <li class="liul"><ul>
+            <li>A guide for images support</li>
+          </ul></li>
+          <li><a href="#make-cvs">Making it easy: A Script File for Building</a></li>
+        </ul></li>
+        <li><a href="#installing">Installing the New Emacs</a></li>
+        <li><a href="#twoversions">Running Several Versions of Emacs</a></li>
+        <li><a href="#updating">Updating from CVS</a></li>
+        <li><a href="#patching">Exchanging Changes - <i>patch.exe</i></a></li>
+        <li class="liul"><ul>
+          <li><a href="#EmacsW32Patches">Patches for the Emacs+EmacsW32 distribution</a></li>
+        </ul></li>
+      </ul>
+    </td></tr></table>
+    <!-- END of Table of contents -->
+
+
+    <p style="margin-top:0.5em">
+      It is not much more difficult to build Emacs on MS Windows than on other OS:es.
+      However what is harder is to get and setup the tools you need.
+      There are some traps when doing this!
+      And if you want to get the latest developing version of Emacs you need even more
+      tools to be able to access the CVS repository where it is.
+      You can also get a bit confused about what documentation to read, since
+      the main documentation is for "unix like" OS:es.
+      I will try to give some short advices about both this issues below.
+    </p>
+    <p>
+      The <a href="#needed">list below</a> of programs needed to build
+      Emacs should be sufficient.  All the programs mentioned are also
+      needed in this solution.  It is however of course not the only solution,
+      other programs can be used too.
+    </p>
+    <p>
+      Please also have a look at <a href="w32-unix-progs.html">Unix
+      Utilities for Emacs on MS Windows</a>.
+    </p>
+
+
+    <hr style="clear: both; " />
+    <h1 id="needed">Getting the Tools</h1>
+
+
+    <h2 id="archiver">A File Archiver</h2>
+    <p>
+      Many tools are distributed in .tar.gz format or .zip format.
+      You can use some commercial file archivers to handle those archives.
+      Here is a nice GNU LGPL archiver that can do that too:
+      <a href="http://www.7-zip.org/" >http://www.7-zip.org/</a>
+    </p>
+
+    <h2 id="building-tools">Tools for Building Emacs</h2>
+    <h3 id="checking-setup">Avoid Problems: Check Your Setup</h3>
+    <p>
+      Do you already have everything needed?
+      Are versions correct?
+      Are there bad mixing of tools?
+      You can easily run a first check of this with
+      <em>emacs-w32-build-check.pl</em> that comes with
+      <a href="EmacsW32SetupUtilities.html">EmacsW32</a>.
+      To do this you however need another program, namely perl from
+      <a href="http://www.activestate.com/"
+	 >http://www.activestate.com/</a>.
+      (This little tool is perhaps not very complete, but it may keep you on the track.)
+    </p>
+
+
+    <h4 id="comannd-line-tool">Tools in Your Path</h4>
+    <p>
+      There are some programs that need to be in your path when
+      building Emacs from the sources in the CVS repository.  These
+      are the make programs, the compiler and some unix like utilities
+      used in the build process.
+      <!-- Surpricingly there are also at least one program that must
+           NOT be in your path. -->
+    </p>
+    <h4 id="comannd-line-nomix">Don't Mix!</h4>
+    <p>
+      Some of the tools, like sh.exe and make.exe, may be very hardly
+      tighed together and it is in those cases important not to mix
+      them.  You must for example use MSYS make.exe if you use MSYS
+      sh.exe.  (But you can currently not use MSYS at all for some
+      parts of the building process, see below.)  The checking tool I
+      mention above tries to see if they are.
+    </p>
+    <p>
+      Here is an example of what can happen if you mix MSYS make.exe
+      with cmd.exe.  Suppose MSYS make.exe is the one used and you try
+      to avoid using MSYS sh.exe by using SHELL=cmd.exe as a parameter
+      to make. This will just hang.  And it hangs very hard.  It can
+      be very hard to find out what is happening in such cases.
+    </p>
+    <h4 id="nomsys">Why You Should Avoid MSYS</h4><!--  (and maybe Cygwin)</h4> -->
+    <p>
+      I believe <a href="http://www.mingw.org/">MSYS</a> tools does
+      most of the build process fine, but unfortunately it fails at
+      some small points.  And that makes it currently pretty useless
+      for the purpose of building Emacs.  An example of the problem is
+      when the build process should update the autoloads.  With MSYS
+      the following happens:
+    </p>
+    <pre style="white-space:pre;">
+[Please ignore a syntax error on the next line - it is intentional]
+/bin/sh.exe: -c: line 1: unexpected EOF while looking for matching `""'
+/bin/sh.exe: -c: line 2: syntax error: unexpected end of file
+
+Directories: calc calendar emacs-lisp emulation eshell gnus
+  international language mail mh-e net obsolete play progmodes term
+  textmodes toolbar url
+
+../bin/emacs.exe -batch --no-init-file --no-site-file --multibyte \
+        -l autoload \
+	--eval '(setq find-file-hook nil \
+		find-file-suppress-same-file-warnings t \
+		generated-autoload-file \
+		  "/c/emacscvs/emacs/lisp/loaddefs.el")' \
+	-f batch-update-autoloads /c/emacscvs/emacs/lisp calc calendar \
+           emacs-lisp emulation eshell gnus international language \
+           mail mh-e net obsolete play progmodes term textmodes toolbar url
+Opening output file: no such file or directory,
+  c:/c/emacscvs/emacs/lisp/loaddefs.el
+    </pre>
+    <p>
+      As you can see above an MSYS format file name was inserted by
+      MSYS make into the --eval parameter to Emacs.  Emacs do not
+      understand this file format and the command therefore fails.
+
+<!--       I do not use Cygwin myself, but I believe I have seen similar -->
+<!--       reports from Cygwin usage where instead the file name where -->
+<!--       inserted in regular MS Windows format, which Emacs does not -->
+<!--       understand in this situation (backslashes are treated as quotes -->
+<!--       for the next char. -->
+    </p>
+    <p>
+      I believe the best cure for this problem would be to rewrite
+      those pieces of the Makefiles where this occurs.  But that has
+      not yet been done.
+    </p>
+
+    <p>
+      Below are some more problems I have currently seen when using MSYS to build Emacs:
+    </p>
+    <ul>
+      <li>
+	Addpm.exe fails because it is called with "addpm /q" by make
+	install. MSYS sh believes /q is a path and changes it to
+	\q. Addpm.exe then think \q is a path and adds this to the
+	registry. Fix: Just rerun addpm.exe from cmd.exe to fix it. A
+	better solution would be that addpm.exe used -q instead (for
+	quiet).
+      </li>
+      <li>
+	Building some part of Emacs (for example Info) fails. This is
+	because MSYS sh can not run .bat-files correctly (it treates
+	them as sh scripts!?). Several bat files are used in the build
+	process.
+      </li>
+      <li>
+	makeinfo from MSYS does not handle CR-LF correctly and can't
+	be used (without problem).
+      </li>
+    </ul>
+
+
+    <h3 id="tee-exe">A Useful Tool: tee.exe</h3>
+    <p>
+      The program <em>tee.exe</em> is very good to have if you want log files
+      when building.
+      See below for an <a href="#using-tee">explaning example</a>.
+      You can find tee.exe in the CoreUtils package from
+      <a href="http://gnuwin32.sourceforge.net/"
+	 >http://gnuwin32.sourceforge.net/</a>.
+    </p>
+
+    <h3 id="make-tool">GNU Make: make.exe</h3>
+    <p>
+      GNU Make is the utility that runs the Emacs building process (which is very complex).
+      On
+      <a href="http://www.mingw.org/"
+	 >http://www.mingw.org/</a>
+      go to the <em>Download</em> page where you can find
+      a file with a name that looks like
+      <em>mingw32-make-3.80.0-3.exe</em>.
+      This is an installation package containing GNU Make documentation and
+      mingw32-make.exe.
+      Rename this file to make.exe and put it in your path.
+    </p>
+    <h3 id="makeinfo-tool">GNU Makeinfo: makeinfo.exe</h3>
+    <p>
+      GNU Makeinfo is used to build Emacs documentation.
+      On
+      <a href="http://gnuwin32.sourceforge.net/"
+	 >http://gnuwin32.sourceforge.net/</a>
+      download the package TexInfo, which contains the file makeinfo.exe.
+      Put this in your path.
+    </p>
+
+    <h3 id="coreutil-tools">Some Smaller GNU Unix Utilities</h3>
+    <p>
+      During the build some programs common on different unix dialects are used.
+      Some of these you can find in CoreUtils
+      that you can download from
+      <a href="http://gnuwin32.sourceforge.net/"
+	 >http://gnuwin32.sourceforge.net/</a>.
+      You need to put <b>cp.exe, mv.exe, rm.exe</b> and <b>touch.exe</b> in your path.
+    </p>
+    <p>
+      A warning: There are numerous port of these unix programs to MS Windows.
+      All of them does not work. I know that by timewasting experience.
+      The GNU ports above does work as they should.
+    </p>
+
+    <p>
+      The unix style program <b>find.exe</b> and its relative
+      <b>xargs.exe</b> are also used during the build.  You can find
+      these in FindUtils from <a
+      href="http://gnuwin32.sourceforge.net/"
+      >http://gnuwin32.sourceforge.net/</a>.  These must be in your
+      path.
+    </p>
+
+    <h3 id="compiler-tools">GNU C compiler: gcc.exe</h3>
+    <p>
+      Emacs C sources can be compiled with the free GNU C/C++ compiler.
+      You can find a port to MS Windows of this here:
+      <a href="http://www.mingw.org/"
+	 >http://www.mingw.org/</a>.
+      A file named something like <em>MinGW-3.1.0-1.exe</em> is what you want.
+      It is an installation package.
+      (Currently this file is missing in the "Current" section, see
+      <a href="http://sourceforge.net/mailarchive/forum.php?thread_id=10185030&amp;forum_id=5119"
+         >this message</a>
+    </p>
+    <p>
+      The MinGW bin directory must be in your path.
+    </p>
+
+
+    <h2 id="cvstools">Tools to Get the Latest Emacs Sources</h2>
+    <p>
+      If you want to get latest Emacs sources from <a
+      href="#source">Emacs CVS</a> then you need something like the
+      tools below.
+    </p>
+    <h3 id="cvstools-cvs">GNU Command Line CVS: cvs.exe</h3>
+    <p>
+      On this page <a href="http://www.cvsnt.org/"
+      >http://www.cvsnt.org/</a>  you can download a
+      command line cvs.exe client.  (It is included in the CVS server
+      and client download (though the installer currently does not
+      tell you this).
+    </p>
+
+    <h3 id="cvstools-ssh">SSH Helper for cvs.exe: Putty</h3>
+    <p>
+      *Note*: I earlier wrote:
+      <cite style="background-color:transparent;">
+        The latest version of the
+        CVSNT client has built in SSH protocol so you do not need plink
+        and can skip this section!
+      </cite>
+      Unfortunately this does not seem to work yet (2005-11-24).
+    </p>
+    <p>
+      Cvs.exe must have a program that helps it with SSH access.
+      The file <b>plink.exe</b> from SSH client Putty can do this.
+      You also need <b>putty.exe</b>.
+      Putty's home page is here:
+      <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/"
+	 >http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>
+    </p>
+    <p>
+      There are two things you must do before cvs.exe will work with plink.exe:
+    </p>
+    <ol>
+      <li>
+	Set the environment variable CVS_RSH:
+	<em>set&nbsp;CVS_RSH=full_path_to_plink.exe</em>
+      </li>
+      <li>
+	Run putty.exe once to save the CVS repository server's host key:
+	<ol>
+	  <li>
+	    Start putty.exe.
+	  </li>
+	  <li>
+	    In the Host Name field enter the name for Emacs CVS repository host (see below).
+	  </li>
+	  <li>
+	    Click Open.
+	  </li>
+	  <li>
+	    "Putty Security Alert" will pop up.
+	    Click Yes to save the host key.
+	  </li>
+	</ol>
+      </li>
+    </ol>
+
+    <hr />
+    <h1 id="source">Getting Emacs Source</h1>
+    <p>
+      There are two main ways to get the source.  You can either
+      download a source <em>tarball</em> or get it from the develop
+      repository, usually called <em>CVS</em> (after the software used
+      for taking care of it).  A source tarball is just a package file
+      with the sources.  Such packages are available for the release
+      version and at some point in the developing fo Emacs.  If you go
+      to Emacs home page you will find more information about where to
+      find tarballs and CVS.
+    </p>
+    <h2 id="getting-cvs">How to Download a Copy of Emacs CVS</h2>
+    <p>
+      If you want to build from CVS you must first download
+      a copy of Emacs from the CVS repository you can use
+      <a href="#cvstools">cvs.exe</a>:
+    </p>
+    <p style="margin-left:2em;">
+      <em>cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/sources/emacs co emacs</em>
+    </p>
+    <p>
+      This will give you a copy of the CVS repository in the
+      subdirectory "emacs" below your current working directory.  You
+      can use exactly the same command to update your copy later.
+    </p>
+    <p>
+      <b>Notice:</b> You must run the command <em>cvs update -kb</em> in the emacs\nt subdirectory.
+      (Ready more about this in emacs\nt\INSTALL.)
+    </p>
+
+
+
+    <hr />
+    <h1 id="building-emacs">How to Build Emacs</h1>
+    <p>
+      In principle you should now only have to start reading INSTALL in the "emacs"
+      subdirectory and follow the instructions there.
+      However this is currently not the right place to start reading.
+      Instead read <b>emacs\nt\INSTALL</b>.
+      This file is specific to MS Windows.
+      You will also want to read <b>emacs\INSTALL.CVS</b> and maybe later
+      emacs\INSTALL.
+    </p>
+    <p>
+      Unfortunately some of the instructions there are yet not quite correct.
+      To make it simple you may follow these instructions instead:
+    </p>
+    <dl>
+      <dt id="using-tee">Use tee.exe!</dt>
+      <dd>
+	Using tee.exe is not necessary but it may help you finding
+	problems.  With <em>tee.exe</em> you can both have the output
+	send to the screen and to a log file at the same time. Use it
+	like this:
+	<p style="margin-left:2em">
+	  make bootstrap 2>&amp;1 | tee -a my.log
+	</p>
+	That will append all output to my.log and you can still see what is going
+	on on the display.
+      </dd>
+      <dt>Run all commands from the "emacs\nt" subdir</dt>
+      <dd>
+	You can not run make from the "emacs" subdirectory on MS Windows.
+	Instead it must be done from the "emacs\nt" subdirectory.
+	So first change your working directory to "emacs\nt".
+	<p>
+	  Later you may run some commands from for example the "emacs\lisp"
+	  subdirectory. (INSTALL.CVS tells you to do this in some cases.)
+	</p>
+      </dd>
+      <dt>Step 1: Run "configure.bat"</dt>
+      <dd>
+	See emacs\nt\INSTALL for more info.
+      </dd>
+      <dt>Step 2: Run "make bootstrap" to build Emacs</dt>
+      <dd>
+	See emacs\INSTALL.CVS for more info.
+      </dd>
+      <dt>Step 3: Run "make info" to build the Info manual</dt>
+      <dd>
+	emacs\INSTALL does not tell you that you have to "make info"
+	to build the Info pages.
+	You should do this before you run "make install".
+      </dd>
+    </dl>
+
+
+    <hr />
+    <h2 id="imagesupport">How to Get Images Support (Optional)</h2>
+
+    <p>
+      You do not need image support to build Emacs.
+      However it could be fun and I found this excellent guide for how to get image support when compiling Emacs on
+      <a href="http://www.emacswiki.org/cgi-bin/wiki/BuildingCvsWThirtyTwoMingw"
+	 >emacswiki.org</a>.
+      I shamelessly stole it and put it here so that you can have it at hand if you use this guide
+      for building Emacs.
+      I can not even give credit to the author, since she/he has preferred to be anonymous.
+    </p>
+    <p>
+      Note that you have to do two things to get image support:
+    </p>
+    <ul>
+      <li>Run configure.bat with image support headers available.</li>
+      <li>Have the image dll-files where Emacs can find them when you start Emacs.</li>
+    </ul>
+    <p>
+      According to nt\INSTALL you may put the image library files either on your path or in Emacs bin dir.
+      Having them in the path is perhaps easier if you are testing several builds.
+    </p>
+    <p>
+      The author of the guide has downloaded the zip files for the image libraries.
+      I myself prefer to use the Setup-versions.
+      They are nicely made and very easy and fast to install.
+    </p>
+
+    <div id="imgwikiguide">
+    <h3>A guide for images support</h3>
+    <p>
+      Several images library is
+      necessory for images support in Emacs. All of them can be
+      downloaded at
+      <a href="http://gnuwin32.sf.net">http://gnuwin32.sf.net</a>.
+      Both the bin packages(for .dll files) and the lib or src packages(for
+      .h files) should be downloaded first. Files of .dll is for
+      runtime, and .h for compiling.
+    </p>
+    <ul>
+      <li>
+	JPEG support
+	<ul>
+	  <li>Required files: jpeg62.dll, jconfig.h (in <b>bin</b> &amp; <b>lib</b> packages)</li>
+	  <li>Current: jpeg-6b-4-bin.zip, jpeg-6b-4-lib.zip</li>
+	</ul>
+      </li>
+      <li>
+	GIF support
+	<ul>
+	  <li>Required files: libungif.dll, gif_lib.h (in <b>bin</b> &amp; <b>src</b> packages) </li>
+	  <li>Current: libungif-4.1.0b1-bin.zip, libungif-4.1.0b1-src.zip</li>
+      </ul>
+      </li>
+      <li>
+	TIFF support
+	<ul>
+	  <li>Required files: libtiff3.dll, tiffio.h, tiff.h, tiffvers.h (in <b>bin</b> &amp; <b>lib</b> packages)</li>
+	  <li>Current: tiff-3.7.2-bin.zip, tiff-3.7.2-lib.zip</li>
+	</ul>
+      </li>
+      <li>
+	XPM support
+	<ul>
+	  <li>Required files: xpm4.dll, X11/xpm.h, simx.h (in <b>bin</b> &amp; <b>lib</b> &amp; <b>src</b> packages)</li>
+	  <li>Current: xpm-3.5.1-1-bin.zip, xpm-3.5.1-1-lib.zip, xpm-3.5.1-1-src.zip</li>
+	</ul>
+      </li>
+      <li>
+	PNG support
+	<ul>
+	  <li>Required files: libpng13.dll, png.h, pngconf.h (in <b>bin</b> &amp; <b>lib</b> packages)</li>
+	  <li>Current: libpng-1.2.8-bin.zip, libpng-1.2.8-lib.zip</li>
+	</ul>
+      </li>
+      <li>
+	Zlib (required by PNG)
+	<ul>
+	  <li>Required files: zlib1.dll (in <b>bin</b> packages)</li>
+	  <li>Current: zlib-1.2.2-bin.zip</li>
+	</ul>
+      </li>
+    </ul>
+    <p>
+      Assuming all required .h files are in C:\free_ware\gnuwin32\include. Run cmd.exe, then to cvs-emacs\nt directory:
+    </p>
+    <pre>
+      emacs\nt&gt; configure.bat -h
+      emacs\nt&gt; configure.bat --with-gcc --cflags -IC:/free_ware/gnuwin32/include
+      emacs\nt&gt; dos2unix makefile
+      <!--
+      emacs\nt&gt; make bootstrap
+      -->
+    </pre>
+    <p>
+      Copy all .dll files to the directory EMACS_INSTALL_DIR\bin, so this Emacs will support images.
+    </p>
+    </div>
+
+
+    <hr />
+    <h2 id="make-cvs">Making it easy: A Script File for Building</h2>
+    <p>
+      In the <a href="http://www.ourcomments.org/Emacs/DL/w32%20util/build/">download area</a>
+
+      for EmacsW32 there is a script file called <b>make-cvs.cmd</b>
+      that can do the building automatically.  You have to edit it a
+      little bit to reflect your paths and you need some supporting
+      files that you find in the same place.
+    </p>
+
+
+
+
+
+    <hr />
+    <h1 id="installing">Installing the New Emacs</h1>
+    <dl>
+      <dt>Step 4: Run "make install" to get everything in place</dt>
+      <dd>
+	See emacs\nt\INSTALL for more info.
+      </dd>
+      <dt>Step 5: Run EmacsW32 Install Wizard</dt>
+      <dd>
+	At this point "emacs\nt\INSTALL" leaves you on your own.  The
+	installation is however not quite ready yet.  There are really
+	no useful shortcuts for starting Emacs in Explorer and there
+	is either no good way to open a new file for editing from the
+	windows command line.  Maybe you also miss file extension
+	associations to Emacs?
+	<p>
+          The main missing pieces are shortcuts and command line
+          support to open files with Emacs.  I suggest that you use <a
+          href="EmacsW32SetupUtilities.html">EmacsW32 Install
+          Wizard</a> to get the shortcuts and command line support in
+          place.  It also give you the possibility to do some tweaking
+          of Emacs that may make it more easy for You as an MS Windows
+          user to use it.
+	</p>
+      </dd>
+    </dl>
+
+    <hr />
+    <h1 id="twoversions">Running Several Versions of Emacs</h1>
+    <p>
+      If you use EmacsW32 it is quite easy to switch between different
+      versions of Emacs.  You just run the file <em>usethis.exe</em>
+      in the bin directory of the version you want to use.  This will
+      tell emacsclient.exe to use this version.  (And emacsclient.exe is
+      used by all the shortcuts for emacs and by the emacs.cmd file.)
+    </p>
+    <p>
+      Since some custom options are different in different versions of
+      Emacs you may also want to enter something like this in your
+      .emacs:
+    </p>
+    <pre>
+      (cond
+        ((equal emacs-version "21.3.1")
+          (setq custom-file "~/.emacs-cust-21.3.el"))
+        (t
+          (setq custom-file "~/.emacs-cust-cvs.el")))
+      (load custom-file)
+    </pre>
+
+    <hr />
+    <h1 id="updating">Updating from CVS</h1>
+    <p>
+    You can update from CVS exactly the same way as you
+    <a href="#getting-cvs">downloaded your first copy</a>.
+    </p>
+    <dl>
+      <dt>Step 6-... : After CVS updates</dt>
+      <dd>
+	Read what emacs\INSTALL.CVS says about this.
+	But use
+	<em>EMACS=../src/oo-spd/i386/emacs</em>
+	instead when it says EMACS=../src/emacs.
+      </dd>
+    </dl>
+
+    <hr />
+    <h1 id="patching">Exchanging Changes - <i>patch.exe</i></h1>
+    <p>
+      There is a simple way to handle changes to the source code.
+      This allows you to send the changes to other people.
+      They can add your changes easily and later remove them.
+      If the changes are in multiple files it is not more to do than if it were in a single file.
+      A very powerful system!
+    </p>
+    <p>
+      I did not know about this and I therefore wrote in a mail conversation
+      <cite>Because I still have not really understood how to use diff files.
+      What will you do with them?</cite>
+      I got this very useful answer from Juanma Barranquero:
+    </p>
+    <blockquote>
+    <p>
+      Patch them  :)
+    </p>
+    <p>
+      You need CVS (which you already have) and a patch.exe (there are a
+      few, from GnuWin32, MinGW, UnxUtils and Cygwin; I'd recommend *not*
+      using the Cygwin one).
+    </p>
+    <p>
+      When you've done some changes to your Emacs source tree, you go to the
+      root and do a "cvs diff". For example, if your source tree is at
+      C:\emacs\HEAD, do:
+    </p>
+    <pre>
+      C:\> CD \emacs\HEAD
+      C:\emacs\HEAD> cvs diff -u2 > C:\emacs\my.patch
+    </pre>
+    <p>
+      Notes:
+    </p>
+    <ul>
+      <li>
+        Of course, you could use other arguments for "cvs diff" (I like to
+        happen unified diffs with 2-line contexts, but some people prefers context
+        diffs, so that would be: "cvs diff -c > C:\emacs\my.patch").
+      </li>
+      <li style="color:gray; background-color:transparent;">
+        If you always use the same arguments for "cvs diff", you can put
+        them at .cvsrc on your HOME directory (see the docs for CVS). You can
+        override them at the command line; for example, I have "-u2" on
+        .cvsrc, but I can make context diffs with "cvs -f diff -c" (-f meaning
+        "ignore .cvsrc").
+      </li>
+      <li>
+        Don't forget to redirect the output of "cvs diff" to a file
+        *outside* the source tree.
+      </li>
+      <li>
+        If you have many changes in your source tree and you want to make
+        a patch file for only some of them, for example only for a
+        subdirectory of the source tree, do *not* move to the subdirectory.
+        Instead of:
+        <pre>
+          C:\emacs\HEAD> cd lisp
+          C:\emacs\HEAD\lisp> cvs diff > C:\emacs\my.patch
+        </pre>
+        do this:
+        <pre>
+          C:\emacs\HEAD> cvs diff lisp > C:\emacs\my.patch
+        </pre>
+        or, if only a few files:
+        <pre>
+          C:\emacs\HEAD> cvs diff src\w32fns.c src\w32term.c > C:\emacs\my.patch
+        </pre>
+        *ALWAYS* from the root of the source tree. This way the patches are
+        easier to apply and remove.
+      </li>
+    </ul>
+    <p>
+      Now, let's suppose I receive your patch file my.patch. My source tree
+      is at C:\bin\emacs\gcc so I copy your file to C:\bin\emacs\my.patch. Then:
+    </p>
+    <pre>
+      C:\bin\emacs\gcc> patch -p0 &lt; C:\bin\emacs\my.patch
+    </pre>
+    <p>
+    And, supposing there's no conflict, now your patches are applied to my
+    source tree. I can build it and test it normally. After a while, I
+    want to remove your patch from my source tree, so I do:
+    </p>
+    <pre>
+      C:\bin\emacs\gcc> patch -p0 -R &lt; C:\bin\emacs\my.patch
+    </pre>
+    <p>
+    and voilà!
+    </p>
+    </blockquote>
+    <p>
+      <cite>>> Should everything go into one .diff file?</cite>
+    </p>
+    <blockquote>
+    <p>
+      Yeah. Otherwise people will have to remember that several patch files
+      correspond to the same bug/feature, and patch them one by one.
+    </p>
+    </blockquote>
+
+    <h2 id="EmacsW32Patches">Patches for the Emacs+EmacsW32 distribution</h2>
+    <p>
+      Installation programs for Emacs+EmacsW32 at
+      http://OurComments.org/ are available in two versions, one with
+      a slightly patched Emacs and one without patches. (See the home
+      page for more information.) The files with names like
+      readmve-CvsP060415.txt contains information about where to find
+      the patches. Both this file and the patches are available both
+      on the web site and in the installed Emacs+EmacsW32.
+    </p>
+
+
+    <hr />
+    <p class="footer">
+      Copyright &copy; 2007 OurComments.org
+    </p>
+    </div>
+  </body>
+</html>

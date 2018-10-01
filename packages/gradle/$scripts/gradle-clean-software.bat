@@ -1,0 +1,1 @@
+@rmdir .\gradle\bin\gradle\

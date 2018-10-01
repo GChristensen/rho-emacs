@@ -1,0 +1,2 @@
+Content of this folder may be removed or replaced by Rho during reinstallation.
+Please backup important personal data.

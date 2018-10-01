@@ -1,0 +1,1 @@
+gawk: ../../grep-2.5.1a-src/tests/bre.awk:12: (FILENAME=../../grep-2.5.1a-src/tests/bre.tests FNR=1) fatal: division by zero attempted in `%'

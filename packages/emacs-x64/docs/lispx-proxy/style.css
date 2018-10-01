@@ -1,0 +1,111 @@
+@charset "iso-8859-1";
+
+body 
+{
+	background-color: white;
+}
+body,td,th 
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: small;
+	color: black;
+}
+.divider
+{
+  width: 100%;
+  text-align: center;
+}
+table.simple
+{
+	border: 1px solid black; 
+	border-collapse: collapse;
+}
+table.simple td, table.simple th
+{
+	border: 1px solid black; 
+	text-align: center;
+}
+table.simple th
+{
+	font-weight: bold;
+}
+table.simple td.first
+{
+	text-align: left;
+}
+p
+{
+	text-indent: 1em;
+}
+.footnotes
+{
+	margin-left: 1em;
+}
+a:link 
+{
+	color: black;
+}
+a:visited 
+{
+	color: black
+}
+a:hover 
+{
+	color: dagr;
+}
+a:active 
+{
+	color: dagr;
+}
+
+#column1 
+{
+	width: 60%;
+	margin-left: 20%;
+}
+a.hdlink 
+{
+	font-weight: bold;
+	/*text-decoration: none;*/
+}
+h3
+{
+	padding-top: 1em;
+}
+h4
+{
+	padding-top: 0.2em;
+}
+.log
+{
+	font-family: "Lucida Console", monospace;
+	font-size: 90%;
+}
+.software
+{
+	margin-left: 3em;
+}
+a.update:link, a.update:visited, a.update:hover, a.update:active 
+{
+	color: #330099;
+}
+.update
+{
+	color: #330099;
+}
+a.update2:link, a.update2:visited, a.update2:hover, a.update2:active 
+{
+	color: #AA11AA;
+}
+.update2
+{
+	color: #AA11AA;
+}
+.remark
+{
+	color: #C00000;
+}
+.mono
+{
+	font-family: monospace;
+}

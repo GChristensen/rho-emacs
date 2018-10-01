@@ -1,0 +1,51 @@
+Major changes in release 4.1:
+
+* Distribution renamed to findutils.
+* updatedb is now a user command, installed in $exec_prefix/bin
+  instead of $exec_prefix/libexec.
+* A few problems in Makefiles and testsuite corrected.
+
+Major changes in release 4.0:
+
+* Documentation:
+** Texinfo manual.
+** Man page for updatedb.
+** Man page for the locate database formats.
+
+* find:
+** Takes less CPU time on long paths, because it uses chdir to descend
+   trees, so it does fewer inode lookups.
+** Does not get trapped in symbolic link loops when -follow is given.
+** Supports "-fstype afs" if you have /afs and /usr/afsws/include
+   and you configure using the --with-afs option.
+** New action -fls FILE; like -ls but writes to FILE.
+
+* locate:
+** Supports a new database format, which is 8-bit clean and
+   allows machines with diffent byte orderings and integer sizes to
+   share the databases.  The new locate can also detect and read the
+   old database format automatically.  The new databases are typically
+   30% or more larger than the old ones (due to allowing all 8 bits in
+   file names).  Search times are approximately the same, or faster on
+   some systems.
+** Warns if a file name database is more than 8 days old.
+
+* updatedb:
+** Takes command-line options.
+
+* xargs:
+** Performance improved 10-20%.
+** The EOF string is not used when -0 is given.
+** Now has a test suite.  Some minor bugs fixed as a result.
+
+Major changes in release 3.8:
+
+* case insensitive versions of -lname, -name, -path, -regex:
+  -ilname, -iname, -ipath, -iregex
+* %F directive for -printf, -fprintf to print file system type
+
+Major changes in release 3.7:
+
+* locate can search multiple databases
+* locate has an option to specify the database path
+* updatedb no longer goes into an infinite loop with some versions of tail

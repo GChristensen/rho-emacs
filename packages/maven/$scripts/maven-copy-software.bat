@@ -1,0 +1,1 @@
+mklink /J  .\maven\bin\maven\ ..\software\maven

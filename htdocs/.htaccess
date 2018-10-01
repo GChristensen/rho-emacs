@@ -1,0 +1,12 @@
+Options +Includes
+
+RewriteEngine on
+# If the requested URI does not contain a period in the final path-part
+RewriteCond %{REQUEST_URI} !(\.[^./]+)$
+# and if it does not exist as a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# and if it does not exist as a file
+RewriteCond %{REQUEST_FILENAME} !-f
+# then add .html to get the actual filename
+RewriteRule (.*) /$1.shtml [L]
+# 

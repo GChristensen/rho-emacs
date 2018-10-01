@@ -1,0 +1,4 @@
+htdocs\header.shtml
+packages\version.txt
+packages\emacs-x64\version\version.txt
+setup.nsi

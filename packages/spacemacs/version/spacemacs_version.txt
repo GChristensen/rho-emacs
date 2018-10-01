@@ -1,0 +1,2 @@
+Package: 0.1.0
+Spacemacs: 0.200.9

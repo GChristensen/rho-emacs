@@ -1,0 +1,49 @@
+* Patch-2.5.9 for Windows *
+===========================
+
+What is it?
+-----------
+Patch: apply a diff file to an original
+
+Description
+-----------
+`patch' takes a patch file containing a difference listing produced by diff and applies those differences to one or more original files, producing patched versions.
+	 
+Homepage
+--------
+http://www.gnu.org/software/patch/patch.html
+	 
+System
+------
+- Win32, i.e. MS-Windows 95 / 98 / ME / NT / 2000 / XP / 2003 with msvcrt.dll
+- if msvcrt.dll is not in your Windows/System folder, get it from
+  Microsoft <http://support.microsoft.com/default.aspx?scid=kb;en-us;259403">
+  or by installing Internet Explorer 4.0 or higher
+  <http://www.microsoft.com/windows/ie> 
+
+Notes
+-----
+- Bugs and questions on this MS-Windows port: gnuwin32@users.sourceforge.net
+
+Package Availability
+--------------------
+- in: http://gnuwin32.sourceforge.net
+Installation
+------------
+On MS-Windows, the patchfile must be a text file, i.e. CR-LF must be used as line endings. A file with LF may give the error: "Assertion failed, hunk, file patch.c, line 343," unless the option '--binary' is given.
+
+Sources
+-------
+- patch-2.5.9-4-src.zip
+
+Compilation
+-----------
+The package has been compiled with GNU auto-tools, GNU make, and Mingw
+(GCC for MS-Windows). Any differences from the original sources are given
+in patch-2.5.9-4-GnuWin32.diffs in patch-2.5.9-4-src.zip. Libraries needed
+for compilation can be found at the lines starting with 'LIBS = ' in the
+Makefiles. Usually, these are standard libraries provided with Mingw, or
+libraries from the package itself; 'gw32c' refers to the libgw32c package,
+which provides MS-Windows substitutes or stubs for functions normally found in
+Unix. For more information, see: http://gnuwin32.sourceforge.net/compile.html
+and http://gnuwin32.sourceforge.net/packages/libgw32c.htm.

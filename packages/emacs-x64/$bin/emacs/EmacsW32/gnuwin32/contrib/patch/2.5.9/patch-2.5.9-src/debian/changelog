@@ -1,0 +1,298 @@
+patch (2.5.9-2) unstable; urgency=low
+
+  * Standards-Version 3.6.1 (no changes required).
+  * Applied upstream patch to fix CR stripping. (Closes: #196297)
+  * Applied a patch from SUSE to prevent previously created backup files
+    from being overwritten. (Closes: #248950)
+  * Ran aclocal and autoconf to make the above patch work.
+  * Touch aclocal.m4 and configure during build to prevent the usual
+    time-skew problems.
+  * Removed emacs vars from changelog.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Sun, 18 Jul 2004 12:56:02 +0200
+
+patch (2.5.9-1) unstable; urgency=low
+
+  * New upstream release:
+    - Handles filenames with spaces. (closes: #99808)
+    - Don't try to stat output file after skipping a patch. (closes: #157232)
+    - CR in hunk header doesn't trigger CR stripping. (closes: #192272)
+  * Standards-Version 3.5.10 (no changes required).
+  * Remove obsolete CFLAGS. (closes: #193403)
+  * Update copyright file.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Tue, 20 May 2003 21:13:37 +0200
+
+patch (2.5.8-2) experimental; urgency=low
+
+  * Standards-Version 3.5.8:
+    - Support DEB_BUILD_GNU_TYPE and DEB_HOST_GNU_TYPE.
+    - Support DEB_BUILD_OPTIONS noopt instead of debug.
+    - Always build with -g.
+    - Build depend on debhelper (>= 4.1.0) to get rid of /usr/doc link.
+  * Use debhelper v4.
+  * Minor fixes to copyright file.
+  * Don't try to stat the output file if the user elected to skip a
+    patch. (Fixes #157232, not closing since this is for experimental.)
+  * Applied patch from upstream to strip trailing whitespace from filenames
+    found in patch headers. (This fixes the glibc build.)
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Thu,  2 Jan 2003 19:37:49 +0100
+
+patch (2.5.8-1) experimental; urgency=low
+
+  * New upstream testing release.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Mon,  3 Jun 2002 16:53:35 +0200
+
+patch (2.5.7-1) experimental; urgency=low
+
+  * New upstream testing release (which is likely to become the new stable
+    release).
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Fri, 31 May 2002 19:01:55 +0200
+
+patch (2.5.6-1) experimental; urgency=low
+
+  * New upstream testing release (plus two patches from upstream which
+    will be in the next version), which incorporates all of our patches
+    or fixes the problems in different ways.
+  * Uploading to experimental until final release.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Wed, 29 May 2002 22:30:18 +0200
+
+patch (2.5.4-11) unstable; urgency=low
+
+  * Fix patch -D. (closes: #140247)
+  * Improve indentation guessing for ed diffs. (closes: #140642)
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Sat,  6 Apr 2002 20:19:19 +0200
+
+patch (2.5.4-10) unstable; urgency=low
+
+  * Fix segfault on illegal arguments to certain options. (closes: #137222)
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Tue, 12 Mar 2002 22:48:53 +0100
+
+patch (2.5.4-9) unstable; urgency=low
+
+  * Debhelperized debian/rules.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Sun, 10 Feb 2002 19:09:16 +0100
+
+patch (2.5.4-8) unstable; urgency=low
+
+  * New maintainer. (closes: #130835)
+  * Call configure with ac_cv_sys_long_file_names=yes (all Debian systems
+    have long file names, but the test may fail if the build target is
+    invoked under fakeroot or is invoked as root while /usr is mounted
+    read-only). (closes: #129257)
+  * Don't build with -g by default.
+  * Support DEB_BUILD_OPTIONS.
+  * Standards-Version 3.5.6.
+
+ -- Michael Fedrowitz <michaelf@debian.org>  Sat, 26 Jan 2002 15:17:35 +0100
+
+patch (2.5.4-7) unstable; urgency=low
+
+  * Orphaned this package.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Fri, 25 Jan 2002 13:07:18 +0100
+
+patch (2.5.4-6) unstable; urgency=high
+
+  * Applied patches from RedHat for the following bugs:
+    - Correct default suffix to .orig. (closes: #122476)
+    - 'no such file' does now appear before the skip patch
+      question.
+    - Fix a possible segfault.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Wed,  5 Dec 2001 12:15:10 +0100
+
+patch (2.5.4-5) unstable; urgency=low
+
+  * s/GNU Public License/GNU General Public License/ in
+    debian/copyright. (closes: #102238)
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sun, 15 Jul 2001 17:44:36 +0200
+
+patch (2.5.4-4) unstable; urgency=low
+
+  * Added a build dependency and a suggestion for ed.
+    (closes: #86822)
+  * Strip the binary better.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sat,  2 Jun 2001 18:35:53 +0200
+
+patch (2.5.4-3) unstable; urgency=low
+
+  * Added a patch from Alessandro Rubini <rubini@gnu.org> that
+    corrects messages about offsets. (closes: #68943)
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Tue, 16 Jan 2001 00:10:03 +0100
+
+patch (2.5.4-2) unstable; urgency=low
+
+  * Removed the build dependency on patch. There's no longer a
+    debian/patches since 2.5.4-1 (all problems are fixed upstream) and
+    therefore no call to patch when building the package. (closes: #76205)
+  * Upload sponsored by Tony Mancill <tmancill@debian.org>.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sun,  5 Nov 2000 17:48:00 +0100
+
+patch (2.5.4-1) unstable; urgency=low
+
+  * New upstream release. (closes: #49119)
+  * Upload sponsored by Tony Mancill <tmancill@debian.org>.
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sat,  5 Aug 2000 22:46:32 +0200
+
+patch (2.5-3) unstable; urgency=low
+
+  * New Maintainer
+  * Removed patch.log from source
+  * Debian patches to the source are now in debian/patches
+  * /usr/doc -> /usr/share/doc
+  * /usr/man -> /usr/share/man
+  * Added Build-Depends to debian/control
+  * Added Section to debian/control
+  * Added "-isp" to dpkg-gencontrol
+  * Added "-g -Wall" to CFLAGS
+  * Removed "-s" from LDFLAGS
+  * Standards-Version: 3.1.1.1
+  * Updated copyright
+  * Approved the patches from the NMUs
+    Closes: #57100, #56621, #58811
+  * Upload sponsored by Tony Mancill <tmancill@debian.org>
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Mon, 29 May 2000 14:29:05 +0200
+
+patch (2.5-2.2) frozen unstable; urgency=medium
+
+  * NMU
+  * Fixed a buffer overrun in mktemp (closes: #58811)
+
+ -- Randolph Chung <tausq@debian.org>  Sat, 26 Feb 2000 12:27:09 -0700
+
+patch (2.5-2.1) frozen unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Update location of GPL and Artistic license in copyright
+  * Apply patch from Colin Phipps <crp22@cam.ac.uk> to fix unsafe file
+    handling, Closes: Bug#56621
+  * Add -D_XOPEN_SOURCE=500 to CFLAGS so patch builds correctly again
+    Closes: Bug#57100
+
+ -- Wichert Akkerman <wakkerma@debian.org>  Sun, 20 Feb 2000 16:39:13 +0100
+
+patch (2.5-2) unstable; urgency=low
+
+  * Apply patch from "James A" <jamesa@demon.net> to fix segv when
+    skipping a patch.  This does fix (Bug #14693, #16116, #16391).  It
+    might fix #14653 but I need more information.
+  * Don't use su during build - allow fakeroot and friends to do their
+    stuff.  (Fixes #15459, #18319)
+  * Use original source.
+  * Updated standards to 2.4.0.0.  (No changes.)
+  * lintian clean.
+
+ -- Darren Stalder <torin@daft.com>  Sat, 14 Mar 1998 19:11:46 -0800
+
+patch (2.5-1) unstable; urgency=low
+
+  * New upstream version.
+  * Problem in patch with Index overriding filenames fixed in upstream.
+    (Bug #10420)
+  * Compiled for libc6. (Bug #11699)
+  * Updated to conform to debian packaging standards 2.3.0.0.
+
+ -- Darren Stalder <torin@daft.com>  Fri, 19 Sep 1997 23:41:38 +0000
+
+patch (2.2-1) unstable; urgency=low
+
+  * Larry Wall said that patch is under the Artistic License.  (Bug #7215)
+  * Make sure that ChangeLog actually becomes /usr/doc/patch/changelog.gz to
+    conform to policy.  (Bug #7237)
+  * Upstream changes fix the problem with basename.  (Bug #8324, #8811)
+  * Upstream changes fix "no newline" problem.  (Bug #9754)
+  * Updated to conform to debian packaging standards 2.1.3.2.
+
+ -- Darren Stalder <torin@daft.com>  Fri, 19 Sep 1997 23:23:32 +0000
+
+patch (2.1-11) unstable; urgency=high
+
+  * Built completely as root to bypass autoconf bug where it doesn't
+    detect long filename support
+  * Waiting on Larry Wall to see if patch will have to be moved to
+    non-free.
+  
+ -- Darren Stalder <torin@daft.com>  Mon, 10 Feb 1997 03:18:58 -0800
+
+patch (2.1-10) unstable; urgency=low
+
+  * Updated to dpkg standards version 2.1.1.2, changed the rules file to
+    the format that I'm used to.  This fixes #3348.
+  * Reverted the Makefile.in to the upstream version since the changed
+    parameters can be passed on the command line
+  * Reverted util.h and backupfile.c since the basename problem isn't
+    there anymore.
+  * Applied patch by Herbert Xu <herbert@greathan.apana.org.au> to handle
+    long lines.
+
+ -- Darren Stalder <torin@daft.com>  Sat, 1 Feb 1997 17:08:10 -0800
+
+The following changes are from Bill Mitchell:
+
+Changes for the debian patch-2.1-9
+	elf package
+	* rebuilt for elf
+
+Changes for the debian patch-2.1-8 binary distribution
+
+1.  Install patch.1 in /usr/man/man1, not /usr/man (oops).
+
+Changes for the debian patch-2.1-7 binary distribution
+
+1.  Changed debian.rules file to Ian Murdock style.
+
+2.  Cleaned up control file description and extended description.
+
+3.  In debian.rules, add -DLINUX to CFLAGS.
+
+4.  In util.h, added #ifndef LINUX block around obsolete basename()
+    declaration.  It conflicts with the declaration in the file
+    /usr/include/unistd.h in the linux 1.2.1 kernel sources.
+
+5.  In backupfile, added #ifndef LINUX block around obsolete basename()
+    declarations.
+
+Changes for the debian patch-2.1-6 binary distribution
+
+1.  Removed leading tab on "include debian.rules.inc" line of debian.rules
+
+Changes for the debian patch-2.1-5 binary distribution
+
+1.  Changes for new packaging guidelines
+    preinst and postinst scripts return exit status
+    use debian.rules.inc 1.6 to support new package naming conventions
+    debian.rules changes for new debian.rules.inc
+
+Changes for the debian patch-2.1-4 binary distribution
+
+1.  Modified debian.rules to use debian.rules.inc
+
+Changes for the debian patch-2.1-3 binary distribution
+
+1.  For the debian.rules target build:
+    pass CFLAGS and LDFLAGS to Makefile
+
+Changes for the debian patch-2.1-2 binary distribution
+
+1.  Corrected permissions on man pages from 640 to 644
+
+Changes for the patch-2.1-1 debian binary distribution
+
+1.  Renamed README.debian to debian.README
+2.  Renamed COPYRIGHT.debian to debian.COPYRIGHT
+3.  Added debian.control
+4.  Added debian.rules

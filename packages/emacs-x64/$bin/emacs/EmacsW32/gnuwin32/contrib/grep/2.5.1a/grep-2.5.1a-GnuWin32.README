@@ -1,0 +1,58 @@
+* Grep-2.5.1a for Windows *
+===========================
+
+What is it?
+-----------
+Grep: print lines matching a pattern
+
+Description
+-----------
+Grep searches one or more input files for lines containing a match to a
+specified pattern. By default, grep prints the matching lines. 
+	 
+Homepage
+--------
+http://www.gnu.org/software/grep/grep.html
+	 
+System
+------
+- MS-Windows 95 / 98 / ME / NT / 2000 / XP with msvcrt.dll
+- if msvcrt.dll is not in your Windows/System folder, get it from
+  Microsoft <http://support.microsoft.com/default.aspx?scid=kb;en-us;259403">
+  or by installing Internet Explorer 4.0 or higher
+  <http://www.microsoft.com/windows/ie> 
+- libintl-2 <http://gnuwin32.sourceforge.net/packages/libintl.htm> 
+- libiconv-2 <http://gnuwin32.sourceforge.net/packages/libiconv.htm> 
+- pcre <http://gnuwin32.sourceforge.net/packages/pcre.htm> 
+
+Notes
+-----
+- Bugs and questions on this MS-Windows port: gnuwin32@users.sourceforge.net
+
+Package Availability
+--------------------
+- in: http://gnuwin32.sourceforge.net
+Installation
+------------
+The MS-Windows command interpreters expand wildcards on the command-line
+sometimes differently from Unix. In particular '*' is copied literally,
+and thus the program gets '*', with the single quotes included, as
+argument, whereas a Unix shell passes *, without the single quotes, to
+the program. If you want the program to get * as argument, then enclose
+it in double quotes: "*".
+
+Sources
+-------
+- grep-2.5.1a-src.zip
+
+Compilation
+-----------
+The package has been compiled with GNU auto-tools, GNU make, and Mingw
+(GCC for MS-Windows). Any differences from the original sources are given
+in grep-2.5.1a-GnuWin32.diffs in grep-2.5.1a-src.zip. Libraries needed
+for compilation can be found at the lines starting with 'LIBS = ' in the
+Makefiles. Usually, these are standard libraries provided with Mingw, or
+libraries from the package itself; 'gw32c' refers to the libgw32c package,
+which provides MS-Windows substitutes or stubs for functions normally found in
+Unix. For more information, see: http://gnuwin32.sourceforge.net/compile.html
+and http://gnuwin32.sourceforge.net/packages/libgw32c.htm.

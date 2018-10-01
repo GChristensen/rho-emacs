@@ -1,0 +1,1 @@
+mklink /J  .\python3\bin\python3\ ..\software\python3

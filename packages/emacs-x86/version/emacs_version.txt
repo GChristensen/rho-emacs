@@ -1,0 +1,4 @@
+Package: 0.2.1
+Emacs: 26.1 (32-bit)
+EmacsW32: 1.58
+Lisp Execution Proxy: 0.3.1
