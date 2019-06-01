@@ -1,2 +1,2 @@
-Package: 0.2.0
-SBCL: 1.4.8
+Package: 0.3.2
+SBCL: 1.4.14

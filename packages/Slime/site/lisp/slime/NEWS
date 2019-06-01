@@ -1,4 +1,26 @@
 * SLIME News                                -*- mode: outline; coding: utf-8 -*-
+* 2.24 (May 2019)
+*** Minor improvements.
+
+* 2.23 (December 2018)
+*** Improved compatiblity with different versions of Emacs, SBCL, Clasp, Allegro.
+*** Bug fixes
+
+* 2.22 (July 2018)
+*** Improved compatiblity with Emacs 26
+
+* 2.21 (June 2018)
+*** Improved compatiblity with Emacs 26
+*** Mezzano support
+
+* 2.20 (August 2017)
+** Core
+*** More secure handling of ~/.slime-secret
+** SBCL backend
+*** Compatiblity with the latest SBCL and older SBCL.
+** ECL backend
+*** Numerous enhancements
+
 * 2.19 (February 2017)
 ** Core
 *** Function `create-server` now accepts optional `interface` argument.

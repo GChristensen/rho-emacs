@@ -240,7 +240,7 @@ hashtable `slime-output-target-to-marker'; output is inserted at this marker."
   (case target
     ((nil) (slime-repl-emit string))
     (:repl-result (slime-repl-emit-result string t))
-    (t (slime-emit-to-target string target))))
+    (t (slime-repl-emit-to-target string target))))
 
 (defvar slime-repl-popup-on-output nil
   "Display the output buffer when some output is written.
@@ -293,27 +293,10 @@ This is set to nil after displaying the buffer.")
 (defvar slime-last-output-target-id 0
   "The last integer we used as a TARGET id.")
 
-(defvar slime-output-target-to-marker
-  (make-hash-table)
-  "Map from TARGET ids to Emacs markers.
-The markers indicate where output should be inserted.")
-
-(defun slime-output-target-marker (target)
-  "Return the marker where output for TARGET should be inserted."
-  (case target
-    ((nil)
-     (with-current-buffer (slime-output-buffer)
-       slime-output-end))
-    (:repl-result
-     (with-current-buffer (slime-output-buffer)
-       slime-repl-input-start-mark))
-    (t
-     (gethash target slime-output-target-to-marker))))
-
-(defun slime-emit-to-target (string target)
+(defun slime-repl-emit-to-target (string target)
   "Insert STRING at target TARGET.
 See `slime-output-target-to-marker'."
-  (let* ((marker (slime-output-target-marker target))
+  (let* ((marker (slime-repl-output-target-marker target))
          (buffer (and marker (marker-buffer marker))))
     (when buffer
       (with-current-buffer buffer
@@ -323,6 +306,18 @@ See `slime-output-target-to-marker'."
           (goto-char marker)
           (insert-before-markers string)
           (set-marker marker (point)))))))
+
+(defun slime-repl-output-target-marker (target)
+  (case target
+    ((nil)
+     (with-current-buffer (slime-output-buffer)
+       slime-output-end))
+    (:repl-result
+     (with-current-buffer (slime-output-buffer)
+       slime-repl-input-start-mark))
+    (t
+     (slime-output-target-marker target))))
+
 
 (defun slime-switch-to-output-buffer ()
   "Select the output buffer, when possible in an existing window.
@@ -452,7 +447,8 @@ joined together."))
   ("\C-c\C-n" 'slime-repl-next-prompt)
   ("\C-c\C-p" 'slime-repl-previous-prompt)
   ("\C-c\C-z" 'slime-nop)
-  ("\C-cI" 'slime-repl-inspect))
+  ("\C-cI" 'slime-repl-inspect)
+  ("\C-x\C-e" 'slime-eval-last-expression))
 
 (slime-define-keys slime-inspector-mode-map
   ((kbd "M-RET") 'slime-inspector-copy-down-to-repl))
@@ -937,16 +933,6 @@ used with a prefix argument (C-u), doesn't switch back afterwards."
   :type 'boolean
   :group 'slime-repl)
 
-(defcustom slime-repl-history-remove-duplicates nil
-  "*When T all duplicates are removed except the last one."
-  :type 'boolean
-  :group 'slime-repl)
-
-(defcustom slime-repl-history-trim-whitespaces nil
-  "*When T strip all whitespaces from the beginning and end."
-  :type 'boolean
-  :group 'slime-repl)
-
 (make-variable-buffer-local
  (defvar slime-repl-input-history '()
    "History list of strings read from the REPL buffer."))
@@ -954,12 +940,10 @@ used with a prefix argument (C-u), doesn't switch back afterwards."
 (defun slime-repl-add-to-input-history (string)
   "Add STRING to the input history.
 Empty strings and duplicates are ignored."
-  (when slime-repl-history-trim-whitespaces
-    (setq string (slime-trim-whitespace string)))
+  (setq string (slime-trim-whitespace string))
   (unless (equal string "")
-    (when slime-repl-history-remove-duplicates
-      (setq slime-repl-input-history
-            (remove string slime-repl-input-history)))
+    (setq slime-repl-input-history
+          (remove string slime-repl-input-history))
     (unless (equal string (car slime-repl-input-history))
       (push string slime-repl-input-history))))
 

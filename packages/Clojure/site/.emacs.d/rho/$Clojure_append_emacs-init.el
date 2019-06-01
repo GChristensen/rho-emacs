@@ -56,7 +56,7 @@
     (if (file-exists-p project-file)
       (progn
         (find-file project-file)
-        (cider-jack-in))
+        (cider-jack-in '()))
       (princ "project.clj is missing"))))
 
 (defun start-clojure-repl ()
@@ -65,7 +65,7 @@
     (cd path)
     (let ((project-file (concat path "/project.clj")))
       (if (file-exists-p project-file)
-        (cider-jack-in)
+        (cider-jack-in '())
         (princ (concat project-file " is missing"))))))
 
 

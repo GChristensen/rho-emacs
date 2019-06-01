@@ -1,2 +1,2 @@
-Package: 0.2.1
-Racket: 7.0 (32-bit)
+Package: 0.3.2
+Racket: 7.3 (32-bit)

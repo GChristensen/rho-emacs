@@ -1,2 +1,2 @@
-Package: 0.1.0
-ABCL: 1.1.5
+Package: 0.3.2
+ABCL: 1.5.0

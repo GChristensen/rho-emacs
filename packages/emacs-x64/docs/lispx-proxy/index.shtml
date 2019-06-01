@@ -16,8 +16,9 @@
 
 <h3>About</h3>
 
-<p><b>lispx-proxy</b> (Lisp Execution Proxy) is a yet another Lisp application launcher, written in C++ and designed for use primarily on <b>Windows</b>, but *nix port with limited functionality is also available. 
-It allows to create relatively complex cross platform executable source code distributions, which require zero configuration to run (see a <a href="https://youtu.be/TeAGkIjRn7s">video</a>).</p>
+<p><b>lispx-proxy</b> (Lisp Execution Proxy) is a <b>Windows</b> utility to make your Lisp software easily invokable from the command-line and <b>Windows Explorer</b> (*nix port with limited functionality is also available). 
+It allows to create relatively complex cross platform executable source code distributions which require zero configuration to run (see a <a href="https://youtu.be/TeAGkIjRn7s">video</a>). <b>lispx-proxy</b> is embedded
+into <a href="https://rho-emacs.sourceforge.io">Rho Emacs</a> distribution.</p>
 
 <h3>Motivation</h3>
 

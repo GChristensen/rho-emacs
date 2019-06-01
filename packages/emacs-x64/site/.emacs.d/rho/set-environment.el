@@ -34,7 +34,7 @@
 ;;   (setq default-process-coding-system '(windows-1251-dos . windows-1251-dos)))
 
 ;; Set environment variables
-(load "alien-bind.el")
+;(load "alien-bind.el")
 
 (defconst +emacs-dir+ (concat +rho-dir+ "/bin/emacs/"))
 (defconst +rho-dir-win-path+ (substitute ?\\ ?/ +rho-dir+))
@@ -44,48 +44,54 @@
 (setenv "EMACSDIR" +emacs-dir+)
 (setenv "RHO_DIR" +rho-dir+)
 
-(alien-bind (javaHome redist2008 browseCommand)
-  'vbs "
-         On Error Resume Next
-         Dim objShell
-         Dim browseCommand
-         Dim javaHome
+;; (alien-bind (javaHome redist2008 browseCommand)
+;;   'vbs "
+;;          On Error Resume Next
+;;          Dim objShell
+;;          Dim browseCommand
+;;          Dim javaHome
 
-         Set objShell = CreateObject(\"WScript.Shell\")
+;;          Set objShell = CreateObject(\"WScript.Shell\")
 
-         ' Get JDK or JRE installation dir.
+;;          ' Get JDK or JRE installation dir.
 
-         Dim javaVer 
-         javaVer = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Development Kit\\CurrentVersion\")
-         javaHome = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Development Kit\\\" & javaVer & \"\\JavaHome\")
+;;          Dim javaVer 
+;;          javaVer = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Development Kit\\CurrentVersion\")
+;;          javaHome = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Development Kit\\\" & javaVer & \"\\JavaHome\")
 
-         If javaHome = \"\" Then
-           javaVer = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Runtime Environment\\CurrentVersion\")
-           javaHome = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Runtime Environment\\\" & javaVer & \"\\JavaHome\")
-         End If
+;;          If javaHome = \"\" Then
+;;            javaVer = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Runtime Environment\\CurrentVersion\")
+;;            javaHome = objShell.RegRead(\"HKLM\\SOFTWARE\\JavaSoft\\Java Runtime Environment\\\" & javaVer & \"\\JavaHome\")
+;;          End If
 
-         ' MSVC++ 2008 Redistributable
-         redist2008 = objShell.RegRead(\"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4}\\VersionMajor\") = \"9\"
+;;          ' MSVC++ 2008 Redistributable
+;;          redist2008 = objShell.RegRead(\"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4}\\VersionMajor\") = \"9\"
      
-         ' Get default browser path
-         browseCommand = objShell.RegRead(\"HKCR\\http\\shell\\open\\command\\\")"
-  (if (boundp 'browseCommand)
-      (progn
-        (let ((private-jdk (concat +rho-dir+ "/bin/jdk")))
-          (defconst +java-home+ 
-            (if (or (file-exists-p private-jdk) (not javaHome) (string= javaHome ""))
-                private-jdk javaHome)))
-        (defconst +redist-2008+ (string= redist2008 "True"))
-        (defconst +browse-command+ browseCommand))
-    (progn
-        (defconst +java-home+ (concat +rho-dir+ "/bin/jdk"))
-        (defconst +redist-2008+ nil)
-        (defconst +browse-command+ "iexplore %1")
-        (when (not (string= (getenv "INVOCATION_TAG") "TARGET:PRECOMP"))
-          (display-warning '(rho)
-                           "Windows Scripting Host command-line utility (cscript) is disabled or not available,
-this could impact the functionality of some Rho components.
-Please enable Windows Scripting Host or make it available.")))))
+;;          ' Get default browser path
+;;          browseCommand = objShell.RegRead(\"HKCR\\http\\shell\\open\\command\\\")"
+;;   (if (boundp 'browseCommand)
+;;       (progn
+;;         (let ((private-jdk (concat +rho-dir+ "/bin/jdk")))
+;;           (defconst +java-home+ 
+;;             (if (or (file-exists-p private-jdk) (not javaHome) (string= javaHome ""))
+;;                 private-jdk javaHome)))
+;;         (defconst +redist-2008+ (string= redist2008 "True"))
+;;         (defconst +browse-command+ browseCommand))
+;;     (progn
+;;         (defconst +java-home+ (concat +rho-dir+ "/bin/jdk"))
+;;         (defconst +redist-2008+ nil)
+;;         (defconst +browse-command+ "iexplore %1")
+;;         (when (not (string= (getenv "INVOCATION_TAG") "TARGET:PRECOMP"))
+;;           (display-warning '(rho)
+;;                            "Windows Scripting Host command-line utility (cscript) is disabled or not available,
+;; this could impact the functionality of some Rho components.
+;; Please enable Windows Scripting Host or make it available.")))))
+
+(require 'w32-reg-iface)
+
+(defconst +java-home+ (concat +rho-dir+ "/bin/jdk"))
+(defconst +redist-2008+ nil)
+(defconst +browse-command+ (car (w32-reg-iface-read-value "HKCR/http/shell/open/command/")))
 
 (defconst +home-dir+ (getenv "HOME"))
 (defconst +home-dir-unix-path+ (substitute ?/ ?\\ +home-dir+))
@@ -100,10 +106,6 @@ Please enable Windows Scripting Host or make it available.")))))
   (make-directory +emacs-home+))
 
 ;(add-to-list 'load-path +emacs-home+)
-
-(let ((java-home (getenv "JAVA_HOME")))
-  (when (or (not java-home) (string= java-home ""))
-    (setenv "JAVA_HOME" +java-home+)))
 
 (setenv "USERPROFILE" +home-dir+)
 (setenv "HOME_UTF8" (encode-coding-string +home-dir+ 'utf-8))

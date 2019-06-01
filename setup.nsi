@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 0.3.0
+!define VERSION 0.3.2
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -836,6 +836,9 @@ SectionEnd
 
 Section /o Clojure SEC_Clojure
     !insertmacro INSTALL_PACKAGE Clojure 68000
+
+    CreateDirectory "$CurrentSandbox\.emacs.d\elpa\"
+    CopyFiles /SILENT "$InstDirRedirect\bin\clojure\emacs\*" "$CurrentSandbox\.emacs.d\elpa\"
     
     StrCmp $PrivateEnvironment portable already_installed
     
@@ -970,7 +973,7 @@ Section /o "Python 2.7" SEC_python2
 already_installed:
 SectionEnd
 
-Section /o "Python 3.2" SEC_python3
+Section /o "Python 3.7" SEC_python3
     !insertmacro INSTALL_PACKAGE python3 68000
     
     StrCmp $PrivateEnvironment portable already_installed
@@ -983,24 +986,27 @@ SectionGroupEnd
 
 #SectionGroupEnd
 
-Section /o "Groovy" SEC_groovy
-    SetRegView 32
-    WriteRegStr HKLM "SOFTWARE\JavaSoft\Prefs" ".nop" ""
+#Section /o "Groovy" SEC_groovy
+#    SetRegView 32
+#    WriteRegStr HKLM "SOFTWARE\JavaSoft\Prefs" ".nop" ""
 
-    SetRegView 64
-    WriteRegStr HKLM "SOFTWARE\JavaSoft\Prefs" ".nop" ""
+#    SetRegView 64
+#    WriteRegStr HKLM "SOFTWARE\JavaSoft\Prefs" ".nop" ""
  
 
-    !insertmacro INSTALL_PACKAGE groovy 150000
+#    !insertmacro INSTALL_PACKAGE groovy 150000
     
-    StrCmp $PrivateEnvironment portable already_installed
+#    StrCmp $PrivateEnvironment portable already_installed
    
-    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Groovy" 1
-already_installed:
-SectionEnd
+#    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Groovy" 1
+#already_installed:
+#SectionEnd
 
 
 SectionGroup "Java"
+
+Section /o "-nopJDK" SEC_nopjdk
+SectionEnd
 
 Section /o "JDK" SEC_jdk
     !insertmacro INSTALL_PACKAGE jdk 226000
@@ -1010,6 +1016,16 @@ Section /o "JDK" SEC_jdk
     !insertmacro REG_STR HKLM "${REGKEY}\Components" "JDK" 1
 already_installed:
 SectionEnd
+
+Section /o "OpenJDK" SEC_openjdk
+    !insertmacro INSTALL_PACKAGE openjdk 307000
+    
+    StrCmp $PrivateEnvironment portable already_installed
+    
+    !insertmacro REG_STR HKLM "${REGKEY}\Components" "OpenJDK" 1
+already_installed:
+SectionEnd
+
 
 Section /o "Apache Ant" SEC_ant
     !insertmacro INSTALL_PACKAGE ant 37000
@@ -1343,7 +1359,7 @@ Function DownloadComponents
 
   !insertmacro LOAD_PACKAGE python2
   !insertmacro LOAD_PACKAGE python3
-  !insertmacro LOAD_PACKAGE groovy  
+#  !insertmacro LOAD_PACKAGE groovy  
 #  !insertmacro LOAD_PACKAGE mingw
 #  !insertmacro LOAD_PACKAGE boost
 
@@ -1409,6 +1425,21 @@ Function .onSelChange
     ${Else}
         !insertmacro ClearSectionFlag ${SEC_MSYS} ${SF_RO}
     ${EndIf}
+
+    !insertmacro SectionRadioButtons "${SEC_nopjdk}" "${SEC_nopjdk},${SEC_jdk},${SEC_openjdk}"
+    !insertmacro UnSelectSection ${SEC_nopjdk}
+
+#    ${If} ${SectionIsSelected} ${SEC_jdk}
+#        !insertmacro UnSelectSection ${SEC_openjdk}
+#    ${ElseIf} ${SectionIsSelected} ${SEC_openjdk}
+#        !insertmacro UnSelectSection ${SEC_jdk}
+#    ${EndIf}
+
+#    ${If} ${SectionIsSelected} ${SEC_openjdk}
+#        !insertmacro UnSelectSection ${SEC_jdk}
+#    ${ElseIf} ${SectionIsSelected} ${SEC_jdk}
+#        !insertmacro UnSelectSection ${SEC_openjdk}
+#    ${EndIf}
 !endif
 
     ${If} ${SectionIsSelected} ${SEC_AdditionalModes}
@@ -1444,12 +1475,12 @@ FunctionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x64} "Emacs 26.1 (64-bit) build for Microsoft Windows bundled with modules and EmacsW32 enchancement pack"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x86} "Emacs 26.1 (32-bit) build for Microsoft Windows bundled with EmacsW32 enchancement pack"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Basic Emacs setup for convenient editing: arjen theme, ido, linum, column-marker, highlight-symbol, show-paren, save-place, org-wiki"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Basic Emacs setup for convenient editing: arjen theme, ido, linum, column-marker, highlight-symbol, show-paren, save-place"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_AutoComplete} "Global visual (popup menu) autocompletion mode for Emacs (available manually with the `auto-complete-mode' command if unchecked)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_AdditionalModes} "A set of advanced modes: bookmark+, yasnippet, helm, sr-speedbar, window-purpose"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SpacemacsLook} "Get Spacemacs look without installing Spacemacs"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_spacemacs} "Bring Vim experience to Emacs (only check this if you know what you are doing)"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_CollectBackups} "Store bacup files not near the edited file but in ~/emscs.d/backups"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_CollectBackups} "Store backups not near the edited file but in ~/emscs.d/backups"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CUA} "Enable CUA mode"
 !ifndef BASIC_EMACS
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_HyperSpec} "Reference documentation for Common Lisp"
@@ -1466,11 +1497,12 @@ FunctionEnd
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MSYS} "A minimalist Bourne Shell port for Windows"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_python2} "Python 2.7"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_python3} "Python 3.7"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw32} "Install the latest MinGW-x64 (32-bit) into MSYS2 directory"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw64} "Install the latest MinGW-x64 (64-bit) into MSYS2 directory"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw32} "Install the latest MinGW-x64 (32-bit)"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw64} "Install the latest MinGW-x64 (64-bit)"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_boost} "The Boost Library (1.50)"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_jdk} "Private instances of JDK and JRE v8.0 available through the environment of Rho Emacs (no system integration)"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_groovy} "Groovy 2 + Grails 3"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_jdk} "Private instance of legacy Oracle JDK v8.0 available through Rho Emacs command shell (no system integration), not compatible with OpenJDK"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_openjdk} "Private instance of a recent version of OpenJDK available through Rho Emacs command shell (no system integration), not compatible with Oracle JDK"
+#!insertmacro MUI_DESCRIPTION_TEXT ${SEC_groovy} "Groovy 2 + Grails 3"
 !endif
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 

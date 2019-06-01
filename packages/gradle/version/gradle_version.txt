@@ -1,2 +1,2 @@
-Package: 0.1.0
-Gradle: 4.0.1
+Package: 0.3.2
+Gradle: 5.4.1

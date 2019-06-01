@@ -22,6 +22,49 @@
             });
         });
     </script>
+    <style>
+        input[type='checkbox'] {
+            display: none;
+            visibility: hidden;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            font-size: 12pt;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        label:hover {
+            color: #000;
+        }
+        label::before {
+            font-family: Consolas, monaco, monospace;
+            font-weight: bold;
+            font-size: 15px;
+            content: "~";
+            vertical-align: text-top;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 3px;
+            /*background: radial-gradient(ellipse at center, #CCC 50%, transparent 50%);*/
+            text-align: center;
+            cursor: pointer;
+        }
+        #expand, #expand2, #expand3, #expand4 {
+            height: auto;
+            overflow: hidden;
+            transition: height 0.5s;
+            padding-left: 10px;
+        }
+        #toggle:checked ~ #expand, #toggle2:checked ~ #expand2, #toggle3:checked ~ #expand3, #toggle4:checked ~ #expand4  {
+            height: 0;
+        }
+        #toggle:checked ~ label::before, #toggle2:checked ~ label::before, #toggle3:checked ~ label::before, #toggle4:checked ~ label::before {
+            content: "~";
+            text-align: center;
+        }                     
+    </style>
 </head>
 
 <body>
@@ -36,20 +79,20 @@
                 <p><b>&rho;Emacs</b> is a <!--s>bloatware from hell</s--> preconfigured distribution of
                     <a href="https://www.gnu.org/software/emacs/" target="_blank">GNU Emacs</a> editor for
                     <b>Microsoft Windows</b>. It offers nearly <b>GNU/Linux</b> Emacs experience in <b>Windows</b>
-                    with minimum configuration efforts. A set of additional GNU command-line and development tools are available through the network installer.<br class="tohide" /><br class="tohide" />
-                    <a href="#" class="tohide" onclick="$('.developer').show(); $('.tohide').hide(); localStorage.setItem('development', 'true');"
-                    >I'm a developer. Please, show me all options...</a>
+                    with minimum configuration efforts. A set of additional GNU command-line and development tools is available through the network installer.<br class="tohide" /><br class="tohide" />
+                    <!--a href="#" class="tohide" onclick="$('.developer').show(); $('.tohide').hide(); localStorage.setItem('development', 'true');"
+                    >I'm a developer. Please, show me all options...</a-->
                 </p>
 
                 <h3>Downloads</h3>
                 <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.0/rho-emacs-x86_64-setup-0.3.0.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.0/rho-emacs-x86-setup-0.3.0.exe/download">Rho Emacs x86</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.0/rho-setup-0.3.0.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-emacs-x86_64-setup-0.3.2.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-emacs-x86-setup-0.3.2.exe/download">Rho Emacs x86</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-setup-0.3.2.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
                 </ul>
         </div>
-        <div class="developer" id="desc_video">
-            <video src="images/emacs.webm" type="video/webm" autoplay controls/>
+        <div class="tohide" id="desc_video">
+            <video src="images/emacs.webm" width="432px" height="240px" type="video/webm" autoplay controls muted/>
         </div>
     </div>
     <h3>Why use &rho;Emacs</h3>
@@ -57,26 +100,25 @@
     <p>
         You may prefer <b>&rho;Emacs</b> because:
     <ul style="list-style-type: square">
-        <li>Some common posix utilities used by Emacs, such as
-            find/grep, diff or aspell, are provided by the distribution and work out of the box.
+        <li><b>&rho;Emacs</b> includes several popular preconfigured enhancement libraries which comprise a reasonably
+            convenient configuration out of the box.</li>
+        <li>Some common posix utilities, such as find/grep, diff and aspell, are provided by the distribution.
         </li>
         <li><b>&rho;Emacs</b> uses a dedicated configurable <b>HOME</b> directory which is not reachable by other
-            <b>Emacs</b> installations. It's
+            <b>Emacs</b> installations. It is
             even possible to create several <b>&rho;Emacs</b> <b>HOME</b> directories and easily switch between them.
         </li>
         <li>Anything you install with <b>&rho;Emacs</b> (including the <b>HOME</b> directory) could be made portable,
-            so you can take your full <b>Emacs</b> environment anywhere on a USB-stick.
+            so you can take your <b>Emacs</b> environment anywhere on a USB-stick.
         </li>
-        <li><b>&rho;Emacs</b> includes several popular preconfigured enhancement libraries that make it look and feel
-            more convenient than a regular Emacs.
-            <a href="https://melpa.org/" target="_blank">MELPA</a> is enabled by default.
+    <li class="">It allows to get <a href="http://spacemacs.org/">Spacemacs</a> look&feel without Spacemacs. <a href="https://github.com/nashamri/spacemacs-theme">Spacemacs theme</a>,
+        <a href="https://github.com/TheBB/spaceline">Spaceline</a> mode and fonts could be optionally installed without installing Spacemacs itself.
+        <li class="developer">You can save hours for Lisp environment configuration.
         </li>
-    <li class=""><a href="http://spacemacs.org/">Spacemacs</a> look without Spacemacs - <a href="https://github.com/nashamri/spacemacs-theme">Spacemacs theme</a>
-        and <a href="https://github.com/TheBB/spaceline">Spaceline</a> mode could be optionally installed without installing Spacemacs itself.
-        <li class="developer">All languages and tools you install with <b>&rho;Emacs</b> are accessible from <b>Rho Shell</b> - a command-line environment
-            that could be used for lengthy C++ assembles, etc.
-        </li>
-        <li class="developer">Clojure/Lisp scripting support: a regular installation of <b>&rho;Emacs</b> provides some system wide
+        <li class="developer">All programming languages and tools you install with <b>&rho;Emacs</b> are accessible from <b>Rho Shell</b> - a command-line environment
+            that could be used for lengthy C++ assembles, etc.</li>
+
+        <li class="developer">Clojure/Lisp scripting support: a regular installation of <b>&rho;Emacs</b> provides some system-wide
             commands which allow to
             execute Clojure/Lisp files as scripts. All scripts are able to seamlessly load libraries or ASDF-systems
             located at <b>&rho;Emacs</b> <b>HOME</b> directory.
@@ -93,9 +135,10 @@
     <ul style="list-style-type: square">
         <li><b><a href="https://www.gnu.org/software/emacs/" target="_blank">GNU Emacs</a></b> - the editor.</li>
         <ul>
-            <li><b>Basic enhancements</b> (optional) - `<a
+            <li><b>Basic enhancements</b> (optional) - a set of posix utilities, `<a
                     href="https://emacsthemes.com/themes/arjen-theme.html">Arjen</a>' dark theme, <a
-                    href="https://en.wikipedia.org/wiki/Source_Code_Pro">Source Code Pro</a> fonts, <a
+                    href="https://github.com/source-foundry/Hack">Hack</a> and <a
+                    href="https://github.com/adobe-fonts/source-code-pro">Source Code Pro</a> fonts, <a
                     href="https://emacswiki.org/emacs/InteractivelyDoThings">ido</a>,
                 <a href="https://www.emacswiki.org/emacs/IbufferMode">ibuffer</a>, <a
                         href="https://www.emacswiki.org/emacs/uniquify">uniquify</a>,
@@ -139,7 +182,7 @@
         </li>
         <li><b><a href="https://www.python.org/">Python</a></b> versions:
             <ul>
-                <li><b><a href="https://winpython.github.io/">Python 2.7</a></b> (currently only in IDLE-based REPL)
+                <li><b><a href="https://winpython.github.io/">Python 2.7</a></b>
                 </li>
                 <li><b><a href="https://winpython.github.io/">Python 3.7</a></b></li>
             </ul>
@@ -148,9 +191,7 @@
             + <a href="https://grails.org/">Grails</a> 3 framework.
         <li><b><a href="https://www.oracle.com/java/index.html" target="_blank" class="">Java</a></b>
             <ul>
-                <li><b><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK</a></b> - Java
-                    Development Kit from Oracle
-                </li>
+                <li><b><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK</a></b> - OpenJDK binary distribution.</li>
                 <li><b><a href="http://ant.apache.org/">Apache ANT</a></b></li>
                 <li><b><a href="http://maven.apache.org/">Apache Maven</a></b></li>
                 <li><b><a href="https://gradle.org/">Gradle</a></b></li>
@@ -166,292 +207,94 @@
     </p>
 
 
-        <p class="software"><b><span>Any component could be manually upgraded or downgraded - you just need to replace the contents of
-                its subfolder under
-                the `&lt;<b>&rho;Emacs</b> Installation Directory&gt;/bin'.</span></b></p>
+        <p class="software"><b><span>IMPORTANT: any component could be manually upgraded or downgraded by the replacement of the contents of
+                its subfolder under `&lt;&rho;Emacs Installation Directory&gt;/bin'.</span></b></p>
 
-    <h3>Software Details <a href="#" id="expander" onclick="$('#accordion').accordion( 'destroy' );$('#expander').remove()"><img src="images/expand.png"/></a></h3>
+    <h3>Software Details <!--a href="#" id="expander" onclick="$('#accordion').accordion( 'destroy' );$('#expander').remove()"><img src="images/expand.png"/></a--></h3>
 
-    <div id="accordion">
+        <input id="toggle" type="checkbox" checked>
+        <label for="toggle">GNU Emacs</label>
+        <div id="expand">
 
-        <h2>GNU Emacs</h2>
-        <div>
-            <p>The current version of <b>&rho;Emacs</b> includes version 26 of
-                <b><a href="http://www.gnu.org/software/emacs" target="_blank">GNU Emacs</a></b> text editor
-                with (currently extinct) <b><a
-                        href="https://web.archive.org/web/20140819124625/http://www.ourcomments.org:80/Emacs/EmacsW32.html"
-                        target="_blank">EmacsW32</a></b>
-                extension package (use <span class="mono">M-x customize-group RET emacsw32</span> to explore what it offers).
+                <p>The current version of <b>&rho;Emacs</b> includes version 26 of
+                    <b><a href="http://www.gnu.org/software/emacs" target="_blank">GNU Emacs</a></b> text editor
+                    with (now extinct) <b><a
+                            href="https://web.archive.org/web/20140819124625/http://www.ourcomments.org:80/Emacs/EmacsW32.html"
+                            target="_blank">EmacsW32</a></b>
+                    extension package (use <span class="mono">M-x customize-group RET emacsw32</span> to explore what it offers).
 
-                It's not recommended to install
-                <b>&rho;Emacs</b> at the write-protected system folders.</p>
+                    It is not recommended to install
+                    <b>&rho;Emacs</b> at the write-protected system folders.</p>
 
-            <h3>Emacs Home Directory</h3>
+                <h3>Emacs Home Directory</h3>
 
-            <p><b>&rho;Emacs</b> installer will ask where do you want to store your personal settings and data. The
-                following three
-                options are available:</p>
+                <p><b>&rho;Emacs</b> installer will ask where do you want to store your personal settings and data. The
+                    following three
+                    options are available:</p>
 
-            <ul>
-                <li><i>Create sandbox environment</i> - installer will ask you to manually specify the path of <b>&rho;Emacs</b>
-                    home directory.
-                </li>
-                <li class=""><i>Portable installation</i> - <b>&rho;Emacs</b> will be installed as a portable
-                    distribution. In
-                    this case <b>Emacs</b> will use the directory named `home' at the root of the installation as
-                    user's personal directory. Installer will also not create shortcuts or perform any other system wide
-                    integration.
-                </li>
-                <li><i>Always use the environment of a current user</i> - <b>Emacs</b> will always use a subfolder
-                    inside the
-                    `My Documents' folder of a current user.
-                </li>
-            </ul>
-            <p>You can change the path of the home directory of non-portable &rho;Emacs at any time through the submenu
-                item named `Set Home
-                Directory' at the top `((' menu. <span style="color: red; font-weight: bold;">It's recommended to choose
+                <ul>
+                    <li><i>Create sandbox environment</i> - installer will ask you to manually specify the path of <b>&rho;Emacs</b>
+                        home directory.
+                    </li>
+                    <li class=""><i>Portable installation</i> - <b>&rho;Emacs</b> will be installed as a portable
+                        distribution. In
+                        this case <b>Emacs</b> will use the directory named `home' at the root of the installation as
+                        user's personal directory. Installer will also not create shortcuts or perform any other system
+                        integration.
+                    </li>
+                    <li><i>Always use the environment of a current user</i> - <b>Emacs</b> will always use a subfolder
+                        inside `My Documents' folder of a current user.
+                    </li>
+                </ul>
+                <p>You can change the path of the home directory of a non-portable &rho;Emacs installation at any time through the submenu
+                    item named `Set Home
+                    Directory' under the top `((' menu. <span style="color: red; font-weight: bold;">It is recommended to choose
                 a path without spaces or non-ASCII characters for the &rho;Emacs HOME.</span> The current path to <b>&rho;Emacs</b>
-                <b>HOME</b> is available in `About Rho' buffer, under
-                the <b>Emacs</b> `Help' menu.
+                    <b>HOME</b> is available in `About Rho' buffer, under
+                    the <b>Emacs</b> `Help' menu.
 
-            </p>
-            <p>It is also possible (for example in a Windows shortcut) to set <b>Emacs</b> home directory through <span class="mono">/HOME</span> command-line argument:</p>
-            <p><span class="mono">/HOME:&lt;path to a directory&gt; (e.g.: rho /HOME:D:\gnu\home)</span></p>
-            <p><b>Rho</b> will not create component-related directories in it if additional <span class="mono">/GUEST</span> switch is specified.</p>
-
-            <h3>Installing Third Party Emacs Extensions</h3>
-            <p>In the most of cases you will probably need only the `Basic Enhancements' package listed above and manually install
-                other packages relevant to your needs.</p>
-            <h4>Automated installation</h4>
-            <p class="indented">
-
-                Automated package installation is possible through the <a href="https://melpa.org/" target="_blank">MELPA</a>
-                repository available with <span
-                    class="mono">M-x list-packages</span> command.
-
-            </p>
-            <h4>Manual installation</h4>
-            <div class="indented">
-                <p>To install a package manually, you need to place it inside the `&lt;&rho;Emacs Home&gt;/.emacs.d'
-                    directory
-                    (which is already added to the Emacs load path). There could be two kinds of extensions:
                 </p>
-                <ol>
-                    <li>A single-file extension. In this case it's just necessary to put the corresponding .el file into
-                        the `.emacs.d' folder, for example: `&lt;&rho;Emacs Home&gt;/.emacs.d/foo-package.el'
-                    </li>
-                    <li>If an extension consists of multiple files, you need to put them into the corresponding
-                        subfolder under `.emacs.d'. You will also need to add this subfolder to
-                        the Emacs load path, for example, by placing the following elisp code at your `&lt;&rho;Emacs
-                        Home&gt;/.emacs' initialization file: `<span class="mono">(add-to-list 'load-path "~/.emacs.d/bar-package/")</span>'.
-                    </li>
-                </ol>
-                Then you should initialize the package according to its manual, for example, by placing `<span
-                    class="mono">(require 'some-mode)</span>' line into
-                the `~/.emacs'.
+                <p>It is also possible to set <b>Emacs</b> home directory through <span class="mono">/HOME</span> command-line argument of the <b>rho</b> command-line utility
+                    (see `System-wide tools' section):</p>
+                <p><span class="mono">rho /HOME:&lt;path to a directory&gt; (e.g.: rho /HOME:D:\gnu\home)</span></p>
+                <p><b>Rho</b> will not create component-related directories in it if additional <span class="mono">/GUEST</span> switch is specified.</p>
+
+                <h3>Installing Third Party Emacs Extensions</h3>
+                <h4>Automated installation</h4>
+                <p class="indented">
+
+                    Automated package installation is possible through the <a href="https://melpa.org/" target="_blank">MELPA</a>
+                    repository available with <span
+                        class="mono">M-x list-packages</span> command.
+
+                </p>
+                <h4>Manual installation</h4>
+                <div class="indented">
+                    <p>To install a package manually, you need to place it inside `&lt;&rho;Emacs Home&gt;/.emacs.d'
+                        directory
+                        (which is already added to Emacs load path). There could be two kinds of extensions:
+                    </p>
+                    <ol>
+                        <li>A single-file extension. In this case it is just necessary to put the corresponding .el file into
+                            `.emacs.d' folder, for example: `&lt;&rho;Emacs Home&gt;/.emacs.d/foo-package.el'
+                        </li>
+                        <li>If an extension consists of multiple files, you need to put them into the corresponding
+                            subfolder under `.emacs.d'. You will also need to add this subfolder to
+                            Emacs load path, for example, by placing the following elisp code at your `&lt;&rho;Emacs
+                            Home&gt;/.emacs' initialization file: `<span class="mono">(add-to-list 'load-path "~/.emacs.d/bar-package/")</span>'.
+                        </li>
+                    </ol>
+                    Then you should initialize the package according to its manual, for example, by placing `<span
+                        class="mono">(require 'some-mode)</span>' line into
+                    the `~/.emacs'.
+                </div>
+            <br><br>
             </div>
-        </div>
 
-        <h2 class="">Advanced Emacs features</h2>
-        <div>
-            <p>A quick glimpse at some advanced Emacs features and extensions.</p>
-
-            <h4>User Interface</h4>
-
-            <p>When working on a large project with the huge amount of different files, shells and REPLs, it's often useful
-                to open them in several Emacs buffers simultaneously, for example, as at the screenshot below. Such layout allows to get better overview
-                and makes it possible to switch between the buffers quickly.
-
-            <p align="center"><img src="images/windows.png" alt="Emacs windows"></p>
-
-            <p>Emacs documentation <a
-                    href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Windows.html">section</a> on windows
-                explains in detail the commands you can use to split or resize them. Emacs 24+ also has a handy built-in <a
-                        href="http://www.emacswiki.org/emacs/SpeedBar">M-x
-                    speedbar</a> command, which allows to navigate at the current directory tree visually (by default it opens in a separate frame,
-                <a href="http://www.emacswiki.org/emacs/SrSpeedbar" target="_blank">sr-speedbar</a> mode installable from MELPA opens
-                speedbar in a existing frame). The ido-mode may be used as a convenient keyboard-driven alternative for
-                speedbar. It's also possible to save a current window configuration with winsav save mode (could be
-                enabled in
-                winsav customization group: <span class="mono">M-x&nbsp;customize-group&nbsp;winsav</span>), although
-                it works
-                a little bit clumsy.</p>
-
-            <p>If you prefer mouse, the tabbar mode (enabled by default) is a click away. It has one not so
-                obvious
-                feature - the ability to switch between buffer mode window collections with mouse wheel. Move the mouse
-                cursor
-                over the tab bar at the top of a window and scroll the mouse wheel. The tabbar mode will switch window
-                collections as you scroll.</p>
-
-            <p><a href="http://nschum.de/src/emacs/highlight-symbol/" target="_blank">highlight-symbol</a>, <a
-                    href="https://www.emacswiki.org/emacs/ColumnMarker" target="_blank">column-marker</a> and <a
-                    href="http://www.emacswiki.org/emacs/LineNumbers" target="_blank">linum</a> modes bring some
-                cosmetic
-                features to <b>Emacs</b>, which usually could be found only in full-blown IDEs, such as <b>Eclipse</b>.
-                Line
-                numbering, symbol highlighting (green) and line width limiting "gutter" (blue) are shown at the
-                screenshot
-                below. The symbol highlighting operations are bound to C-f3, M-f3 and S-f3 keys (all these features will
-                be
-                available automatically with the relevant major modes, if `Basic enhancements' option was checked during
-                the
-                installation). The linum mode may work ungraceful with the auto complete mode.</p>
-
-            <p align="center"><img src="images/highlight.png" alt="Emacs windows"></p>
-
-            <h4>ido-mode</h4>
-
-            <p>The <a href="http://www.emacswiki.org/emacs/InteractivelyDoThings">ido-mode</a> could be described as the
-                iswitchb mode on steroids (it also works with find-file and some other cases). Its advantages over
-                the default
-                iswitchb are: flexy completion (if you have buffers named `core.clj' and `core.cljs'
-                you need
-                to type only `crls' to narrow the selection), filtering, ability to switch between items with keyboard and
-                automatic
-                path expansion. With ido it's also possible to quickly
-                jump to
-                the root or home folders with simple keystrokes (`//' and `~/' respectively). The `Basic enhancements'
-                installer
-                option makes this mode enabled by default.</p>
-
-            <h4>YASnippet</h4>
-
-            <p><a href="http://capitaomorte.github.com/yasnippet/" target="_blank">YASnippet</a> mode allows to insert predefined code templates
-                at the current point location with the ability
-                to
-                quickly switch between the internal template insertion points. To insert a template you need to type a template
-                abbreviation and press the expansion trigger keyboard shortcut (TAB in the case of &rho;Emacs;
-                `yas'
-                minor mode also should be active). For example, in a buffer with the `Clojure' major mode, type
-                `require'
-                and press <TAB>. The abbreviation will be expanded into the corresponding template with
-                several
-                insertion points (you can switch between them with the TAB key). It's possible to find which abbreviation is
-                mapped to a
-                snippet by visiting its file with `C-c & C-v' sequence (the `&' key in this shortcut should be
-                pressed
-                on the keyboard).</p>
-
-            <h4>Search And Replace across files</h4>
-
-            <p>The <span class="mono">M-x lgrep</span> and <span class="mono">M-x rgrep</span> Emacs commands do exactly
-                this. It's also possible to use a little bit lower level <span class="mono">M-x grep</span> command.
-                To replace a text in multiple files, use the dired <a
-                        href="http://www.emacswiki.org/emacs/DiredSearchAndReplace"
-                        target="_blank">query-replace-regexp</a>
-                function. There are <a href="http://www.emacswiki.org/emacs/CategorySearchAndReplace">more</a> options
-                which
-                could be installed separately.
-
-            <h4>Compare files, create patches</h4>
-
-            <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Diff-Mode.html">diff/ediff-mode</a>
-            allows to
-            perform various file comparison operations and create or apply patches. The behavior of patch/diff utilities could be customized at the corresponding
-            Emacs
-            customization groups. <span class="mono">M-x occur</span> also may come useful.</p>
-
-            <h4>Version Control</h4>
-
-            <p>Emacs has <a
-                    href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Version-Control.html#Version-Control">built-in
-                support</a> of
-                some common version control systems. Third party VC extensions are also <a
-                        href="http://www.emacswiki.org/emacs/CategoryVersionControl">available</a>. Note that you need
-                to place
-                your ssh keys and other personal VC settings into the &rho;Emacs home directory to use VC from
-                <b>Emacs</b>.</p>
-
-            <h4>Project Management</h4>
-
-            <p>Because SLIME is an advanced IDE by itself, there is no need in such monster things as <a
-                    href="http://cedet.sourceforge.net/">CEDET</a> or <a href="http://ecb.sourceforge.net/">ECB</a>. But it would be
-                nice to
-                have a project management system in the sense of Visual Studio `solutions'. Although not obvious, it's
-                possible
-                in vanilla Emacs with <span class="mono">M-x desktop-save</span> and <span
-                        class="mono">M-x desktop-change-dir</span> commands (it's necessary to save a desktop file in
-                the
-                project root directory). But there is a better third party solution exist: <a
-                        href="http://www.emacswiki.org/emacs/BookmarkPlus" target="_blank">Bookmark+</a> desktop
-                bookmarks. For
-                example, there is a project directory tree with root in the <span
-                        class="mono">~/lisp/development/my-app</span>
-                and you are editing its files. To add a bookmark to the current desktop, you need to issue the
-                following commands:</p>
-
-            <ul>
-                <li><span class="mono">C-x p K ~/lisp/development/my-app/.desktop RET</span> - save the desktop file (a
-                    desktop
-                    file name may be arbitrary in this case, the vanilla desktop mode recognizes only `.emacs.desktop')
-                </li>
-                <li><span class="mono">my-app-project RET</span> - name the bookmark</li>
-            </ul>
-
-            <p>The <span class="mono">C-x r l</span> command
-                allows
-                to list all bookmarks and quickly switch between saved project desktops, it's also possible to clear the
-                current
-                desktop with <span class="mono">M-x desktop-clear</span> command.</p>
-
-            <h4>Other Stuff</h4>
-
-            <ul>
-                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Mark.html#Mark">Mark ring</a> -
-                    it's
-                    possible move backward through the history of the point locations with <span
-                            class="mono">C-u C-SPC</span> and
-                    view the location list with <span class="mono">M-x anything-mark-ring</span> command
-                </li>
-                <li>
-                    <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html#Specifying-File-Variables">File
-                        variables</a> - file variables allow to keep some meta-information about a file (text
-                    encoding, for
-                    example).
-                </li>
-                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Registers.html">Registers</a> - a
-                    set of
-                    named "clipboards".
-                </li>
-                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html">Rectangle
-                    regions</a> -
-                    especially useful with <a
-                            href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html#Wdired">writable
-                        dired</a> mode.
-                </li>
-                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Archives.html">Archive
-                    modes</a> -
-                    it's possible to browse and edit files directly in zip/jar or tar.gz archives (the latter is a
-                    little bit
-                    trickier, because it's necessary to manually toggle the read-only archive buffer flag and save the
-                    archive
-                    buffer after the editing has been finished).
-                </li>
-                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Keyboard-Macros.html">Keyboard
-                    macros</a>
-                    - a way to simplify repeating things.
-                </li>
-                <li><span class="mono">M-x flyspell-buffer</span> - <a
-                        href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html">spell
-                    checking</a> (uses
-                    aspell 0.60, it's possible to install additional dictionaries from the `lyx' editor <a
-                            href="ftp://ftp.lyx.org/pub/lyx/contrib/aspell6-windows/">packages</a>, or prebuilt Linux
-                    packages:
-                    extract a dictionary to any folder, open this folder in the Emacs shell and execute the
-                    following
-                    command: `install-dict &lt;dictionary name&gt; &lt;desired .multi file name&gt;', for example:
-                    `install-dict
-                    spanish es').
-                </li>
-                <li><span class="mono">M-x <a href="http://orgmode.org/">org-mode</a></span> - built-in organizer.</li>
-            </ul>
-        </div>
-
-
-        <h2>Lisp-based development</h2>
-        <div>
-            <p class="software">It's possible to install the following Lisp dialects with <b>&rho;Emacs</b>:</p>
+        <input id="toggle2" type="checkbox" checked>
+        <label for="toggle2" id="hh2">Lisp-based development</label>
+        <div id="expand2">
+            <p class="software">It is possible to install the following Lisp dialects with <b>&rho;Emacs</b>:</p>
 
             <div align="center">
                 <table border="0" cellpadding="3" cellspacing="0" class="simple software">
@@ -464,10 +307,10 @@
                     </tr>
                     <tr>
                         <td class="first"><a href="http://clojure.org" target="_blank">Clojure</a></td>
-                        <td><span class="">1.9</span></td>
+                        <td><span class="">1.10</span></td>
                         <td><a href="https://github.com/clojure-emacs/cider" target="_blank">Cider</a></td>
                         <td><a href="http://github.com/technomancy/leiningen" target="_blank">Leiningen 2</a></td>
-                        <td>Java 1.6 or higher</td>
+                        <td>Java 1.8 or higher</td>
                     </tr>
                     <tr>
                         <td class="first"><a href="http://trac.clozure.com/ccl" target="_blank">Clozure CL</a></td>
@@ -478,14 +321,14 @@
                     </tr>
                     <tr>
                         <td class="first"><a href="http://www.sbcl.org" target="_blank">SBCL</a></td>
-                        <td><span class="">1.4.8</span></td>
+                        <td><span class="">1.4</span></td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td class="first"><a href="http://clisp.cons.org" target="_blank">CLISP</a></td>
-                        <td>2.48<sup>2</sup></td>
+                        <td>2.49</td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td>-</td>
@@ -493,22 +336,22 @@
                     <tr>
                         <td class="first"><a href="http://common-lisp.net/project/armedbear" target="_blank">ABCL</a>
                         </td>
-                        <td class=""><span class="">1.1.5</span></td>
+                        <td class=""><span class="">1.5.0</span></td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td>Java 1.6 or higher</td>
                     </tr>
                     <tr>
-                        <td class="first"><a href="http://ecls.sourceforge.net" target="_blank">ECL</a><sup>3</sup></td>
+                        <td class="first"><a href="http://ecls.sourceforge.net" target="_blank">ECL</a><sup>2</sup></td>
                         <td>16.1.3</td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank"> SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
-                        <td><a href="https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2017">Visual C++ compiler</a>
+                        <td><a href="https://visualstudio.microsoft.com/">Visual C++ compiler</a>
                         </td>
                     </tr>
                     <tr>
                         <td class="first "><a href="http://racket-lang.org" target="_blank" class="">Racket</a></td>
-                        <td class="">7.0</td>
+                        <td class="">7.3</td>
                         <td><a href="http://www.nongnu.org/geiser/" target="_blank">Geiser</a></td>
                         <td><a href="http://planet.plt-scheme.org" target="_blank">PLaneT</a></td>
                         <td>-</td>
@@ -520,18 +363,20 @@
                 <p class="indented">
                     <sup>1</sup>
                     <span class="">For the detailed information about dependency management see `Dependency Management' section below.</span><br/>
-                    <sup>2</sup> <b>CLISP 2.49</b> contains a bug that prevents it to work with <b>Emacs</b> properly on
-                    Windows.<br/>
-                    <sup>3</sup> Will not work if path to <b>&rho;Emacs</b> home directory contains spaces or non-ASCII
-                    characters.<br/>
-
+                    <sup>2</sup> Will not work if path to <b>&rho;Emacs</b> home directory contains spaces or non-ASCII
+                    characters.<br>&nbsp;&nbsp;&nbsp;To use the C++ compiler with ECL you need to manually set the following system environment variables:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VC_INSTALL_DIR=&lt;path to Visual C++ build tools&gt;/bin<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WIN_SDK_DIR=&lt;path to Windows SDK&gt;<br>
+                    &nbsp;&nbsp;&nbsp;The values above could be obtained by issuing the following commands in Visual Studio Developer Shell:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-family: monospace;">echo %VCToolsInstallDir%</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-family: monospace;">echo %WindowsSdkDir%
                 </p>
             </div>
 
             <h3>SLIME</h3>
 
             <p class="software"><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a> is a Emacs
-                library used
+                library that is used
                 to interact with <b>Common Lisp</b> implementations from the editor (Scheme lang. implementation
                 included in <b>&rho;Emacs</b>
                 uses another Emacs enhancement library - <a href="http://www.nongnu.org/geiser/"
@@ -542,12 +387,11 @@
                 keyboard shortcut. Use the <span style="font-family: monospace;">&lt;TAB&gt;</span> key after the first
                 <span style="font-family: monospace;">&lt;RET&gt;</span>
                 to list available implementation names.</p>
-            <p class="software"><b>Important</b>: what to do if a SLIME REPL evaluation request freezes? If you are
+            <p class="software"><b>IMPORTANT</b>: what to do if a SLIME REPL evaluation request freezes? If you are
                 running a
                 multithreaded Lisp, you can save the existing Lisp environment by recurrent connection to the
                 corresponding Lisp
-                process. To accomplish this, use the <span class="mono">M-x slime-connect</span> command or simply
-                command from
+                process. To accomplish this, use the <span class="mono">M-x slime-connect</span> command or the command from
                 the previous paragraph. For example, if you are running Clozure CL, type
                 <span style="font-family: monospace;">M--&nbsp;M-x&nbsp;slime&nbsp;&lt;RET&gt;&nbsp;ccl&nbsp;&lt;RET&gt;</span>
                 and answer 'No' to the following SLIME question. Clozure then will create additional thread in the
@@ -574,7 +418,7 @@
             <h3>Emacs Command Shell</h3>
 
             <p>Emacs has ability to emulate command shell, which could be used to run Lisp implementations (by issuing
-                the corresponding commands offered by <b>Rho Shell</b>) without overhead made
+                the corresponding commands offered by <b>Rho Shell</b> without overhead made
                 by SLIME's Swank or Quicklisp. This may be useful when you want to reduce memory footprint of a
                 generated program
                 binary.
@@ -609,7 +453,7 @@
                         third party ASDF-systems;
                     </li>
                     <li><span class="mono">&lt;HOME&gt;\lisp</span> - a repository for folders of work-in-progress ASDF
-                        systems
+                        systems and lispx distributions
                         (use it for development);
                     </li>
                     <li><span class="mono">&lt;HOME&gt;\.quicklisp\dists\quicklisp\software</span> - a <b>Quicklisp</b>
@@ -618,7 +462,7 @@
                 </ul>
 
                 <p>where <span
-                        class="mono">&lt;HOME&gt;</span> is a <b>&rho;Emacs</b> home directory. It's necessary to place
+                        class="mono">&lt;HOME&gt;</span> is the <b>&rho;Emacs</b> home directory. It is necessary to place
                     directories
                     with ASDF systems in one of these folders to make them accessible by ASDF. In addition, you can
                     store <b>Leiningen</b>
@@ -626,15 +470,15 @@
                     meaning for <b>Leiningen</b>).
                 </p>
 
-                <p class="">It's possible to disable any ASDF repository (including the
+                <p class="">It is possible to disable any ASDF repository (including the
                     repositories inside <b>lispx-proxy</b> executable source distributions) by placing a file named
                     `.noindex' into it.</p>
 
                 <h5>&curren; Qukclisp &curren;</h5>
                 <p class="software"><b>Quicklisp</b> is automatically preloaded for CL implementations with built-in
                     ASDF2 or above
-                    (currently for all implementations included into <b>&rho;Emacs</b>). It's immediately
-                    possible to use <span style="font-family: monospace;">ql:apropos-system</span> and <span
+                    (currently for all implementations included into <b>&rho;Emacs</b>). It is immediately
+                    possible to use <span style="font-family: monospace;">ql:system-apropos</span> and <span
                             style="font-family: monospace;">ql:quickload</span> functions (for details see the <a
                             href="http://www.quicklisp.org/beta/#basic-commands">manual</a> at <b>Quicklisp</b> home
                     site).</p>
@@ -690,11 +534,212 @@
                 directory. Fasl cache could be cleaned with `Clear Fasl Cache' menu item under the `((' menu group. It
                 may be the first thing to do when something fails by no obvious reason.</p>
 
-
+            <br><br>
         </div>
-        <h2 class="">Additional tools and languages</h2>
-        <div>
+
+
+        <!--input id="toggle2" type="checkbox" checked>
+        <label for="toggle2">Advanced Emacs features</label>
+        <div id="expand2">
+            <p>A quick glimpse at some advanced Emacs features and extensions.</p>
+
+            <h4>User Interface</h4>
+
+            <p>When working on a large project with the huge amount of different files, shells and REPLs, It is often useful
+                to open them in several Emacs buffers simultaneously, for example, as at the screenshot below. Such layout allows to get better overview
+                and makes it possible to switch between the buffers quickly.
+
+            <p align="center"><img src="images/windows.png" alt="Emacs windows"></p>
+
+            <p>Emacs documentation <a
+                    href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Windows.html">section</a> on windows
+                explains in detail the commands you can use to split or resize them. Emacs 24+ also has a handy built-in <a
+                        href="http://www.emacswiki.org/emacs/SpeedBar">M-x
+                    speedbar</a> command, which allows to navigate at the current directory tree visually (by default it opens in a separate frame,
+                <a href="http://www.emacswiki.org/emacs/SrSpeedbar" target="_blank">sr-speedbar</a> mode installable from MELPA opens
+                speedbar in a existing frame). The ido-mode may be used as a convenient keyboard-driven alternative for
+                speedbar. It is also possible to save a current window configuration with winsav save mode (could be
+                enabled in
+                winsav customization group: <span class="mono">M-x&nbsp;customize-group&nbsp;winsav</span>), although
+                it works
+                a little bit clumsy.</p>
+
+            <p>If you prefer mouse, the tabbar mode (enabled by default) is a click away. It has one not so
+                obvious
+                feature - the ability to switch between buffer mode window collections with mouse wheel. Move the mouse
+                cursor
+                over the tab bar at the top of a window and scroll the mouse wheel. The tabbar mode will switch window
+                collections as you scroll.</p>
+
+            <p><a href="http://nschum.de/src/emacs/highlight-symbol/" target="_blank">highlight-symbol</a>, <a
+                    href="https://www.emacswiki.org/emacs/ColumnMarker" target="_blank">column-marker</a> and <a
+                    href="http://www.emacswiki.org/emacs/LineNumbers" target="_blank">linum</a> modes bring some
+                cosmetic
+                features to <b>Emacs</b>, which usually could be found only in full-blown IDEs, such as <b>Eclipse</b>.
+                Line
+                numbering, symbol highlighting (green) and line width limiting "gutter" (blue) are shown at the
+                screenshot
+                below. The symbol highlighting operations are bound to C-f3, M-f3 and S-f3 keys (all these features will
+                be
+                available automatically with the relevant major modes, if `Basic enhancements' option was checked during
+                the
+                installation). The linum mode may work ungraceful with the auto complete mode.</p>
+
+            <p align="center"><img src="images/highlight.png" alt="Emacs windows"></p>
+
+            <h4>ido-mode</h4>
+
+            <p>The <a href="http://www.emacswiki.org/emacs/InteractivelyDoThings">ido-mode</a> could be described as the
+                iswitchb mode on steroids (it also works with find-file and some other cases). Its advantages over
+                the default
+                iswitchb are: flexy completion (if you have buffers named `core.clj' and `core.cljs'
+                you need
+                to type only `crls' to narrow the selection), filtering, ability to switch between items with keyboard and
+                automatic
+                path expansion. With ido It is also possible to quickly
+                jump to
+                the root or home folders with simple keystrokes (`//' and `~/' respectively). The `Basic enhancements'
+                installer
+                option makes this mode enabled by default.</p>
+
+            <h4>YASnippet</h4>
+
+            <p><a href="http://capitaomorte.github.com/yasnippet/" target="_blank">YASnippet</a> mode allows to insert predefined code templates
+                at the current point location with the ability
+                to
+                quickly switch between the internal template insertion points. To insert a template you need to type a template
+                abbreviation and press the expansion trigger keyboard shortcut (TAB in the case of &rho;Emacs;
+                `yas'
+                minor mode also should be active). For example, in a buffer with the `Clojure' major mode, type
+                `require'
+                and press <TAB>. The abbreviation will be expanded into the corresponding template with
+                    several
+                    insertion points (you can switch between them with the TAB key). It is possible to find which abbreviation is
+                    mapped to a
+                    snippet by visiting its file with `C-c & C-v' sequence (the `&' key in this shortcut should be
+                    pressed
+                    on the keyboard).</p>
+
+            <h4>Search And Replace across files</h4>
+
+            <p>The <span class="mono">M-x lgrep</span> and <span class="mono">M-x rgrep</span> Emacs commands do exactly
+                this. It is also possible to use a little bit lower level <span class="mono">M-x grep</span> command.
+                To replace a text in multiple files, use the dired <a
+                        href="http://www.emacswiki.org/emacs/DiredSearchAndReplace"
+                        target="_blank">query-replace-regexp</a>
+                function. There are <a href="http://www.emacswiki.org/emacs/CategorySearchAndReplace">more</a> options
+                which
+                could be installed separately.
+
+            <h4>Compare files, create patches</h4>
+
+            <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Diff-Mode.html">diff/ediff-mode</a>
+            allows to
+            perform various file comparison operations and create or apply patches. The behavior of patch/diff utilities could be customized at the corresponding
+            Emacs
+            customization groups. <span class="mono">M-x occur</span> also may come useful.</p>
+
+            <h4>Version Control</h4>
+
+            <p>Emacs has <a
+                    href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Version-Control.html#Version-Control">built-in
+                support</a> of
+                some common version control systems. Third party VC extensions are also <a
+                        href="http://www.emacswiki.org/emacs/CategoryVersionControl">available</a>. Note that you need
+                to place
+                your ssh keys and other personal VC settings into the &rho;Emacs home directory to use VC from
+                <b>Emacs</b>.</p>
+
+            <h4>Project Management</h4>
+
+            <p>Because SLIME is an advanced IDE by itself, there is no need in such monster things as <a
+                    href="http://cedet.sourceforge.net/">CEDET</a> or <a href="http://ecb.sourceforge.net/">ECB</a>. But it would be
+                nice to
+                have a project management system in the sense of Visual Studio `solutions'. Although not obvious, It is
+                possible
+                in vanilla Emacs with <span class="mono">M-x desktop-save</span> and <span
+                        class="mono">M-x desktop-change-dir</span> commands (It is necessary to save a desktop file in
+                the
+                project root directory). But there is a better third party solution exist: <a
+                        href="http://www.emacswiki.org/emacs/BookmarkPlus" target="_blank">Bookmark+</a> desktop
+                bookmarks. For
+                example, there is a project directory tree with root in the <span
+                        class="mono">~/lisp/development/my-app</span>
+                and you are editing its files. To add a bookmark to the current desktop, you need to issue the
+                following commands:</p>
+
+            <ul>
+                <li><span class="mono">C-x p K ~/lisp/development/my-app/.desktop RET</span> - save the desktop file (a
+                    desktop
+                    file name may be arbitrary in this case, the vanilla desktop mode recognizes only `.emacs.desktop')
+                </li>
+                <li><span class="mono">my-app-project RET</span> - name the bookmark</li>
+            </ul>
+
+            <p>The <span class="mono">C-x r l</span> command
+                allows
+                to list all bookmarks and quickly switch between saved project desktops, It is also possible to clear the
+                current
+                desktop with <span class="mono">M-x desktop-clear</span> command.</p>
+
+            <h4>Other Stuff</h4>
+
+            <ul>
+                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Mark.html#Mark">Mark ring</a> -
+                    It is
+                    possible move backward through the history of the point locations with <span
+                            class="mono">C-u C-SPC</span> and
+                    view the location list with <span class="mono">M-x anything-mark-ring</span> command
+                </li>
+                <li>
+                    <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html#Specifying-File-Variables">File
+                        variables</a> - file variables allow to keep some meta-information about a file (text
+                    encoding, for
+                    example).
+                </li>
+                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Registers.html">Registers</a> - a
+                    set of
+                    named "clipboards".
+                </li>
+                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html">Rectangle
+                    regions</a> -
+                    especially useful with <a
+                            href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html#Wdired">writable
+                        dired</a> mode.
+                </li>
+                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Archives.html">Archive
+                    modes</a> -
+                    It is possible to browse and edit files directly in zip/jar or tar.gz archives (the latter is a
+                    little bit
+                    trickier, because It is necessary to manually toggle the read-only archive buffer flag and save the
+                    archive
+                    buffer after the editing has been finished).
+                </li>
+                <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Keyboard-Macros.html">Keyboard
+                    macros</a>
+                    - a way to simplify repeating things.
+                </li>
+                <li><span class="mono">M-x flyspell-buffer</span> - <a
+                        href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html">spell
+                    checking</a> (uses
+                    aspell 0.60, It is possible to install additional dictionaries from the `lyx' editor <a
+                            href="ftp://ftp.lyx.org/pub/lyx/contrib/aspell6-windows/">packages</a>, or prebuilt Linux
+                    packages:
+                    extract a dictionary to any folder, open this folder in the Emacs shell and execute the
+                    following
+                    command: `install-dict &lt;dictionary name&gt; &lt;desired .multi file name&gt;', for example:
+                    `install-dict
+                    spanish es').
+                </li>
+                <li><span class="mono">M-x <a href="http://orgmode.org/">org-mode</a></span> - built-in organizer.</li>
+            </ul>
+        </div-->
+
+        <input id="toggle3" type="checkbox" checked>
+        <label for="toggle3" id="hh3">Additional tools and languages</label>
+        <div id="expand3">
             <div align="center">
+                <p>
                 <table border="0" cellpadding="3" cellspacing="0" class="simple">
                     <tr>
                         <th>Item</th>
@@ -717,18 +762,18 @@
                     </tr>
                     <tr>
                         <td class="first"><a href="http://groovy-lang.org/" target="_blank">Groovy</a></td>
-                        <td><span class="">2.4.12</span></td>
-                        <td class="first"><a href="https://grails.org/">Grails</a> 3.3.0
+                        <td><span class="">2.5.7</span></td>
+                        <td class="first"><a href="https://grails.org/">Grails</a> 3.3.10
                         </td>
                     </tr>
                     <tr>
                         <td class="first"><a
-                                href="http://www.oracle.com/us/technologies/java/standard-edition/overview/index.html"
-                                target="_blank">JDK</a></td>
-                        <td><span class="">8.0u141</span></td>
-                        <td class="first"><a href="http://ant.apache.org/">Apache ANT</a> 1.10.1,
-                            <a href="http://maven.apache.org/">Apache Maven</a> 3.5,
-                            <a href="https://gradle.org/">Gradle</a></b> 4.0.1
+                                href="https://openjdk.java.net/"
+                                target="_blank">OpenJDK</a></td>
+                        <td><span class="">12.0.1</span></td>
+                        <td class="first"><a href="http://ant.apache.org/">Apache ANT</a> 1.10.6,
+                            <a href="http://maven.apache.org/">Apache Maven</a> 3.6.1,
+                            <a href="https://gradle.org/">Gradle</a></b> 5.4.1
                     </tr>
                     <tr>
                         <td class="first"><a href="https://mingw-w64.org/doku.php">MinGW-x64</a></td>
@@ -738,29 +783,27 @@
 
 
                 </table>
+                </p>
             </div>
-
+            <br><br>
         </div>
-        <h2>System-wide tools</h2>
-        <div>
-            <p>The `rho' and `rhoc' utilities available
-                through the system PATH could be used to open files from command line or to use Emacs as an
-                external editor in some applications (this could be useful with panel file managers such as <a
-                        href="http://farmanager.com/">FAR Manager</a>). The
-                utilities accept only one file argument, though.</p>
+
+        <input id="toggle4" type="checkbox" checked>
+        <label for="toggle4" id="hh4">System-wide tools</label>
+        <div id="expand4">
+            <p>The `rho' and `rhoc' utilities are available
+                through system PATH and could be used to open files from command line or to use Emacs as an
+                external editor in some applications. The utilities accept only one file argument, though.</p>
 
             <p>The `<a href="http://lispx-proxy.sourceforge.net" target="_blank" class="">lispx</a>' command is also
                 available
-                at the command prompt and could be used for Lisp scripting. Common Lisp scripts can use all ASDF systems
+                at the command prompt and could be used for Lisp scripting. Common Lisp scripts are able to use all ASDF systems
                 installed into
                 &rho;Emacs repositories, Clojure scripts may load libraries placed in the `&lt;&rho;Emacs Home&gt;/clojure/lib'
                 directory.</p>
-
-
         </div>
 
 
-    </div>
 
     </div>
 
@@ -791,6 +834,8 @@
         <li class="developer"><a href="http://letoverlambda.com/">Let Over Lambda</a> - even
             more advanced book on Lisp
         </li>
+        <li><a href="https://gchristensen.github.io" target="_blank">Software by g/christensen</a>
+        </li>
 
     </ul>
 
@@ -803,7 +848,7 @@
         -->
     </script>
 
-    <div><p style="text-indent: 0px;">© 2010-2018 g/christensen (<a href="javascript:mailMe()">gchristnsn<img
+    <div><p style="text-indent: 0px;">© 2010-2019 g/christensen (<a href="javascript:mailMe()">gchristnsn<img
             src="images/at.png" style="position: relative; top: 4px;" alt=".at." border="0">gmail.com</a>)</p></div>
 </div>
 </body>

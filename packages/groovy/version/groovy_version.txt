@@ -1,2 +1,2 @@
-Package: 0.1.0
-Groovy: 2.4.12
+Package: 0.3.2
+Groovy: 2.5.7

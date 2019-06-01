@@ -1,4 +1,4 @@
-;;; slime-autoloads.el --- autoload definitions for SLIME
+;;; slime-autoloads.el --- autoload definitions for SLIME -*- no-byte-compile: t -*-
 
 ;; Copyright (C) 2007  Helmut Eller
 
@@ -13,6 +13,9 @@
 ;; JT@14/01/09: FIXME: This file should be auto-generated with autoload cookies.
 
 ;;; Code:
+
+(add-to-list 'load-path (directory-file-name
+                         (or (file-name-directory #$) (car load-path))))
 
 (autoload 'slime "slime"
   "Start a Lisp subprocess and connect to its Swank server." t)
@@ -46,6 +49,3 @@
 (provide 'slime-autoloads)
 
 ;;; slime-autoloads.el ends here
-;; Local Variables:
-;; no-byte-compile: t
-;; End:

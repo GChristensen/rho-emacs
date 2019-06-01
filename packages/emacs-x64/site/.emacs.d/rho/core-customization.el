@@ -287,7 +287,7 @@
                    'follow-link t)
     (insert (propertize (concat rho-version-string "") 'face face))
     (insert "\n")
-    (insert (propertize "(C) 2010-2018 g/christensen (" 'face face))
+    (insert (propertize "(C) 2010-2019 g/christensen (" 'face face))
     (insert-button "gchristnsn@gmail.com"
                    'face (list 'link face)
                    'action '(lambda (arg) (browse-url "mailto:gchristnsn@gmail.com"))

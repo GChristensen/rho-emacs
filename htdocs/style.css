@@ -128,7 +128,7 @@ a.update2:link, a.update2:visited, a.update2:hover, a.update2:active
 }
 
 .developer {
-	display: none;
+	/*display: none;*/
 }
 
 #desc_cntnr {

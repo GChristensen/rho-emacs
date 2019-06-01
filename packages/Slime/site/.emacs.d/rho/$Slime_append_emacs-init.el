@@ -54,7 +54,7 @@
 
 (defconst +lisp-home+ (concat +home-dir+ "/lisp"))
 (defconst +quicklisp-home+ (concat +home-dir+ "/.quicklisp"))
-(defconst +quicklisp-tag+ (concat +home-dir+ "/.quicklisp/.quicklisp/quicklisp.asd"))
+(defconst +quicklisp-tag+ (concat +home-dir+ "/.quicklisp/quicklisp.asd"))
 
 (if (and (not +anyhome?+) (not (file-exists-p +lisp-home+)))
   (make-directory +lisp-home+))

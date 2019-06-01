@@ -1,2 +1,2 @@
-Package: 0.1.0
-Clozure CL: 1.11
+Package: 0.3.2
+Clozure CL: 1.11.5

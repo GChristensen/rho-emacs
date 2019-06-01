@@ -105,14 +105,8 @@
  '(iswitchb-mode t)
  '(tabbar-use-images nil))
 
-(let ((plist '("Source Code Pro" :size 13 :weight normal :width normal)))
-    (when (find-font (font-spec :name (car plist)))
-      (let* ((font (car plist))
-             (props (cdr plist))             
-             (fontspec (apply 'font-spec :name font props)))
-        (set-frame-font fontspec nil t)
-        (push `(font . ,(frame-parameter nil 'font)) default-frame-alist))))
-
+(custom-set-faces
+ '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
 
 ;; remove grep output header ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

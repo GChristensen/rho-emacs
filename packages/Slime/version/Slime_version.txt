@@ -1,2 +1,2 @@
-Package: 0.2.0
-Slime: 2.19
+Package: 0.3.2
+Slime: 2.24
