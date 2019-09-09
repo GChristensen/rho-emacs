@@ -51,16 +51,16 @@
             text-align: center;
             cursor: pointer;
         }
-        #expand, #expand2, #expand3, #expand4 {
+        #expand, #expand2, #expand3, #expand4, #expand5 {
             height: auto;
             overflow: hidden;
             transition: height 0.5s;
             padding-left: 10px;
         }
-        #toggle:checked ~ #expand, #toggle2:checked ~ #expand2, #toggle3:checked ~ #expand3, #toggle4:checked ~ #expand4  {
+        #toggle:checked ~ #expand, #toggle2:checked ~ #expand2, #toggle3:checked ~ #expand3, #toggle4:checked ~ #expand4, #toggle5:checked ~ #expand5  {
             height: 0;
         }
-        #toggle:checked ~ label::before, #toggle2:checked ~ label::before, #toggle3:checked ~ label::before, #toggle4:checked ~ label::before {
+        #toggle:checked ~ label::before, #toggle2:checked ~ label::before, #toggle3:checked ~ label::before, #toggle4:checked ~ label::before, #toggle5:checked ~ label::before {
             content: "~";
             text-align: center;
         }                     
@@ -86,9 +86,9 @@
 
                 <h3>Downloads</h3>
                 <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-emacs-x86_64-setup-0.3.2.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-emacs-x86-setup-0.3.2.exe/download">Rho Emacs x86</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.2/rho-setup-0.3.2.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-emacs-x86_64-setup-0.3.3.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-emacs-x86-setup-0.3.3.exe/download">Rho Emacs x86</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-setup-0.3.3.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
                 </ul>
         </div>
         <div class="tohide" id="desc_video">
@@ -107,6 +107,8 @@
         <li><b>&rho;Emacs</b> uses a dedicated configurable <b>HOME</b> directory which is not reachable by other
             <b>Emacs</b> installations. It is
             even possible to create several <b>&rho;Emacs</b> <b>HOME</b> directories and easily switch between them.
+        </li>
+        <li><a href="https://orgmode.org/manual/Capture.html" target="_blank">Capture</a> with <a href="https://orgmode.org/manual/Protocols.html" target="_blank">org-protocol</a> may be configured by a single check in the installer.
         </li>
         <li>Anything you install with <b>&rho;Emacs</b> (including the <b>HOME</b> directory) could be made portable,
             so you can take your <b>Emacs</b> environment anywhere on a USB-stick.
@@ -162,7 +164,9 @@
             </li-->
             <li><b><a href="http://spacemacs.org/">Spacemacs</a></b> (optional) - Emacs configuration from Star Trek.
             </li>
-
+            <li><b>Org tools</b> (optional) - preconfigured <b><a href="https://orgmode.org/manual/Protocols.html">org-protocol</a></b> and 
+                <b><a href="https://github.com/caiorss/org-wiki">org-wiki</a></b> package.
+            </li>
         </ul>
         <li><b><a href="http://www.msys2.org/">MSYS2</a></b> - a minimalist port of <b><a
                 href="https://en.wikipedia.org/wiki/Bourne_shell">Bourne Shell</a></b> for <b>Windows</b> with the
@@ -257,7 +261,7 @@
                 <p>It is also possible to set <b>Emacs</b> home directory through <span class="mono">/HOME</span> command-line argument of the <b>rho</b> command-line utility
                     (see `System-wide tools' section):</p>
                 <p><span class="mono">rho /HOME:&lt;path to a directory&gt; (e.g.: rho /HOME:D:\gnu\home)</span></p>
-                <p><b>Rho</b> will not create component-related directories in it if additional <span class="mono">/GUEST</span> switch is specified.</p>
+                <p><b>Rho</b> will not create component-related directories in it if the additional <span class="mono">/GUEST</span> switch is specified.</p>
 
                 <h3>Installing Third Party Emacs Extensions</h3>
                 <h4>Automated installation</h4>
@@ -280,16 +284,39 @@
                         </li>
                         <li>If an extension consists of multiple files, you need to put them into the corresponding
                             subfolder under `.emacs.d'. You will also need to add this subfolder to
-                            Emacs load path, for example, by placing the following elisp code at your `&lt;&rho;Emacs
-                            Home&gt;/.emacs' initialization file: `<span class="mono">(add-to-list 'load-path "~/.emacs.d/bar-package/")</span>'.
+                            Emacs load path. For example, place the following elisp code at your `&lt;&rho;Emacs
+                            Home&gt;/.emacs' initialization file: <span class="mono">(add-to-list 'load-path "~/.emacs.d/some-mode/")</span>
+                            to inltialize <span class="mono">some-mode</span>.
                         </li>
                     </ol>
                     Then you should initialize the package according to its manual, for example, by placing `<span
-                        class="mono">(require 'some-mode)</span>' line into
-                    the `~/.emacs'.
+                        class="mono">(require 'some-mode)</span>' line into the `~/.emacs'.
                 </div>
             <br><br>
             </div>
+
+        <input id="toggle5" type="checkbox" checked>
+        <label for="toggle5" id="hh5">Org-mode tools</label>
+        <div id="expand5">
+            <p><b>&rho;Emacs</b> takes care of the configuration of some org-mode tools that are very tedious to set up manually:</p>
+
+            <h3>org-protocol</h3>
+
+             <p class="software">RHO installer is able to automatically configure <a href="https://orgmode.org/manual/Protocols.html">org-protocol</a>
+             to capture links and selected text from web browsers. Notably, in the case of western system locales it should seamlessly work with <b>Org Capture</b> extension 
+             (<a href="https://chrome.google.com/webstore/detail/org-capture/kkkjlfejijcjgjllecmnejhogpbcigdc?hl=en" target="_blank">Chrome</a>,
+              <a href="https://addons.mozilla.org/en-US/firefox/addon/org-capture/" target="_blank">Firefox</a>) without any additional configuration.
+             More complex capture schemes <a href="https://gchristensen.github.io/posts/dynamic-org-capture-templates/" target="_blank">are possible</a>.
+             By default, captures are saved at the file named <span class="mono">~/org/capture.org</span> (configurable through the
+             <a href="https://orgmode.org/manual/Setting-up-capture.html#index-org_002ddefault_002dnotes_002dfile">org-default-notes-file</a> variable).
+             </p>
+
+            <h3>org-wiki</h3>
+            <p class="software"><a href="https://caiorss.github.io/org-wiki/" target="_blank">org-wiki</a> package offers a firm foundation for a personal
+            knowledge base. Its <a href="https://github.com/caiorss/org-wiki#paste-image" target="_blank">clip.jar</a> utility is included into the distribution
+            (Java runtime is required). The default wiki root is located at <span class="mono">~/org/wiki</span>.</p>
+            <br><br>
+        </div>
 
         <input id="toggle2" type="checkbox" checked>
         <label for="toggle2" id="hh2">Lisp-based development</label>
@@ -373,15 +400,13 @@
                 </p>
             </div>
 
-            <h3>SLIME</h3>
-
-            <p class="software"><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a> is a Emacs
+            <a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a> is a Emacs
                 library that is used
                 to interact with <b>Common Lisp</b> implementations from the editor (Scheme lang. implementation
                 included in <b>&rho;Emacs</b>
                 uses another Emacs enhancement library - <a href="http://www.nongnu.org/geiser/"
                                                             target="_blank">Geiser</a>).</p>
-            <p class="software">Hint: you can launch any installed Common Lisp implementation using <span
+            <p class="software"><b>HINT</b>: you can launch any installed Common Lisp implementation using <span
                     style="font-family: monospace;">M-- M-x slime &lt;RET&gt; implementation-name &lt;RET&gt;</span>
                 Emacs
                 keyboard shortcut. Use the <span style="font-family: monospace;">&lt;TAB&gt;</span> key after the first
@@ -400,28 +425,19 @@
 
             <h3>lispx-proxy</h3>
 
-            <p class="software ">By using <a href="http://lispx-proxy.sourceforge.net" target="_blank" class="">lispx-proxy</a>
+            <p class="software ">With <a href="http://lispx-proxy.sourceforge.net" target="_blank" class="">lispx-proxy</a>
                 you
                 can easily launch Common Lisp, Clojure or Scheme files as scripts and create more complex application
                 distributions.
-            <p class="software "><b>lispx-proxy</b> is fully integrated into <b>&rho;Emacs</b>, and you could use all
-                installed
-                Common Lisp implementations and all <b>&rho;Emacs</b> ASDF repositories while executing Common Lisp
-                code. <b>&rho;Emacs</b>
-                knows about <b>lispx-proxy</b> `executable source code distribution' structure, and all ASDF
-                systems and resources from the `shared' folder of a distribution will be available to the inferior Lisp
-                (the
-                distribution should be placed into one of the <b>&rho;Emacs</b> ASDF repositories). In other words, you
-                can
-                easily develop <b>lispx-proxy</b> applications with <b>&rho;Emacs</b>.</p>
+            <p class="software "><b>lispx-proxy</b> is fully integrated into <b>&rho;Emacs</b>, and you could access
+                all <b>&rho;Emacs</b> ASDF repositories while executing Common Lisp
+                code.</p>
 
             <h3>Emacs Command Shell</h3>
 
-            <p>Emacs has ability to emulate command shell, which could be used to run Lisp implementations (by issuing
-                the corresponding commands offered by <b>Rho Shell</b> without overhead made
-                by SLIME's Swank or Quicklisp. This may be useful when you want to reduce memory footprint of a
-                generated program
-                binary.
+            <p>Emacs has ability to emulate command shell, which could run Lisp implementations without overhead made
+                by Quicklisp or SLIME's Swank. This may be useful when you want to reduce the memory footprint of a
+                generated program binary. See what commands  <b>Rho Shell</b> offers by issuing `list-commands' inside it.
             </p>
             <p class="">It is also possible to run any Lisp implementation out of <b>Emacs</b> using system-wide <b>lispx-proxy</b>.
                 For example,
@@ -431,7 +447,7 @@
                 To run Clojure REPL type <span style="font-family: monospace;">lispx -l clojure --repl</span> in your
                 command
                 prompt. Common Lisp package management systems are not automatically available with this scenario,
-                although the REPL or scripts could use any already installed ASDF-systems or Java/Clojure libraries from
+                although the REPL or scripts could use any preinstalled ASDF-systems or Java/Clojure libraries from
                 `&lt;<b>&rho;Emacs</b> Home&gt;/clojure/lib'.</p>
 
 

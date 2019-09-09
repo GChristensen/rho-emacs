@@ -57,7 +57,7 @@ int InterpolateArguments(TCHAR* str, int max_len, TCHAR **argv, int argc)
 {
 	TCHAR *point = _tcschr(str, _T('%'));
 
-	int str_len = lstrlen(str);
+	int str_len = _tcslen(str);
 
 	if (!point)
 		return str_len;
@@ -65,7 +65,8 @@ int InterpolateArguments(TCHAR* str, int max_len, TCHAR **argv, int argc)
 	if (argc > 0)
 	{
 		TCHAR *arg_to_interpolate = new TCHAR[max_len];
-		lstrcpy(arg_to_interpolate, argv[0]);
+        ZeroMemory(arg_to_interpolate, max_len);
+		_tcsncpy(arg_to_interpolate, argv[0], max_len - str_len - 2);
 
 		int quoted_len = 0;
 
@@ -74,12 +75,12 @@ int InterpolateArguments(TCHAR* str, int max_len, TCHAR **argv, int argc)
 		else 
 			quoted_len = _tcslen(arg_to_interpolate);
 
-		if (!quoted_len || str_len + quoted_len + 1 > max_len)
+		if (!quoted_len)
 		{
 			delete arg_to_interpolate;
 			return 0;
 		}
-
+        
 		StrShiftR(point, quoted_len - 2);
 		_tcsncpy(point, arg_to_interpolate, quoted_len);
 		delete arg_to_interpolate;
@@ -114,4 +115,52 @@ int RTrim(TCHAR *str)
     }
 
     return retval;
+}
+
+// You must free the result if result is non-NULL
+TCHAR *StrReplace(TCHAR *orig, TCHAR *rep, TCHAR *with) {
+    TCHAR *result; // the return string
+    TCHAR *ins;    // the next insert point
+    TCHAR *tmp;    // varies
+    int len_rep;  // length of rep (the string to remove)
+    int len_with; // length of with (the string to replace rep with)
+    int len_front; // distance between rep and end of last rep
+    int count;    // number of replacements
+
+    // sanity checks and initialization
+    if (!orig || !rep)
+        return NULL;
+    len_rep = _tcslen(rep);
+    if (len_rep == 0)
+        return NULL; // empty rep causes infinite loop during count
+    if (!with)
+        with = _T("");
+    len_with = _tcslen(with);
+
+    // count the number of replacements needed
+    ins = orig;
+    for (count = 0; tmp = _tcsstr(ins, rep); ++count) {
+        ins = tmp + len_rep;
+    }
+
+    tmp = result = (TCHAR*)malloc(_tcslen(orig) * sizeof(TCHAR) 
+                 + (len_with - len_rep) * count * sizeof(TCHAR) + sizeof(TCHAR));
+
+    if (!result)
+        return NULL;
+
+    // first time through the loop, all the variable are set correctly
+    // from here on,
+    //    tmp points to the end of the result string
+    //    ins points to the next occurrence of rep in orig
+    //    orig points to the remainder of orig after "end of rep"
+    while (count--) {
+        ins = _tcsstr(orig, rep);
+        len_front = ins - orig;
+        tmp = _tcsncpy(tmp, orig, len_front) + len_front;
+        tmp = _tcscpy(tmp, with) + len_with;
+        orig += len_front + len_rep; // move to next "end of rep"
+    }
+    _tcscpy(tmp, orig);
+    return result;
 }

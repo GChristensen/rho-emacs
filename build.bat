@@ -43,7 +43,7 @@ cd "..\.."
 
 :build_packages
 
-@copy .\htdocs\index.shtml ".\packages\Emacs-x64\docs\rho\"
+@rem @copy .\htdocs\index.shtml ".\packages\Emacs-x64\docs\rho\"
 
 @cd .\packages
 

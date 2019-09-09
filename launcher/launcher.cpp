@@ -16,13 +16,68 @@
 #include <shlobj.h>
 
 #define MAX_ARGS_LENGTH 2047
+#define MAX_CMDLINE_LENGTH 32768
 
 #define GENERAL_SECTION _T("GENERAL")
 #define ARGUMENTS_SECTION _T("ARGUMENTS")
 
+void create_dir(TCHAR* path)
+{
+	TCHAR dir_name[MAX_PATH];
+	TCHAR* p = path;
+	TCHAR* q = dir_name;
+
+	while (*p)
+	{
+		if ((_T('\\') == *p) || (_T('/') == *p))
+		{
+			if (':' != *(p - 1))
+			{
+				CreateDirectory(dir_name, NULL);
+			}
+		}
+
+		*q++ = *p++;
+		*q = '\0';
+	}
+
+	CreateDirectory(dir_name, NULL);
+}
+
 DWORD LaunchTarget(const TCHAR *target, const TCHAR *arguments, bool show,
 		bool wait)
 {
+    TCHAR home_dir[MAX_PATH];
+    ZeroMemory(home_dir, MAX_PATH * sizeof(home_dir[0]));
+    GetEnvironmentVariable(_T("HOME"), home_dir, MAX_PATH);
+
+	TCHAR server_file[MAX_PATH];
+    ZeroMemory(server_file, MAX_PATH * sizeof(server_file[0]));
+
+	_tcscpy(server_file, home_dir);
+	_tcscpy(server_file + _tcslen(server_file), _T("\\.emacs.d"));
+
+    DWORD attrs = GetFileAttributes(server_file);
+
+	if (attrs == INVALID_FILE_ATTRIBUTES)
+	{
+		create_dir(server_file);
+	}
+
+    _tcscpy(server_file + _tcslen(server_file), _T("\\server"));
+
+    attrs = GetFileAttributes(server_file);
+
+	if (attrs == INVALID_FILE_ATTRIBUTES)
+	{
+		create_dir(server_file);
+	}
+
+    _tcscpy(server_file + _tcslen(server_file), _T("\\server"));
+
+    SetEnvironmentVariable(_T("EMACS_SERVER_FILE"), server_file);
+
+
 	STARTUPINFOW siStartupInfo;
 	PROCESS_INFORMATION piProcessInfo;
 	ZeroMemory(&siStartupInfo, sizeof(siStartupInfo));
@@ -34,19 +89,21 @@ DWORD LaunchTarget(const TCHAR *target, const TCHAR *arguments, bool show,
 	if (_tcsstr(target, _T(".bat")))
 		batch_file = true;
 
-	TCHAR args[MAX_ARGS_LENGTH];
+    size_t target_len = _tcslen(target);
+
+	TCHAR args[target_len + _tcslen(arguments) + 5];
 	ZeroMemory(args, sizeof(args));
 
 	// Prepend target as a first argument
-	size_t target_len = _tcslen(target);
+	
 	args[0] = _T('"');
 	_tcscpy(args + 1, target);
 	args[target_len + 1] = _T('"');
 	args[target_len + 2] = _T(' ');
 
 	if (arguments)
-		_tcsncpy(args + target_len + 3, arguments,
-				MAX_ARGS_LENGTH - target_len - 4);
+		_tcscpy(args + target_len + 3, arguments);
+//				MAX_ARGS_LENGTH - target_len - 4);
 
 	if (CreateProcess(batch_file ? NULL : target, args, NULL, NULL, TRUE,
 			(show ? 0 : CREATE_NO_WINDOW), NULL, NULL, &siStartupInfo,
@@ -55,8 +112,8 @@ DWORD LaunchTarget(const TCHAR *target, const TCHAR *arguments, bool show,
 		if (wait)
 			WaitForSingleObject(piProcessInfo.hProcess, INFINITE);
 
+        CloseHandle(piProcessInfo.hThread);
 		CloseHandle(piProcessInfo.hProcess);
-		CloseHandle(piProcessInfo.hThread);
 		return 0;
 	}
 
@@ -96,29 +153,6 @@ void get_default_home(TCHAR *home_dir, const TCHAR *module_name)
 {
 	SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, 0, home_dir);
     _tcscpy(home_dir + _tcslen(home_dir), _T("\\rhome"));
-}
-
-void create_dir(TCHAR* path)
-{
-	TCHAR dir_name[MAX_PATH];
-	TCHAR* p = path;
-	TCHAR* q = dir_name;
-
-	while (*p)
-	{
-		if ((_T('\\') == *p) || (_T('/') == *p))
-		{
-			if (':' != *(p - 1))
-			{
-				CreateDirectory(dir_name, NULL);
-			}
-		}
-
-		*q++ = *p++;
-		*q = '\0';
-	}
-
-	CreateDirectory(dir_name, NULL);
 }
 
 TCHAR *set_home_variable(HINSTANCE hInstance)
@@ -174,19 +208,13 @@ TCHAR *set_home_variable(HINSTANCE hInstance)
 		}
 	}
 
-	attrs = GetFileAttributes(home_dir);
-
-	if (attrs == INVALID_FILE_ATTRIBUTES)
-	{
-		create_dir(home_dir);
-	}
 
 	SetEnvironmentVariable(_T("HOME"), home_dir);
 
     return _tcsdup(home_dir);
 }
 
-bool del_desktop_lock_hack(TCHAR *home_dir)
+void del_desktop_lock_hack(TCHAR *home_dir)
 {
 	TCHAR lock_file[MAX_PATH];
 
@@ -287,7 +315,7 @@ int entry(HINSTANCE hInstance, int argc, TCHAR **argv) {
 
 	// Command line arguments which launcher should pass to the target
 	// (depend on command line switch)
-	TCHAR args_to_pass[MAX_ARGS_LENGTH];
+	TCHAR args_to_pass[MAX_ARGS_LENGTH] = {0};
 
 	if (argc > 0)
 	{
@@ -306,24 +334,33 @@ int entry(HINSTANCE hInstance, int argc, TCHAR **argv) {
             {
                 SetEnvironmentVariable(_T("INVOCATION_TAG"), argv[arg_offset] + 1);
 
-                TCHAR args_to_pass[MAX_ARGS_LENGTH] =
-                    {	0};
+                bool org_protocol = switch_presents(argv, argc, _T("/TARGET:ORG_PROTOCOL"));
+
+                TCHAR args_to_pass[org_protocol? MAX_CMDLINE_LENGTH: MAX_ARGS_LENGTH] = {0};
+
                 GetPrivateProfileString(ARGUMENTS_SECTION, argv[arg_offset] + 1, NULL, args_to_pass,
-                                        MAX_ARGS_LENGTH, config_name);
+                                        org_protocol? MAX_CMDLINE_LENGTH: MAX_ARGS_LENGTH, config_name);
 
                 if (args_to_pass[0])
                 {
                     bool show = switch_presents(argv + arg_offset + 1, argc - arg_offset - 1, _T("/SHOW"));
                     bool wait = switch_presents(argv + arg_offset + 1, argc - arg_offset - 1, _T("/WAIT"));
 
-                    // delete a .desktop.lock file in home directory if presents
+                    // delete the .desktop.lock file in home directory if presents
                     if (switch_presents(argv, argc, _T("/TARGET:PRECOMP"))
                         || switch_presents(argv, argc, _T("/TARGET:EXT_SHELL"))) {
 
                         del_desktop_lock_hack(home_dir);
                     }
 
-                    InterpolateArguments(args_to_pass, MAX_ARGS_LENGTH, argv + arg_offset + 1, argc - 1);
+                    InterpolateArguments(args_to_pass, org_protocol? MAX_CMDLINE_LENGTH: MAX_ARGS_LENGTH, argv + arg_offset + 1, argc - 1);
+
+                    if (org_protocol) {                 
+                        TCHAR *correct_args = StrReplace(args_to_pass, _T("/?"), _T("?"));
+                        _tcscpy(args_to_pass, correct_args);
+                        free(correct_args);
+                    }
+
                     return LaunchTarget(target_path, args_to_pass, show, wait);
                 }
                 else
@@ -338,7 +375,7 @@ int entry(HINSTANCE hInstance, int argc, TCHAR **argv) {
 	TCHAR arg1[MAX_PATH];
 	TCHAR *argv2[1] = {arg1};
 
-	// make a file path passed through argument absolute
+	// make the file path passed through argument absolute
 	if (n_args > 0)
 	{
 		int arg_len = _tcslen(argv[arg_offset]);
@@ -380,7 +417,7 @@ int WinMain(HINSTANCE hInstance,
 		HINSTANCE hPrevInstance,
 		LPSTR lpCmdLine,
 		int nCmdShow)
-{
+{ 
 	return _tWinMain(hInstance, NULL, GetCommandLine(), 0);
 }
 //#endif

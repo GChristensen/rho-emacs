@@ -51,14 +51,16 @@
 ;;
 ;;; Code:
 
-(require 'server)
+;; this file is needed for compatibility with EmacsW32 emacsclient
 
-(when (string= "yes" (getenv "EMACSCLIENT_STARTING_SERVER"))
-  (let ((server-file (getenv "EMACS_SERVER_FILE")))
-    (when server-file
-      (setq server-auth-dir (file-name-directory server-file)
-            server-name (file-name-nondirectory server-file))))
-  (server-mode 1))
+;;(require 'server)
+
+;;(when (string= "yes" (getenv "EMACSCLIENT_STARTING_SERVER"))
+;;  (let ((server-file (getenv "EMACS_SERVER_FILE")))
+;;    (when server-file
+;;      (setq server-auth-dir (file-name-directory server-file)
+;;            server-name (file-name-nondirectory server-file))))
+;;  (server-mode 1))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

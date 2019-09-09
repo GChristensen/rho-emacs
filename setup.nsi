@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 0.3.2
+!define VERSION 0.3.3
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -679,9 +679,9 @@ Section "Emacs 26.1 (x64)" SEC_emacs-x64
 !endif
 
 !ifdef BASIC_EMACS
-    !insertmacro INSTALL_EMACS emacs-x64 450000
+    !insertmacro INSTALL_EMACS emacs-x64 650000
 !else
-    !insertmacro INSTALL_EMACS emacs-x64 521000
+    !insertmacro INSTALL_EMACS emacs-x64 700000
 !endif
 SectionEnd           
 
@@ -709,9 +709,9 @@ Section /o "Emacs 26.1 (x86)" SEC_emacs-x86
 !endif
 
 !ifdef BASIC_EMACS
-    !insertmacro INSTALL_EMACS emacs-x86 600000
-!else
     !insertmacro INSTALL_EMACS emacs-x86 700000
+!else
+    !insertmacro INSTALL_EMACS emacs-x86 800000
 !endif
 SectionEnd
 
@@ -787,6 +787,19 @@ Section /o "Spacemacs" SEC_spacemacs
 already_installed:
 SectionEnd
 
+SectionGroup "Org tools"
+    Section /o "org-protocol" SEC_orgprotocol
+        !insertmacro REG_STR HKCR "org-protocol" "" "URL:Org Protocol"
+        !insertmacro REG_STR HKCR "org-protocol" "URL Protocol" ""
+        !insertmacro REG_STR HKCR "org-protocol\shell\open\command" "" "$\"$InstDirRedirect\rho.exe$\" /TARGET:ORG_PROTOCOL $\"%1$\""
+        !insertmacro APPEND_CONFIG orgprotocol emacs-init.el "$InstDirRedirect\site\.emacs.d\${STEM}"
+    SectionEnd
+
+    Section /o "org-wiki" SEC_orgwiki
+        !insertmacro APPEND_CONFIG orgwiki emacs-init.el "$InstDirRedirect\site\.emacs.d\${STEM}"
+    SectionEnd
+SectionGroupEnd
+
 Section /o "Store backups in one place" SEC_CollectBackups
     !insertmacro APPEND_CONFIG CollectBackups emacs-init.el "$InstDirRedirect\site\.emacs.d\${STEM}"
 SectionEnd
@@ -837,8 +850,8 @@ SectionEnd
 Section /o Clojure SEC_Clojure
     !insertmacro INSTALL_PACKAGE Clojure 68000
 
-    CreateDirectory "$CurrentSandbox\.emacs.d\elpa\"
-    CopyFiles /SILENT "$InstDirRedirect\bin\clojure\emacs\*" "$CurrentSandbox\.emacs.d\elpa\"
+#    CreateDirectory "$CurrentSandbox\.emacs.d\elpa\"
+#    CopyFiles /SILENT "$InstDirRedirect\bin\clojure\emacs\*" "$CurrentSandbox\.emacs.d\elpa\"
     
     StrCmp $PrivateEnvironment portable already_installed
     
@@ -1473,13 +1486,16 @@ FunctionEnd
 
 # Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x64} "Emacs 26.1 (64-bit) build for Microsoft Windows bundled with modules and EmacsW32 enchancement pack"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x86} "Emacs 26.1 (32-bit) build for Microsoft Windows bundled with EmacsW32 enchancement pack"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Basic Emacs setup for convenient editing: arjen theme, ido, linum, column-marker, highlight-symbol, show-paren, save-place"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_Shortcuts} "Create desktop shortcuts"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x64} "Emacs editor (64-bit) build for Microsoft Windows bundled with EmacsW32 enchancement pack"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_emacs-x86} "Emacs editor (32-bit) build for Microsoft Windows bundled with EmacsW32 enchancement pack"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Basic Emacs setup for convenient editing: arjen theme, ido, ibuffer, linum, column-marker, highlight-symbol, show-paren, save-place"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_AutoComplete} "Global visual (popup menu) autocompletion mode for Emacs (available manually with the `auto-complete-mode' command if unchecked)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_AdditionalModes} "A set of advanced modes: bookmark+, yasnippet, helm, sr-speedbar, window-purpose"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SpacemacsLook} "Get Spacemacs look without installing Spacemacs"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_spacemacs} "Bring Vim experience to Emacs (only check this if you know what you are doing)"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgprotocol} "Make org-protocol:// links to open in Rho Emacs"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgwiki} "Install and configure org-wiki package"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CollectBackups} "Store backups not near the edited file but in ~/emscs.d/backups"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CUA} "Enable CUA mode"
 !ifndef BASIC_EMACS

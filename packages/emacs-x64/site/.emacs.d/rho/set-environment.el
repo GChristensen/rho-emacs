@@ -11,6 +11,8 @@
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+(setq system-time-locale "C")
+
 ;; Little hack to get proper Windows cyrillic language environment setup
 ;; out of the box
 (defconst +lang+ (getenv "LANG"))

@@ -92,10 +92,10 @@
   (let ((fstab (concat +rho-dir+ "/bin/msys/etc/fstab")))
     (when (file-exists-p fstab)
       (with-temp-file fstab
-        (insert-string "none / cygdrive binary,posix=0,noacl,user 0 0\n")
+        (insert "none / cygdrive binary,posix=0,noacl,user 0 0\n")
 ;        (insert-string (concat +rho-dir+ "/bin/mingw /mingw32\n"))
-        (insert-string (concat +msys-tmp+ " /tmp\n"))
-        (insert-string (concat +home-dir-unix-path+ "/.msys /home\n"))))))
+        (insert (concat +msys-tmp+ " /tmp\n"))
+        (insert (concat +home-dir-unix-path+ "/.msys /home\n"))))))
 
 (create-default-get-version 'MSYS)
 

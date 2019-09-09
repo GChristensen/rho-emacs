@@ -3,7 +3,6 @@
 
 ;; misk settings
 
-(add-to-list 'load-path (concat +rho-dir+ "/site/.emacs.d/basic"))
 (add-to-list 'load-path (concat +rho-dir+ "/site/.emacs.d/basic/bookmarks"))
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -106,7 +105,7 @@
  '(tabbar-use-images nil))
 
 (custom-set-faces
- '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
+ `(default ((t (:family ,(if +portable?+ "Courier New" "Hack") :foundry "outline" :slant normal :weight normal :height 100 :width normal)))))
 
 ;; remove grep output header ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

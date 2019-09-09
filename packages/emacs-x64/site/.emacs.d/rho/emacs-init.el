@@ -10,6 +10,8 @@
 
 (require 's)
 
+(add-to-list 'load-path (concat +rho-dir+ "/site/.emacs.d/basic"))
+
 (setq find-program 
       (concat +rho-dir+ "/bin/emacs/EmacsW32/gnuwin32/bin/find.exe"))
 (setq grep-program 
@@ -24,6 +26,23 @@
    '("melpa" . "http://melpa.milkbox.net/packages/")
    t)
 (package-initialize)
+
+(add-to-list 'load-path (concat +rho-dir+ "/site/.emacs.d/basic/use-package"))
+(require 'use-package)
+
+(when (not +precomp+)
+  (require 'server)
+  (defun server-ensure-safe-dir (dir) t)
+
+  ;; set up magical EmacsW32 emacsclient
+  (when (string= "yes" (getenv "EMACSCLIENT_STARTING_SERVER"))
+    (let ((server-file (getenv "EMACS_SERVER_FILE")))
+      (when server-file
+        (setq server-auth-dir (file-name-directory server-file)
+              server-name (file-name-nondirectory server-file)))))
+
+  (or (eq (server-running-p) t)
+      (server-start)))
 
 (setq custom-theme-directory (concat +rho-dir+ "/site/.emacs.d/themes/"))
 (setq custom-safe-themes t)

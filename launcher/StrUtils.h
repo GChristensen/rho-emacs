@@ -7,9 +7,11 @@
 
 #include <tchar.h>
 
+
 void StrShiftR(TCHAR *str, int shift_to);
 void StrShiftL(TCHAR *str, int shift_to);
 int InterpolateArguments(TCHAR* str, int max_len, TCHAR **argv, int argc);
 int RTrim(TCHAR *str);
+TCHAR *StrReplace(TCHAR *orig, TCHAR *rep, TCHAR *with);
 
 #endif // _H_STR_UTILS_

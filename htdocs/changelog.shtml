@@ -14,6 +14,15 @@
 <h4 align="center">Cnangelog</h4>
 <div id="column1">
 
+    <h5 align="left">0.3.3 &lt;09 Sep 2019&gt;</h5>
+    <blockquote>
+    <pre class="log">
+        - Updated Emacs 26.2 -> 26.3
+        - Added org-mode tools.
+    </pre>
+    </blockquote>
+
+
     <h5 align="left">0.3.2 &lt;01 Jun 2019&gt;</h5>
     <blockquote>
     <pre class="log">

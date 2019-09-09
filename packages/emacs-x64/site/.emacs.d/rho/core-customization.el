@@ -3,46 +3,51 @@
 
 (require 'easymenu)
 
+
+(defun rho-get-frame (emacs-only)
+  (if emacs-only
+      (let ((dedicated-frame)
+            (list (frame-list)))
+        (while list
+          (let ((frame (car list)))
+            (when (frame-parameter frame 'emacs-dedicated-frame)
+              (setq dedicated-frame frame)
+              (setq list nil))
+            (setq list (cdr list))))
+        (if dedicated-frame
+            dedicated-frame
+          (let ((frame (new-frame)))
+            (set-frame-parameter frame 'emacs-dedicated-frame t)
+            frame)))
+    (new-frame)))
+
+(defun rho-split-frames (emacs-only)
+  (select-frame (rho-get-frame emacs-only))
+  (raise-frame))
+
 ;; Function determines frame creation policy after rho.exe invocation
 (defun split-frame (&optional do-actions emacs-only)
-  (flet ((get-frame ()
-           (if emacs-only
-	       (let ((dedicated-frame)
-		     (list (frame-list)))
-		 (while list
-		   (let ((frame (car list)))
-		     (when (frame-parameter frame 'emacs-dedicated-frame)
-		       (setq dedicated-frame frame)
-		       (setq list nil))
-                     (setq list (cdr list))))
-		 (if dedicated-frame
-		     dedicated-frame
-		     (let ((frame (new-frame)))
-		       (set-frame-parameter frame 'emacs-dedicated-frame t)
-		       frame)))
-	     (new-frame)))
-	 (do-split ()
-	   (select-frame (get-frame))
-	   (raise-frame)))
-    (if (= (length (frame-list)) 1)
-	(let ((frame (car (frame-list))))
-	  (if (not (frame-parameter frame 'subsequent-invocation))
-	      (progn
-		(when emacs-only
-		  (set-frame-parameter frame 'emacs-dedicated-frame t))
-		(set-frame-parameter frame 'subsequent-invocation t))
-	      (do-split)))
-      (do-split)))
+  (if (= (length (frame-list)) 1)
+      (let ((frame (car (frame-list))))
+        (if (not (frame-parameter frame 'subsequent-invocation))
+            (progn
+              (when emacs-only
+                (set-frame-parameter frame 'emacs-dedicated-frame t))
+              (set-frame-parameter frame 'subsequent-invocation t))
+          (rho-split-frames emacs-only)))
+    (rho-split-frames emacs-only))
   (cd +home-dir+)
   (when do-actions (funcall do-actions))
   (delete-other-windows))
 
 (defun visit-in-dedicated-frame (file-path)
+(message file-path)
   (lexical-let ((file-path file-path))
     (split-frame '(lambda ()
                     (when (not (string= file-path ""))
                       (find-file file-path)))
                  t))) 
+
 
 ;; Customize `shell' command
 (defvar explicit-cmdproxy.exe-args nil)
@@ -172,7 +177,7 @@
 
 (defun rho-browse-rho-docs ()
  (interactive)
- (browse-url (concat "file://" +rho-dir+ "/docs/Rho/index.shtml")))
+ (browse-url "https://rho-emacs.sourceforge.io/"))
 
 (defun rho-browse-lispx-docs ()
  (interactive)
