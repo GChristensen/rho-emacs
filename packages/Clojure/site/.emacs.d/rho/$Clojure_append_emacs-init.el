@@ -21,11 +21,12 @@
 
 (unless +precomp+
   (condition-case err
+   (progn
     (use-package clojure-mode :ensure t)
 
     (use-package cider :ensure t
-      :config
-
+     :config
+     (progn
       (setf cider-repl-display-help-banner nil)
 
       (defun rho-run-clojure ()
@@ -54,7 +55,7 @@
                   (when (get-process "nrepl-server")
                       ;(cider-nrepl-request:eval "(System/exit 0)" (lambda ()))
                       (cider-quit)
-                      ))))
+                      ))))))
 
       (error (message "%s" (error-message-string err)))))
 

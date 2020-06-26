@@ -5,7 +5,8 @@
   (condition-case err
 
     (use-package helm :ensure t
-      :config
+     :config
+     (progn
       (require 'org-wiki)
 
       (setq org-wiki-location-list
@@ -15,7 +16,7 @@
 
       (setq org-wiki-location (car org-wiki-location-list))
 
-      (setq org-wiki-clip-jar-path (concat +rho-dir+ "/site/.emacs.d/basic/Clip.jar")))
+      (setq org-wiki-clip-jar-path (concat +rho-dir+ "/site/.emacs.d/basic/Clip.jar"))))
     
   (error (message "%s" (error-message-string err)))))
 
