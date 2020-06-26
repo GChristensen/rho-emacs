@@ -1,2 +1,2 @@
-Package: 0.3.2
-Apache Maven: 3.6.1
+Package: 0.4.0
+Apache Maven: 3.6.3

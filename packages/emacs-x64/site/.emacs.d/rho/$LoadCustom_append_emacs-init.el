@@ -4,5 +4,11 @@
 (setq custom-file (concat +home-dir+ "/.emacs.d/.custom"))
 (load custom-file t)
 
+
+(defun rho-remove-persistent-warnings ()
+  (message ""))
+
+(run-with-idle-timer 1 nil 'rho-remove-persistent-warnings)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Additional modes ;;
 

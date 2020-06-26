@@ -16,10 +16,10 @@
             (setq list (cdr list))))
         (if dedicated-frame
             dedicated-frame
-          (let ((frame (new-frame)))
+          (let ((frame (make-frame)))
             (set-frame-parameter frame 'emacs-dedicated-frame t)
             frame)))
-    (new-frame)))
+    (make-frame)))
 
 (defun rho-split-frames (emacs-only)
   (select-frame (rho-get-frame emacs-only))

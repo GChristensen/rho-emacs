@@ -48,22 +48,18 @@
           (copy-directory (concat +rho-dir+ "/bin/clojure/.repl")
                         (concat +clojure-user-dir+ "/.repl"))))
 
-      (defun open-clojure-project (path)
-        (interactive (list
-                      (read-directory-name
-                       "Project root: "
-                       (if (functionp 'locate-dominating-file) ; Emacs 23 only
-                           (locate-dominating-file default-directory "src")
-                         default-directory))))          
-        (cd path)
-        (let ((project-file (concat path "/project.clj")))
-          (if (file-exists-p project-file)
-            (progn
-              (find-file project-file)
-              (cider-jack-in '()))
-            (princ "project.clj is missing"))))
+      ;; lost clojure java process workaround
+      (add-hook 'kill-emacs-hook
+                (lambda ()
+                  (when (get-process "nrepl-server")
+                      ;(cider-nrepl-request:eval "(System/exit 0)" (lambda ()))
+                      (cider-quit)
+                      ))))
 
-      (defun start-clojure-repl ()
+      (error (message "%s" (error-message-string err)))))
+
+(easy-menu-add-item nil '("((" "Launch") ["Clojure (REPL)" 
+       (lambda ()
         (interactive)
         (let ((path (concat +home-dir+ "/clojure/.repl")))
           (cd path)
@@ -73,17 +69,24 @@
               (princ (concat project-file " is missing"))))))
 
 
-      ;; lost clojure java process workaround
-      (add-hook 'kill-emacs-hook
-                (lambda ()
-                  (when (get-process "nrepl-server")
-                      (cider-nrepl-request:eval "(System/exit 0)" (lambda ()))))))
+ t])
 
-      (error (message "%s" (error-message-string err)))))
-
-(easy-menu-add-item nil '("((" "Launch") ["Clojure (REPL)" start-clojure-repl t])
-
-(easy-menu-add-item nil '("((" "Launch") ["Clojure (open project)" open-clojure-project t])
+;(easy-menu-add-item nil '("((" "Launch") ["Clojure (open project)" 
+;       (lambda (path)
+;        (interactive (list
+;                      (read-directory-name
+;                       "Project root: "
+;                       (if (functionp 'locate-dominating-file) ; Emacs 23 only
+;                           (locate-dominating-file default-directory "src")
+;                         default-directory))))          
+;        (cd path)
+;        (let ((project-file (concat path "/project.clj")))
+;          (if (file-exists-p project-file)
+;            (progn
+;              (find-file project-file)
+;              (cider-jack-in '()))
+;            (princ "project.clj is missing"))))
+; t])
 
 (create-default-get-version 'clojure)
 

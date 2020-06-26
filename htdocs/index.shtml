@@ -86,9 +86,9 @@
 
                 <h3>Downloads</h3>
                 <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-emacs-x86_64-setup-0.3.3.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-emacs-x86-setup-0.3.3.exe/download">Rho Emacs x86</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.3.3/rho-setup-0.3.3.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-emacs-x86_64-setup-0.4.0.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-emacs-x86-setup-0.4.0.exe/download">Rho Emacs x86</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-setup-0.4.0.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
                 </ul>
         </div>
         <div class="tohide" id="desc_video">
@@ -188,7 +188,7 @@
             <ul>
                 <li><b><a href="https://winpython.github.io/">Python 2.7</a></b>
                 </li>
-                <li><b><a href="https://winpython.github.io/">Python 3.7</a></b></li>
+                <li><b><a href="https://winpython.github.io/">Python 3.8</a></b></li>
             </ul>
         </li>
         <!--li><b><a href="http://groovy-lang.org/" target="_blank" class="">Groovy</a></b> - Groovy 2 programming language
@@ -220,7 +220,7 @@
         <label for="toggle">GNU Emacs</label>
         <div id="expand">
 
-                <p>The current version of <b>&rho;Emacs</b> includes version 26 of
+                <p>The current version of <b>&rho;Emacs</b> includes version 27 of
                     <b><a href="http://www.gnu.org/software/emacs" target="_blank">GNU Emacs</a></b> text editor
                     with (now extinct) <b><a
                             href="https://web.archive.org/web/20140819124625/http://www.ourcomments.org:80/Emacs/EmacsW32.html"
@@ -334,21 +334,21 @@
                     </tr>
                     <tr>
                         <td class="first"><a href="http://clojure.org" target="_blank">Clojure</a></td>
-                        <td><span class="">1.10</span></td>
+                        <td><span class="">1.10.1</span></td>
                         <td><a href="https://github.com/clojure-emacs/cider" target="_blank">Cider</a></td>
                         <td><a href="http://github.com/technomancy/leiningen" target="_blank">Leiningen 2</a></td>
                         <td>Java 1.8 or higher</td>
                     </tr>
                     <tr>
-                        <td class="first"><a href="http://trac.clozure.com/ccl" target="_blank">Clozure CL</a></td>
-                        <td><span class="">1.11</span></td>
+                        <td class="first"><a href="https://ccl.clozure.com/" target="_blank">Clozure CL</a></td>
+                        <td><span class="">1.12</span></td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td>-</td>
                     </tr>
                     <tr>
                         <td class="first"><a href="http://www.sbcl.org" target="_blank">SBCL</a></td>
-                        <td><span class="">1.4</span></td>
+                        <td><span class="">2.0</span></td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td>-</td>
@@ -363,14 +363,14 @@
                     <tr>
                         <td class="first"><a href="http://common-lisp.net/project/armedbear" target="_blank">ABCL</a>
                         </td>
-                        <td class=""><span class="">1.5.0</span></td>
+                        <td class=""><span class="">1.7</span></td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank">SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
-                        <td>Java 1.6 or higher</td>
+                        <td>Java 1.8 or higher</td>
                     </tr>
                     <tr>
                         <td class="first"><a href="http://ecls.sourceforge.net" target="_blank">ECL</a><sup>2</sup></td>
-                        <td>16.1.3</td>
+                        <td>20.4.24</td>
                         <td><a href="http://common-lisp.net/project/slime" target="_blank"> SLIME</a></td>
                         <td><a href="http://quicklisp.org" target="_blank" class="">Quicklisp</a></td>
                         <td><a href="https://visualstudio.microsoft.com/">Visual C++ compiler</a>
@@ -378,7 +378,7 @@
                     </tr>
                     <tr>
                         <td class="first "><a href="http://racket-lang.org" target="_blank" class="">Racket</a></td>
-                        <td class="">7.3</td>
+                        <td class="">7.7</td>
                         <td><a href="http://www.nongnu.org/geiser/" target="_blank">Geiser</a></td>
                         <td><a href="http://planet.plt-scheme.org" target="_blank">PLaneT</a></td>
                         <td>-</td>
@@ -525,11 +525,8 @@
 
                 </ul>
                 <p>
-                    WARNING: a Clojure Java process may remain in memory after the Emacs shutdown, because it has not
-                    been spawned
-                    by Emacs itself. Although &rho;Emacs tries to work around this issue and close the process before
-                    the Emacs
-                    shutdown, be aware of this.
+                    WARNING: a Clojure Java process may remain in memory after Emacs shutdown,
+                    when Cider nrepl was not terminated through <span class="mono">M-x cider-quit</span>.
                 </p>
             </div>
 
@@ -771,7 +768,7 @@
                     </tr>
                     <tr>
                         <td class="first"><a href="https://winpython.github.io/" target="_blank">Python</a></td>
-                        <td><span class="">3.7.0</span></td>
+                        <td><span class="">3.8.3</span></td>
                         <td class="first">The default Python <a href="https://pypi.python.org/pypi/pip">pip</a> package
                             manager is available as the `pip3' command
                         </td>
@@ -786,13 +783,13 @@
                         <td class="first"><a
                                 href="https://openjdk.java.net/"
                                 target="_blank">OpenJDK</a></td>
-                        <td><span class="">12.0.1</span></td>
+                        <td><span class="">14.0.1</span></td>
                         <td class="first"><a href="http://ant.apache.org/">Apache ANT</a> 1.10.6,
-                            <a href="http://maven.apache.org/">Apache Maven</a> 3.6.1,
-                            <a href="https://gradle.org/">Gradle</a></b> 5.4.1
+                            <a href="http://maven.apache.org/">Apache Maven</a> 3.6.3,
+                            <a href="https://gradle.org/">Gradle</a></b> 6.5
                     </tr>
                     <tr>
-                        <td class="first"><a href="https://mingw-w64.org/doku.php">MinGW-x64</a></td>
+                        <td class="first"><a href="https://mingw-w64.org/doku.php">MinGW-w64</a></td>
                         <td><span class="">installed by pacman</span></td>
                         <td class="first"><a href="http://boost.org" target="_blank">Boost</a>
                     </tr>

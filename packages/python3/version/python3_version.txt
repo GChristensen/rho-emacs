@@ -1,2 +1,2 @@
-Package: 0.2.1
-WinPython: 3.7.0
+Package: 0.4.0
+WinPython: 3.8.0

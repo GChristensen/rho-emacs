@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 0.3.3
+!define VERSION 0.4.0
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -658,12 +658,12 @@ already_installed:
 
 !ifdef BASIC_EMACS
 !ifdef ARCH_64
-Section "-Emacs 26.1 (x64)" SEC_emacs-x64
+Section "-Emacs 27 (x64)" SEC_emacs-x64
 !else
-Section /o "-Emacs 26.1 (x64)" SEC_emacs-x64
+Section /o "-Emacs 27 (x64)" SEC_emacs-x64
 !endif
 !else
-Section "Emacs 26.1 (x64)" SEC_emacs-x64
+Section "Emacs 27 (x64)" SEC_emacs-x64
 !endif
 
 !ifdef BASIC_EMACS
@@ -688,12 +688,12 @@ SectionEnd
 
 !ifdef BASIC_EMACS
 !ifdef ARCH_32
-Section "-Emacs 26.1 (x86)" SEC_emacs-x86
+Section "-Emacs 27 (x86)" SEC_emacs-x86
 !else
-Section /o "-Emacs 26.1 (x86)" SEC_emacs-x86
+Section /o "-Emacs 27 (x86)" SEC_emacs-x86
 !endif
 !else
-Section /o "Emacs 26.1 (x86)" SEC_emacs-x86
+Section /o "Emacs 27 (x86)" SEC_emacs-x86
 !endif
 
 !ifdef BASIC_EMACS
@@ -982,16 +982,16 @@ Section /o "Python 2.7" SEC_python2
     
     StrCmp $PrivateEnvironment portable already_installed
          
-    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Python 2.7" 1
+    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Python 2" 1
 already_installed:
 SectionEnd
 
-Section /o "Python 3.7" SEC_python3
+Section /o "Python 3.8" SEC_python3
     !insertmacro INSTALL_PACKAGE python3 68000
     
     StrCmp $PrivateEnvironment portable already_installed
            
-    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Python 3.2" 1
+    !insertmacro REG_STR HKLM "${REGKEY}\Components" "Python 3" 1
 already_installed:
 SectionEnd
 
@@ -1096,6 +1096,12 @@ Section -post SEC_post
     SetDetailsPrint none
 
     RmDir /r "$InstDirRedirect\scripts"
+
+
+    # !IMPORTANT: comment out for emacs 28
+    ${If} $CurrentSandbox != ""
+        Delete "$CurrentSandbox\.emacs.d\recentf"
+    ${EndIf}
 
     StrCmp $PrivateEnvironment portable continue_portable
 
@@ -1512,12 +1518,12 @@ FunctionEnd
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_extras} "Additional tools and languages"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MSYS} "A minimalist Bourne Shell port for Windows"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_python2} "Python 2.7"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_python3} "Python 3.7"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_python3} "Python 3.8"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw32} "Install the latest MinGW-x64 (32-bit)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw64} "Install the latest MinGW-x64 (64-bit)"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_boost} "The Boost Library (1.50)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_jdk} "Private instance of legacy Oracle JDK v8.0 available through Rho Emacs command shell (no system integration), not compatible with OpenJDK"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_openjdk} "Private instance of a recent version of OpenJDK available through Rho Emacs command shell (no system integration), not compatible with Oracle JDK"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_openjdk} "Private instance of OpenJDK 14 available through Rho Emacs command shell (no system integration), not compatible with Oracle JDK"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_groovy} "Groovy 2 + Grails 3"
 !endif
 !insertmacro MUI_FUNCTION_DESCRIPTION_END

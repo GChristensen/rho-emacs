@@ -76,7 +76,7 @@
         (list "MSYS" ["MSYS2 (emacs)" run-msys-shell t]
                      ["MSYS2 (external)" external-msys-shell t] 
                      ["MINGW32 (external)" external-mingw32-shell t]
-                     ["MINGW64 (external)" external-mingw32-shell t]
+                     ["MINGW64 (external)" external-mingw64-shell t]
                      ["--" 'ignore :visible (lambda ())]
                      ["Update installed packages" external-update-mingw t]))
 

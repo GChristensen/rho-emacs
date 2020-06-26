@@ -1,4 +1,4 @@
-Package: 0.3.3
-Emacs: 26.3 (32-bit)
+Package: 0.4.0
+Emacs: 27.0 (32-bit)
 EmacsW32: 1.58
 Lisp Execution Proxy: 0.3.1
