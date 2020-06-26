@@ -525,7 +525,7 @@
 
                 </ul>
                 <p>
-                    WARNING: a Clojure Java process may remain in memory after Emacs shutdown,
+                    WARNING: a Clojure Java process may remain in memory after Emacs shutdown
                     when Cider nrepl was not terminated through <span class="mono">M-x cider-quit</span>.
                 </p>
             </div>
