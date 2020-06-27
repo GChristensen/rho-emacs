@@ -2,13 +2,14 @@
 ;; Clojure setup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconst +lein-home+ (concat +home-dir+ "/.lein"))
+(defconst +clojure-user-dir+ (concat +home-dir+ "/clojure"))
 
 (add-to-list 'load-path (concat +rho-dir+ "/site/.emacs.d/clojure"))
 
 (custom-set-variables
   '(cider-lein-command (concat +lein-home+ "/lein")))
   
-(when (and (> emacs-major-version 23) +precomp+)
+(when +precomp+
   (when (file-exists-p +lein-home+)
     (delete-directory +lein-home+ t t))
   (copy-directory (concat +rho-dir+ "/bin/clojure/.lein")
@@ -35,19 +36,16 @@
 
       (if (not (file-exists-p +home-dir+))
         (make-directory +home-dir+))
-                                                      
-      (defconst +clojure-user-dir+ (concat +home-dir+ "/clojure"))
 
       (if (and (not +anyhome?+) (not (file-exists-p +clojure-user-dir+)))
-        (make-directory +clojure-user-dir+))
+          (make-directory +clojure-user-dir+))
+
+      (when (and (not +anyhome?+) (not (file-exists-p (concat +clojure-user-dir+ "/.repl"))))
+        (copy-directory (concat +rho-dir+ "/bin/clojure/.repl")
+                        (concat +clojure-user-dir+ "/.repl")))
 
       (if (and (not +anyhome?+) (not (file-exists-p (concat +clojure-user-dir+ "/lib"))))
         (make-directory (concat +clojure-user-dir+ "/lib")))
-
-      (when (and (> emacs-major-version 23) +precomp+)
-        (when (not (file-exists-p (concat +clojure-user-dir+ "/.repl")))
-          (copy-directory (concat +rho-dir+ "/bin/clojure/.repl")
-                        (concat +clojure-user-dir+ "/.repl"))))
 
       ;; lost clojure java process workaround
       (add-hook 'kill-emacs-hook
@@ -63,7 +61,7 @@
        (lambda ()
         (interactive)
         (let ((path (concat +home-dir+ "/clojure/.repl")))
-          (cd path)
+          (cd-absolute path)
           (let ((project-file (concat path "/project.clj")))
             (if (file-exists-p project-file)
               (cider-jack-in '())
