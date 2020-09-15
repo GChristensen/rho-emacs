@@ -86,9 +86,9 @@
 
                 <h3>Downloads</h3>
                 <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-emacs-x86_64-setup-0.4.0.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-emacs-x86-setup-0.4.0.exe/download">Rho Emacs x86</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.0/rho-setup-0.4.0.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-emacs-x86_64-setup-0.4.1.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-emacs-x86-setup-0.4.1.exe/download">Rho Emacs x86</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-setup-0.4.1.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
                 </ul>
         </div>
         <div class="tohide" id="desc_video">

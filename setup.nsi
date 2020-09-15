@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 0.4.0
+!define VERSION 0.4.1
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -39,7 +39,6 @@ BrandingText "$(^Name) v${VERSION}"
 !include WinMessages.nsh
 !include Locate.nsh
 !include InstallOptions.nsh
-!include WinMessages.nsh
 !include FileFunc.nsh
 !include FileAssotiation.nsh
 
@@ -55,7 +54,7 @@ ${StrStr}
 ${StrStrAdv}
 #${UnStrStrAdv}
 
-!include EnvVarUpdate.nsh
+#!include EnvVarUpdate.nsh
 !include RadioButtons.nsh
 
 !define MUI_HEADERIMAGE
@@ -143,7 +142,7 @@ ShowUninstDetails hide
                             available. Do you really want to continue?"
 
 #!define S_CREATE_RESTORE_POINT "Creating system restore point"
- 
+
 # Variables
 var StartMenuGroup
 var InstalledVersionPath
@@ -638,7 +637,13 @@ SectionEnd
     StrCmp $PrivateEnvironment portable already_installed
     
     SetDetailsPrint none
-    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR"
+
+    EnVar::SetHKCU
+    EnVar::AddValue "PATH" "$INSTDIR"
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+#    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR"    
+    
     SetDetailsPrint both
 
     !insertmacro CREATE_EMACS_SHORTCUT "${Comp}" "Rho Emacs"
@@ -1176,7 +1181,11 @@ done${UNSECTION_ID}:
 Section -un.post UNSEC_post
     SetShellVarContext all
 
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR"
+    EnVar::SetHKCU
+    EnVar::DeleteValue "PATH" "$INSTDIR"
+    Pop $0
+    #${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR"
+
 !ifndef BASIC_EMACS
 	${UnregisterExtension} ".lispx" "${S_LISPX_SCRIPT}"
 	${UnregisterExtension} ".lispxz" "${S_LISPX_DISTRIBUTION}"
