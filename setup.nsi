@@ -11,7 +11,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 0.4.1
+!define VERSION 0.4.2
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -637,11 +637,13 @@ SectionEnd
     StrCmp $PrivateEnvironment portable already_installed
     
     SetDetailsPrint none
-
+    
+    SetDetailsPrint both
     EnVar::SetHKCU
     EnVar::AddValue "PATH" "$INSTDIR"
     Pop $0
-    DetailPrint "EnVar::AddValue returned=|$0|"
+    #DetailPrint "EnVar::AddValue returned=|$0|"
+
 #    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR"    
     
     SetDetailsPrint both
@@ -1527,12 +1529,12 @@ FunctionEnd
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_extras} "Additional tools and languages"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MSYS} "A minimalist Bourne Shell port for Windows"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_python2} "Python 2.7"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_python3} "Python 3.8"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_python3} "Python 3.9"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw32} "Install the latest MinGW-x64 (32-bit)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_mingw64} "Install the latest MinGW-x64 (64-bit)"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_boost} "The Boost Library (1.50)"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_jdk} "Private instance of legacy Oracle JDK v8.0 available through Rho Emacs command shell (no system integration), not compatible with OpenJDK"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_openjdk} "Private instance of OpenJDK 14 available through Rho Emacs command shell (no system integration), not compatible with Oracle JDK"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_openjdk} "Private instance of OpenJDK 15 available through Rho Emacs command shell (no system integration), not compatible with Oracle JDK"
 #!insertmacro MUI_DESCRIPTION_TEXT ${SEC_groovy} "Groovy 2 + Grails 3"
 !endif
 !insertmacro MUI_FUNCTION_DESCRIPTION_END

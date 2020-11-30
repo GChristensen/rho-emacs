@@ -26,13 +26,13 @@ set /p version= < .\packages\version.txt
 
 cd .\launcher\Release
 
-mingw32-make clean
-mingw32-make all
+make clean
+make all
 @rem mingw32-make term
 
 copy /Y "rho.exe"  "..\..\packages\emacs-x64\" 
 
-mingw32-make clean
+make clean
 
 cd "..\.."
 

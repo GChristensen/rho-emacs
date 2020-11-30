@@ -1,2 +1,2 @@
-Package: 0.4.0
-OpenJDK: 14.0.1
+Package: 0.4.2
+OpenJDK: 15.0.1

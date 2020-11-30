@@ -86,9 +86,9 @@
 
                 <h3>Downloads</h3>
                 <ul style="list-style-type: none; padding-left: 20px;">
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-emacs-x86_64-setup-0.4.1.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-emacs-x86-setup-0.4.1.exe/download">Rho Emacs x86</a> (Emacs only)</li>
-                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.1/rho-setup-0.4.1.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.2/rho-emacs-x86_64-setup-0.4.2.exe/download">Rho Emacs x86_64</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.2/rho-emacs-x86-setup-0.4.2.exe/download">Rho Emacs x86</a> (Emacs only)</li>
+                    <li><img src="images/windows-icon.png"/> <a class="dl-link" target="_blank" href="https://sourceforge.net/projects/rho-emacs/files/Rho%20Emacs%200.4.2/rho-setup-0.4.2.exe/download">Rho Emacs network installer</a> (includes development tools)</li>
                 </ul>
         </div>
         <div class="tohide" id="desc_video">
@@ -175,7 +175,7 @@
         <li><b><a href="http://clojure.org/">Clojure</a></b> - Clojure language implementation for JVM.</li>
         <li><b><a href="https://common-lisp.net/">Common Lisp</a></b> - a set of Common Lisp implementations:</li>
         <ul>
-            <li><b><a href="http://trac.clozure.com/ccl" target="_blank">Clozure CL</a></b></li>
+            <li><b><a href="https://ccl.clozure.com" target="_blank">Clozure CL</a></b></li>
             <li><b><a href="http://www.sbcl.org" target="_blank">SBCL</a></b></li>
             <li><b><a href="http://clisp.cons.org" target="_blank">CLISP</a></b></li>
             <li><b><a href="http://common-lisp.net/project/armedbear" target="_blank">ABCL</a></b></li>
@@ -186,9 +186,9 @@
         </li>
         <li><b><a href="https://www.python.org/">Python</a></b> versions:
             <ul>
-                <li><b><a href="https://winpython.github.io/">Python 2.7</a></b>
+                <li><b><a href="https://www.python.org">Python 2.7</a></b>
                 </li>
-                <li><b><a href="https://winpython.github.io/">Python 3.8</a></b></li>
+                <li><b><a href="https://www.python.org">Python 3.9</a></b></li>
             </ul>
         </li>
         <!--li><b><a href="http://groovy-lang.org/" target="_blank" class="">Groovy</a></b> - Groovy 2 programming language
@@ -760,15 +760,15 @@
                         <th>Included tools and libraries</th>
                     </tr>
                     <tr>
-                        <td class="first"><a href="https://winpython.github.io/" target="_blank">Python</a></td>
+                        <td class="first"><a href="https://www.python.org" target="_blank">Python</a></td>
                         <td><span class="">2.7.13</span></td>
                         <td class="first">The default Python <a href="https://pypi.python.org/pypi/pip">pip</a> package
                             manager is available as the `pip2' command
                         </td>
                     </tr>
                     <tr>
-                        <td class="first"><a href="https://winpython.github.io/" target="_blank">Python</a></td>
-                        <td><span class="">3.8.3</span></td>
+                        <td class="first"><a href="https://www.python.org" target="_blank">Python</a></td>
+                        <td><span class="">3.9.0</span></td>
                         <td class="first">The default Python <a href="https://pypi.python.org/pypi/pip">pip</a> package
                             manager is available as the `pip3' command
                         </td>
@@ -783,7 +783,7 @@
                         <td class="first"><a
                                 href="https://openjdk.java.net/"
                                 target="_blank">OpenJDK</a></td>
-                        <td><span class="">14.0.1</span></td>
+                        <td><span class="">15.0.1</span></td>
                         <td class="first"><a href="http://ant.apache.org/">Apache ANT</a> 1.10.6,
                             <a href="http://maven.apache.org/">Apache Maven</a> 3.6.3,
                             <a href="https://gradle.org/">Gradle</a></b> 6.5
@@ -861,7 +861,7 @@
         -->
     </script>
 
-    <div><p style="text-indent: 0px;">© 2010-2019 g/christensen (<a href="javascript:mailMe()">gchristnsn<img
+    <div><p style="text-indent: 0px;">© 2010-2020 g/christensen (<a href="javascript:mailMe()">gchristnsn<img
             src="images/at.png" style="position: relative; top: 4px;" alt=".at." border="0">gmail.com</a>)</p></div>
 </div>
 </body>
