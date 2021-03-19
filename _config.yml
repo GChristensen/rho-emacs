@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal
+title: RHO Emacs
+logo: media/EmacsIcon.svg
+description: An enhanced distribution of GNU Emacs for Windows
