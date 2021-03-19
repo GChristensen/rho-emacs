@@ -101,7 +101,7 @@ ShowUninstDetails hide
 !define S_FAIL "FAIL"
 
 !define S_SETTINGS_TEXT "Installation options"
-!define S_SETTINGS_SUBTEXT "Specify location of personal files"
+!define S_SETTINGS_SUBTEXT "Specify the location of personal files"
 
 !define S_REMOVING_CURRENT_VER "Removing the currently installed version of \
     $(^Name)"

@@ -121,12 +121,33 @@
                     convenient configuration out of the box.</li>
                 <li>The <a href="https://github.com/source-foundry/Hack">Hack</a> typeface, which works quite fast with <b>Emacs</b> font-lock mode, is used by default.
                     This helps to avoid lags and freezes when editing large files.</li>
-                <li>Some common <b>POSIX</b> utilities used by <b>Emacs</b>, such as <b>find</b>/<b>grep</b>, <b>patch</b>/<b>diff</b> and <b>aspell</b>, are also provided by the distribution.</li>
+                <li>Some common <b>POSIX</b> utilities used by <b>Emacs</b>, such as <b>find</b>/<b>grep</b> and <b>aspell</b>, are also provided by the distribution.</li>
                 <li><a href="https://orgmode.org/manual/Capture.html" target="_blank">Capture</a>
                     with <a href="https://orgmode.org/manual/Protocols.html" target="_blank">org-protocol</a>
                     may be configured by a single check in the installer.</li>
-                <li>Possibility of a portable installation.</li>
+                <li>A portable installation is possible.</li>
         </ul>
+
+        <h4>Emacs Home Directory</h4>
+
+                <p><b>ρEmacs</b> installer will ask where do you want to store your personal settings and files. The
+                    following three options are available:</p>
+
+                <ul>
+                    <li><i>Create a dedicated home directory for Emacs</i> - installer will ask you to manually specify the path of <b>ρEmacs</b>
+                        home directory.
+                    </li>
+                    <li class=""><i>Portable installation</i> - <b>ρEmacs</b> will be installed as a portable
+                        distribution. In
+                        this case <b>Emacs</b> will use the directory named <code>home</code> at the root of the installation as
+                        user's personal directory. Installer will also not create shortcuts or perform any other system
+                        integration.
+                    </li>
+                    <li><i>Always use the environment of a current user</i> - <b>Emacs</b> will always use a subfolder
+                        named <code>rho-emacs</code> inside <code>My Documents</code> folder of a current user.
+                    </li>
+                </ul>
+                
 
         <h4><a id="launcher" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> launcher</h4>
 
