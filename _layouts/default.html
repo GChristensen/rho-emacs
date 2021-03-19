@@ -110,7 +110,7 @@
         in the following form <code>/HOME:path/to/the/directory</code>. This may be convenient, for example, for use in <b>Windows</b> shortcuts.</p>
 
         <p style="text-align: justify;">Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as
-            <code>emacsclient</code> if <b>Emacs</b> is already running.</p>
+            <code>emacsclient</code> if <b>Emacs</b> is already running).</p>
 
         <h4><a id="enhancements" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> enhancement libraries</h4>
 
@@ -125,7 +125,7 @@
             <a href="https://www.emacswiki.org/emacs/TabBarMode" target="_blank">tabbar</a> and
             <a href="https://www.emacswiki.org/emacs/BookmarkPlus" target="_blank">bookmark+</a> modes could be enabled by default.
         </p>
-        <p style="text-align: justify;"><b>&rho;Emacs</b> installer will offer to activate one of the following UI themes:
+        <p style="text-align: justify;"><b>&rho;Emacs</b> installer will also offer to activate one of the following UI themes:
             <a href="https://github.com/nashamri/spacemacs-theme" target="_blank">Spacemacs theme</a>,
             <a href="https://github.com/kuanyui/moe-theme.el" target="_blank">Moe theme</a>,
             <a href="https://emacsthemes.com/themes/arjen-theme.html" target="_blank">Arjen</a>. More themes could be selected after the installation.
@@ -147,9 +147,30 @@
             Then you need to add the following line to your <code>~/.emacs</code> configuration file:<br><br>
             <code>(add-to-list 'load-path "~/.emacs.d/my-library/")</code><br><br>
             to add the package to <b>Emacs</b> load list. Then you should initialize the package according to its manual, for example, by placing
-            <code>(require 'my-library)</code> line into the <code>~/.emacs</code>.</p>
+            <code>(require 'my-library)</code> line into <code>~/.emacs</code>.</p>
         </p>
 
+        <h4>Org Mode tools</h4>
+
+        <p><b>ρEmacs</b> takes care of the configuration of some <b>org-mode</b> tools that are very tedious to set up manually:</p>
+
+        <h5>org-protocol</h5>
+        <p style="text-align: justify;">The installer is able to automatically configure <a href="https://orgmode.org/manual/Protocols.html">org-protocol</a>
+            to capture links and selected text from web browsers. Notably, in the case of western system locales it should seamlessly work with
+
+            the <b>Org Capture</b> extension
+            (<a href="https://chrome.google.com/webstore/detail/org-capture/kkkjlfejijcjgjllecmnejhogpbcigdc?hl=en" target="_blank">Chrome</a>,
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/org-capture/" target="_blank">Firefox</a>) without any additional configuration.
+            More complex capture schemes <a href="https://gchristensen.github.io/posts/dynamic-org-capture-templates/" target="_blank">are possible</a>.
+            By default, captures are saved at the file named <code>~/org/capture.org</code> (configurable through the
+            <a href="https://orgmode.org/manual/Setting-up-capture.html#index-org_002ddefault_002dnotes_002dfile">org-default-notes-file</a> variable).
+        </p>
+
+        <h5>org-wiki</h5>
+        <p style="text-align: justify;"><a href="https://caiorss.github.io/org-wiki/" target="_blank">org-wiki</a> package offers a firm foundation for a personal
+            knowledge base. Its <a href="https://github.com/caiorss/org-wiki#paste-image" target="_blank">clip.jar</a> utility is included into the distribution
+            (Java runtime necessary to run it is provided by the distribution). The default wiki root directory is located at <span class="mono">~/org/wiki</span>.</p>
+        </p>
 
     </section>
     <footer>
