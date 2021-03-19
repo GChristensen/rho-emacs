@@ -106,15 +106,15 @@
         <p style="text-align: justify;"><b>&rho;Emacs</b> could be launched using a shortcut from <b>Windows</b> Start Menu, but the launcher is also accessible
         at the command line as the <code>rho</code> command (included in system <code>PATH</code> environment variable).
         It passes any arguments that do not start with a slash (<code>/</code>) to the underlying program which may be <code>emacs</code> if <b>Emacs</b>
-            is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument allows to specify the home directory <b>ρEmacs</b>
-        in the form <code>/HOME:path/to/the/directory</code>. This is convenient, for example, for use in <b>Windows</b> shortcuts.</p>
+            is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument allows to specify the home directory of <b>ρEmacs</b>
+        in the following form <code>/HOME:path/to/the/directory</code>. This may be convenient, for example, for use in <b>Windows</b> shortcuts.</p>
 
         <p style="text-align: justify;">Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as
             <code>emacsclient</code> if <b>Emacs</b> is already running.</p>
 
         <h4><a id="enhancements" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> enhancement libraries</h4>
 
-        <p><a href="https://emacswiki.org/emacs/InteractivelyDoThings" target="_blank">ido</a>,
+        <p style="text-align: justify;"><a href="https://emacswiki.org/emacs/InteractivelyDoThings" target="_blank">ido</a>,
             <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html" target="_blank">fido</a>,
             <a href="https://www.emacswiki.org/emacs/IswitchBuffers" target="_blank">iswitchb</a>,
             <a href="https://www.emacswiki.org/emacs/IbufferMode" target="_blank">ibuffer</a>,
@@ -125,13 +125,30 @@
             <a href="https://www.emacswiki.org/emacs/TabBarMode" target="_blank">tabbar</a> and
             <a href="https://www.emacswiki.org/emacs/BookmarkPlus" target="_blank">bookmark+</a> modes could be enabled by default.
         </p>
-        <p><b>&rho;Emacs</b> installer also allows to activate one of the following UI themes:
+        <p style="text-align: justify;"><b>&rho;Emacs</b> installer will offer to activate one of the following UI themes:
             <a href="https://github.com/nashamri/spacemacs-theme" target="_blank">Spacemacs theme</a>,
             <a href="https://github.com/kuanyui/moe-theme.el" target="_blank">Moe theme</a>,
             <a href="https://emacsthemes.com/themes/arjen-theme.html" target="_blank">Arjen</a>. More themes could be selected after the installation.
         </p>
 
-        <p>You may install <b>&rho;Emacs</b> without any enhancements and configure it as you wish</p>
+        <p style="text-align: justify;">You may install <b>&rho;Emacs</b> without any enhancements and configure it as you wish.</p>
+
+        <h4>Installing Third Party Emacs Extensions</h4>
+
+        <h5>Automated installation</h5>
+        <p style="text-align: justify;">
+            Automated package installation is possible through the <a href="https://melpa.org/" target="_blank">MELPA</a>
+            repository available with <code>M-x list-packages</code> command.
+        </p>
+
+        <h5>Manual installation</h5>
+        <p style="text-align: justify;">To install a package manually, you need to place it into a subdirectory of <code>~/.emacs.d</code>
+            folder (where <code>~</code> is a shortcut for a home directory in <b>Emacs</b>).
+            Then you need to add the following line to your <code>~/.emacs</code> configuration file:<br><br>
+            <code>(add-to-list 'load-path "~/.emacs.d/my-library/")</code><br><br>
+            to add the package to <b>Emacs</b> load list. Then you should initialize the package according to its manual, for example, by placing
+            <code>(require 'my-library)</code> line into the <code>~/.emacs</code>.</p>
+        </p>
 
 
     </section>
