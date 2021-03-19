@@ -58,7 +58,7 @@
              xhr.onreadystatechange = function () {
                  if (this.readyState == 4 && this.status == 200) {
                      var release = JSON.parse(this.responseText);
-                     var link = document.getElementById("xpi-link");
+                     var link = document.getElementById("app-link");
                      link.href = release.assets[0].browser_download_url;
                  }
              };
