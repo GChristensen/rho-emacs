@@ -1,0 +1,2 @@
+[makefile]
+indent_style = tab

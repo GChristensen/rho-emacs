@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# This script is provided for backward compatibility with programs
+# that use pspell.  Do not use as it will eventually go away.
+
+case $1 in
+--version | version)
+  echo 0.60.7
+  ;;
+--datadir | datadir)
+  echo "/mingw32/share"
+  ;;
+--pkgdatadir | pkgdatadir)
+  echo "/mingw32/lib/aspell-0.60"
+  ;;
+*)
+  echo "usage: pspell-config version|datadir|pkgdatadir"
+  ;;
+esac
