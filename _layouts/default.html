@@ -80,27 +80,34 @@
           <a href="https://www.gnu.org/software/emacs/" target="_blank">GNU Emacs</a> editor for
           <b>Microsoft Windows</b>. It offers some enhancements over the standard <b>Emacs</b> experience and targets
           several Windows-specific issues. Additionally, it provides optional components which improve <b>org-mode</b> capture
-          capabilities and allow to create an <b>org-mode</b>-based wiki.
+          capabilities and allow to create an <b>org-mode</b>-based local wiki.
         </p>
 
         <h4><a id="features" class="anchor" aria-hidden="true" href="#description"></a>Features</h4>
-
-        <p style="text-align: justify;">
-            <ul>
-        <li style="text-align: justify;">A smart launcher, that starts <b>Emacs</b> in a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html" target="_blank">server</a>
+        <ul>
+           <li style="text-align: justify;">A smart launcher, that starts <b>Emacs</b> in a <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Emacs-Server.html" target="_blank">server</a>
             mode and then acts like <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html#Invoking-emacsclient" target="_blank">emacsclient</a>.</li>
                 <li style="text-align: justify;">The home directory of the standard <b>Emacs</b> is bound to <code>USERPROFILE</code> or <code>HOME</code>
                     environment variables.
                     The home directory of <b>&rho;Emacs</b> could be anywhere, and even could be specified as a command-line argument to the launcher.</li>
-                <li style="text-align: justify;">"><b>ρEmacs</b> includes several popular libraries, modes and themes which comprise a reasonably
+                <li style="text-align: justify;"><b>ρEmacs</b> includes several popular libraries, modes and themes which comprise a reasonably
                     convenient configuration out of the box.</li>
-                <li>Some common <b>POSIX</b> utilities used by <b>Emacs</b>, such as find/grep, patch/diff and aspell, are provided by the distribution.</li>
-                <li><a href="https://web.archive.org/web/20201112005304/https://orgmode.org/manual/Capture.html" target="_blank">Capture</a>
-                    with <a href="https://web.archive.org/web/20201112005304/https://orgmode.org/manual/Protocols.html" target="_blank">org-protocol</a>
+                <li>Some common <b>POSIX</b> utilities used by <b>Emacs</b>, such as <b>find</b>/<b>grep</b>, <b>patch</b>/<b>diff</b> and <b>aspell</b>, are also provided by the distribution.</li>
+                <li><a href="https://orgmode.org/manual/Capture.html" target="_blank">Capture</a>
+                    with <a href="https://orgmode.org/manual/Protocols.html" target="_blank">org-protocol</a>
                     may be configured by a single check in the installer.</li>
                 <li>Possibility of a portable installation.</li>
-            </ul>
-        </p>
+        </ul>
+
+        <h4><a id="launcher" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> launcher</h4>
+
+        <p><b>&rho;Emacs</b> could be launched using a shortcut from <b>Windows</b> Start Menu, but the launcher is also accessible
+        at the command line as the <code>rho</code> command (included in system <code>PATH</code> environment variable).
+        It passes any arguments that do not start with a slash (<code>/</code>) to the underlying program which may be <code>emacs</code> if <b>Emacs</b>
+            is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument of the launcher allows to specify the home directory <b>ρEmacs</b>
+        in the form <code>/HOME:path/to/the/directory</code>. This is convenient for example, for use in <b>Windows</b> shortcuts.</p>
+
+        <p>Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as <code>emacsclient</code> if <b>Emacs</b> is already running.</p>
 
 
 
