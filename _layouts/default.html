@@ -72,7 +72,7 @@
                  setTimeout(function () {
                      document.getElementById('webm').style.display = 'none';
                      document.getElementById('placeholder').style.display = 'block';
-                 }, 25000);
+                 }, 33000);
              }
 
              setTimeout(function() {
@@ -84,7 +84,7 @@
              }, 1000);
         </script>
 
-        <div id="placeholder" style="display: block;">
+        <div id="placeholder" style="display: block; text-align: center;">
             <div style="position: relative; display: table;" onclick="watch()">
                 <!--img title="Watch on Youtube" style="cursor: pointer;" src="/enso-portable/screen.jpg" alt="screen" /-->
                 <img style="cursor: pointer;" src="/rho-emacs/media/logo.png" alt="screen"/>
@@ -93,10 +93,10 @@
             </div>
         </div>
 
-        <div id="webm" style="display: none;">
-            <video src="/rho-emacs/media/emacs.webm" width="100%" type="video/webm" muted />
+        <div id="webm" style="display: none; text-align: center;">
+            <video src="/rho-emacs/media/emacs.webm"  type="video/webm" muted />
         </div>
-        
+
         <p>SEE ALSO: <a href="https://gchristensen.github.io/enso-portable/" >Enso open-source</a>,
             <a href="https://gchristensen.github.io/scrapyard/">Scrapyard</a></p>
 
