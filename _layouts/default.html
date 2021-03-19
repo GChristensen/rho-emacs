@@ -92,6 +92,8 @@
                     The home directory of <b>&rho;Emacs</b> could be anywhere, and even could be specified as a command-line argument to the launcher.</li>
                 <li style="text-align: justify;"><b>ρEmacs</b> includes several popular libraries, modes and themes which comprise a reasonably
                     convenient configuration out of the box.</li>
+                <li>The <a href="https://github.com/source-foundry/Hack">Hack</a> typeface, which works quite fast with <b>Emacs</b> font-lock mode is used by default.
+                    This helps to avoid lags and freezes when editing large files.</li>
                 <li>Some common <b>POSIX</b> utilities used by <b>Emacs</b>, such as <b>find</b>/<b>grep</b>, <b>patch</b>/<b>diff</b> and <b>aspell</b>, are also provided by the distribution.</li>
                 <li><a href="https://orgmode.org/manual/Capture.html" target="_blank">Capture</a>
                     with <a href="https://orgmode.org/manual/Protocols.html" target="_blank">org-protocol</a>
@@ -101,15 +103,29 @@
 
         <h4><a id="launcher" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> launcher</h4>
 
-        <p><b>&rho;Emacs</b> could be launched using a shortcut from <b>Windows</b> Start Menu, but the launcher is also accessible
+        <p style="text-align: justify;"><b>&rho;Emacs</b> could be launched using a shortcut from <b>Windows</b> Start Menu, but the launcher is also accessible
         at the command line as the <code>rho</code> command (included in system <code>PATH</code> environment variable).
         It passes any arguments that do not start with a slash (<code>/</code>) to the underlying program which may be <code>emacs</code> if <b>Emacs</b>
-            is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument of the launcher allows to specify the home directory <b>ρEmacs</b>
-        in the form <code>/HOME:path/to/the/directory</code>. This is convenient for example, for use in <b>Windows</b> shortcuts.</p>
+            is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument allows to specify the home directory <b>ρEmacs</b>
+        in the form <code>/HOME:path/to/the/directory</code>. This is convenient, for example, for use in <b>Windows</b> shortcuts.</p>
 
-        <p>Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as <code>emacsclient</code> if <b>Emacs</b> is already running.</p>
+        <p style="text-align: justify;">Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as
+            <code>emacsclient</code> if <b>Emacs</b> is already running.</p>
 
+        <h4><a id="enhancements" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> enhancement libraries</h4>
 
+        <p><a href="https://emacswiki.org/emacs/InteractivelyDoThings" target="_blank">ido</a>,
+            <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html" target="_blank">fido</a>,
+            <a href="https://www.emacswiki.org/emacs/IswitchBuffers" target="_blank">iswitchb</a>,
+            <a href="https://www.emacswiki.org/emacs/IbufferMode" target="_blank">ibuffer</a>,
+            <a href="https://www.emacswiki.org/emacs/uniquify" target="_blank">uniquify</a>,
+            <a href="https://www.emacswiki.org/emacs/SavePlace" target="_blank">save-place</a>,
+            <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Desktop-Save-Mode.html" target="_blank">desktop-save</a>,
+            <a href="https://github.com/sabof/org-bullets" target="_blank">org-bullets</a>,
+            <a href="https://www.emacswiki.org/emacs/TabBarMode" target="_blank">tabbar</a> and
+            <a href="https://www.emacswiki.org/emacs/BookmarkPlus" target="_blank">bookmark+</a> modes could be enabled by default.
+            
+        </p>
 
 
     </section>
