@@ -104,10 +104,10 @@
         <h4><a id="launcher" class="anchor" aria-hidden="true" href="#description"></a><b>&rho;Emacs</b> launcher</h4>
 
         <p style="text-align: justify;"><b>&rho;Emacs</b> could be launched using a shortcut from <b>Windows</b> Start Menu, but the launcher is also accessible
-        at the command line as the <code>rho</code> command (included in system <code>PATH</code> environment variable).
+        at the command line as the <code>rho</code> command (included in the system <code>PATH</code> environment variable).
         It passes any arguments that do not start with a slash (<code>/</code>) to the underlying program which may be <code>emacs</code> if <b>Emacs</b>
             is not running, or <code>emacsclient</code> otherwise. The <code>/HOME</code> command-line argument allows to specify the home directory of <b>ρEmacs</b>
-        in the following form <code>/HOME:path/to/the/directory</code>. This may be convenient, for example, for use in <b>Windows</b> shortcuts.</p>
+        in the following form <code>/HOME:path/to/the/directory</code>, for example: <code>/HOME:d:/rho-home</code>. This may be convenient for use in <b>Windows</b> shortcuts.</p>
 
         <p style="text-align: justify;">Use <code>rhoc</code> command to run <b>Emacs</b> in the terminal (it will act as
             <code>emacsclient</code> if <b>Emacs</b> is already running).</p>
@@ -170,7 +170,12 @@
         <h5>org-wiki</h5>
         <p style="text-align: justify;"><a href="https://caiorss.github.io/org-wiki/" target="_blank">org-wiki</a> package offers a firm foundation for a personal
             knowledge base. Its <a href="https://github.com/caiorss/org-wiki#paste-image" target="_blank">clip.jar</a> utility is included into the distribution
-            (private Java runtime necessary to run it is provided by the installer). The default wiki root directory is located at <span class="mono">~/org/wiki</span>.</p>
+            (private Java runtime necessary to run it is provided by the installer).
+            The default wiki root directory is located at <span class="mono">~/org/wiki</span>.
+        </p>
+        <p style="text-align: justify;">
+            <b>org-wiki</b> will install the <a href="https://github.com/emacs-helm/helm" target="_blank">helm</a> package with its dependencies on the
+            first run of <b>Emacs</b>, so Internet connection is required.
         </p>
 
     </section>
