@@ -1,1 +1,0 @@
-@call %RHO_DIR%\bin\msys\msys2_shell -mingw32 -where %HOME%

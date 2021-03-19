@@ -1,2 +1,0 @@
-Package: 0.3.2
-Groovy: 2.5.7

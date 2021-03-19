@@ -1,7 +1,0 @@
-MODE url 
-
-ASPELL >=0.60
-
-DESCRIPTION mode to skip URL like constructs (default mode)
-
-FILTER url

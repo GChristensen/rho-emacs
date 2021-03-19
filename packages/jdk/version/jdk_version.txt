@@ -1,2 +1,0 @@
-Package: 0.3.2
-Oracle JDK: 8.0u141

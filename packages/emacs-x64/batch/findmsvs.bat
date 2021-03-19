@@ -1,1 +1,0 @@
-vswhere -legacy -property installationPath >%HOME%/.emacs.d/.msvc

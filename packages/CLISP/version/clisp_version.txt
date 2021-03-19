@@ -1,2 +1,0 @@
-Package: 0.1.0
-CLISP: 2.49

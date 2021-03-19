@@ -1,2 +1,0 @@
-Package: 0.2.1
-WinPython: 2.7.13

@@ -1,2 +1,0 @@
-Package: 0.4.0
-Gradle: 6.5

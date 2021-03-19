@@ -1,2 +1,0 @@
-Package: 0.3.2
-Apache Ant: 1.10.6

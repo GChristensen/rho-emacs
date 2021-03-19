@@ -1,5 +1,0 @@
-htdocs\header.shtml
-htdocs\index.shtml (links)
-packages\version.txt
-packages\emacs-x64\version\version.txt
-setup.nsi

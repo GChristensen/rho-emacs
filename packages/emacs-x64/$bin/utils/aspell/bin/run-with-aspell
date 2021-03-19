@@ -1,4 +1,0 @@
-#!/bin/sh
-PATH=/mingw32/lib/aspell-0.60:$PATH
-export PATH
-exec $@

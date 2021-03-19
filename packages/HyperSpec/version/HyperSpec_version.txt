@@ -1,2 +1,0 @@
-Package: 0.1.0
-Common Lisp Hyperspec 7.0

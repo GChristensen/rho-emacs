@@ -1,5 +1,0 @@
-#!/bin/sh
-# Starts Emacs (through emacsclient) from an MSYS sh shell.
-# Put this file in your MSYS sh:s PATH.
-# (Created by Setup Helper at Thu Jan 26 19:27:19 2012)
-"/d/downloads/emacs/emacs/bin/emacsclient.exe" -n "$1"

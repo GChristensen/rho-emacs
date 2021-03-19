@@ -1,1 +1,0 @@
-@rmdir .\ant\bin\ant\

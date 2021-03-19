@@ -1,9 +1,0 @@
-
-Uninstall is Not Available
-**************************
-
-Please observe that Emacs Setup Helper for MS Windows stores no
-uninstall info. You have to manually uninstall everything installed.
-
-The reason for this is that most of what is done can not be safely
-uninstalled.

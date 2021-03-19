@@ -1,1 +1,0 @@
-@rmdir .\maven\bin\maven\

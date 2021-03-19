@@ -1,5 +1,0 @@
-To do:
-
-Eliminate unnecessary strcpy calls in xargs.
-
-Use mode_t and AC_TYPE_MODE_T.
