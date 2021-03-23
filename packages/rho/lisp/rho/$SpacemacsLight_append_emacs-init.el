@@ -1,9 +1,6 @@
 ;; package:SpacemacsLight ; please do not remove or edit these comments
 ;; Additional modes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'custom-theme-load-path (concat custom-theme-directory "/spacemacs-theme/"))
-(add-to-list 'load-path (concat custom-theme-directory "/spacemacs-theme/"))
-
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/powerline"))
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/spaceline"))
 

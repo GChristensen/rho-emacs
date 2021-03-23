@@ -1,12 +1,6 @@
 ;; package:ConvKit ; please do not remove or edit these comments
 ;; Basic Convenience Kit setup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ELPA configuration
-(defconst rho--elpa-dir (concat rho--emacs-home "/elpa"))
-                     
-(if (not (file-exists-p rho--elpa-dir))
-  (make-directory rho--elpa-dir))
-
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/bookmarks"))
 (require 'bookmark+)
 

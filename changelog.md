@@ -1,14 +1,5 @@
-# rho-emacs
-A preconfigured distribution of Emacs for Windows
-
-This is a development page. Please, see the main page at: https://gchristensen.github.io/rho-emacs/
-
-Changes
-
 #### 2021-03-23 v1.0.1
 
 * Fixed incorrect processing of arguments by the launcher when installed in a directory containing spaces.
 * Using precompiled elisp libraries instead of on-site compilation.
 * Fixed theme selection in the installer.
-
-[Full changelog](changelog.md)

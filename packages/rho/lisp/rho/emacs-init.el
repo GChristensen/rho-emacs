@@ -29,6 +29,12 @@
    t)
 (package-initialize)
 
+;; ELPA configuration
+(defconst rho--elpa-dir (concat rho--emacs-home "/elpa"))
+                     
+(if (not (file-exists-p rho--elpa-dir))
+  (make-directory rho--elpa-dir))
+
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/use-package"))
 (require 'use-package)
 
@@ -37,9 +43,6 @@
   (defun server-ensure-safe-dir (dir) t)
   (or (eq (server-running-p) t)
       (server-start)))
-
-(setq custom-theme-directory (concat rho--root-dir "/lisp/themes/"))
-(setq custom-safe-themes t)
 
 (rho--create-default-get-version 'aspell)
 (rho--create-default-get-version 'pandoc)
@@ -55,3 +58,11 @@
 (advice-add 'org-protocol-check-filename-for-protocol
             :around #'advice-org-protocol-check-filename) 
 
+(setq custom-theme-directory (concat rho--root-dir "/lisp/themes/"))
+(setq custom-safe-themes t)
+
+(add-to-list 'custom-theme-load-path (concat custom-theme-directory "/spacemacs-theme/"))
+(add-to-list 'load-path (concat custom-theme-directory "/spacemacs-theme/"))
+
+(add-to-list 'custom-theme-load-path (concat custom-theme-directory "/moe-theme/"))
+(add-to-list 'load-path (concat custom-theme-directory "/moe-theme/"))

@@ -14,7 +14,7 @@ add_link_options(-municode -mwindows)
 #add_definitions(-DRHOC)
 #add_link_options(-municode -mconsole -mwindows)
 
-add_executable(rho main.cpp strutils.h)
+add_executable(rho main.cpp strutils.cpp strutils.h)
 
 target_link_options(rho PUBLIC -static -static-libgcc -static-libstdc++)
 

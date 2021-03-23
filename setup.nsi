@@ -10,7 +10,7 @@ SetCompressor /SOLID lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.0.0
+!define VERSION 1.0.1
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -375,6 +375,7 @@ Section -pre SEC_PRE
 
   SetOutPath "$INSTDIR\"
   File /r "packages\rho\"
+  File /r "software\elc\rho\"
 
   SetDetailsPrint both
   EnVar::SetHKCU
@@ -396,6 +397,7 @@ SectionEnd
 Section "Basic enhancements" SEC_ConvKit
     SetOutPath "$INSTDIR\"
     File /r "packages\convkit\"
+    File /r "software\elc\convkit\"
 
     !insertmacro INSTALL_PACKAGE ConvKit 0
 
@@ -406,6 +408,7 @@ SectionEnd
 Section "Tabbar" SEC_Tabbar
     SetOutPath "$INSTDIR\"
     File /r "packages\tabbar\"
+    File /r "software\elc\tabbar\"
 
     !insertmacro INSTALL_PACKAGE tabbar 0
 SectionEnd
@@ -431,6 +434,7 @@ SectionGroup "Org tools"
 
         SetOutPath "$INSTDIR\"
         File /r "packages\orgwiki\"
+        File /r "software\elc\orgwiki\"
     SectionEnd
 SectionGroupEnd
 
@@ -507,14 +511,15 @@ Section -post SEC_post
 
 continue_portable:
 
-    SetDetailsPrint both
-    DetailPrint "Initializing the installation..."
-    SetDetailsPrint none
+    #SetDetailsPrint both
+    #DetailPrint "Compiling elisp libraries..."
+    #SetDetailsPrint none
 
-    ExecWait '"$INSTDIR\${STEM}.exe" /TARGET:PRECOMP /WAIT'
+    #ExecWait '"$INSTDIR\${STEM}.exe" /TARGET:PRECOMP /SHOW /WAIT'
 
     SetDetailsPrint both
-    DetailPrint "Initialization finished"
+    #DetailPrint "Compilation finished"
+    DetailPrint "Installation complete"
     SetDetailsPrint none
 SectionEnd
 
@@ -662,12 +667,12 @@ Function .onInit
     StrCpy $switch_overwrite 1
     ${GetParameters} $CommandParams
 
-    !insertmacro SectionRadioButtons "${SEC_ThemeNOP}" "${SEC_ThemeNOP}.${SEC_SpacemacsDark},${SEC_SpacemacsLight},${SEC_MoeDark},${SEC_MoeLight},${SEC_Arjen}"
+    !insertmacro SectionRadioButtons "${SEC_ThemeNOP}" "${SEC_ThemeNOP},${SEC_SpacemacsDark},${SEC_SpacemacsLight},${SEC_MoeDark},${SEC_MoeLight},${SEC_Arjen}"
 #    SectionSetFlags ${SEC_emacs-x64} 17 ; mandatory sec
 FunctionEnd
 
 Function .onSelChange
-    !insertmacro SectionRadioButtons "${SEC_ThemeNOP}" "${SEC_ThemeNOP}.${SEC_SpacemacsDark},${SEC_SpacemacsLight},${SEC_MoeDark},${SEC_MoeLight},${SEC_Arjen}"
+    !insertmacro SectionRadioButtons "${SEC_ThemeNOP}" "${SEC_ThemeNOP},${SEC_SpacemacsDark},${SEC_SpacemacsLight},${SEC_MoeDark},${SEC_MoeLight},${SEC_Arjen}"
 FunctionEnd
 
 # Uninstaller functions

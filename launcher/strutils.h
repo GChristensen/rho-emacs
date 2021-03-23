@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include <windows.h>
 
 #ifdef UNICODE
@@ -40,5 +41,7 @@ std::basic_string<TChar> GetStringFromWindowsApi( TStringGetterFunc stringGetter
         result.resize( result.length() * 2 );
     }
 }
+
+bool iequals(const tstring& a, const tstring& b);
 
 #endif //RHO_STRUTILS_H
