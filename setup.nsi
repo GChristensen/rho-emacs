@@ -375,7 +375,7 @@ Section -pre SEC_PRE
 
   SetOutPath "$INSTDIR\"
   File /r "packages\rho\"
-  File /r "software\elc\rho\"
+  File /r "elc\rho\"
 
   SetDetailsPrint both
   EnVar::SetHKCU
@@ -397,7 +397,7 @@ SectionEnd
 Section "Basic enhancements" SEC_ConvKit
     SetOutPath "$INSTDIR\"
     File /r "packages\convkit\"
-    File /r "software\elc\convkit\"
+    File /r "elc\convkit\"
 
     !insertmacro INSTALL_PACKAGE ConvKit 0
 
@@ -408,7 +408,7 @@ SectionEnd
 Section "Tabbar" SEC_Tabbar
     SetOutPath "$INSTDIR\"
     File /r "packages\tabbar\"
-    File /r "software\elc\tabbar\"
+    File /r "elc\tabbar\"
 
     !insertmacro INSTALL_PACKAGE tabbar 0
 SectionEnd
@@ -434,7 +434,7 @@ SectionGroup "Org tools"
 
         SetOutPath "$INSTDIR\"
         File /r "packages\orgwiki\"
-        File /r "software\elc\orgwiki\"
+        File /r "elc\orgwiki\"
     SectionEnd
 SectionGroupEnd
 
