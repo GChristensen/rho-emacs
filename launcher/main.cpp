@@ -226,7 +226,7 @@ int entry(HINSTANCE hInstance, std::vector<tstring> argv) {
         }
     }
 
-    tstring fullFile = iequals(firstFile, moduleName)? _T(""): firstFile;
+    tstring fullFile = firstFile;
 
     if (!fullFile.empty() && fullFile.find_first_of(_T(':')) == tstring::npos) {
         tstring curDir = GetStringFromWindowsApi<TCHAR>([](TCHAR* buffer, int size) {
@@ -257,7 +257,7 @@ int entry(HINSTANCE hInstance, std::vector<tstring> argv) {
     }
 
     auto argFilter = [firstFile, moduleName](tstring s)
-            {return !s.starts_with(_T("/")) && !iequals(s, firstFile) && !iequals(s, moduleName);};
+            {return !s.starts_with(_T("/")) && !iequals(s, firstFile);};
     auto restArgs = argv | std::views::filter(argFilter);
 
     for (const auto &s : restArgs)

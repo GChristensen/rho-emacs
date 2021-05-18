@@ -5,10 +5,9 @@ This is a development page. Please, see the main page at: https://gchristensen.g
 
 Changes
 
-#### 2021-03-23 v1.0.1
+#### 2021-05-18 v1.0.2
 
-* Fixed incorrect processing of arguments by the launcher when installed in a directory containing spaces.
-* Using precompiled elisp libraries instead of on-site compilation.
-* Fixed theme selection in the installer.
+* Updated to Emacs 27.2.
+* Disabled solid compression in the installer to make it more responsive.
 
 [Full changelog](changelog.md)

@@ -1,16 +1,19 @@
 # Rho Emacs installer                    
 # (C) 2021 g/christensen
 
+Unicode True
+
 Name "Rho Emacs"
 !define STEM "rho"
 !define _SUFFIX ""
 !define COPYRIGHT "(C) 2021 g/christensen"
 
-SetCompressor /SOLID lzma
+
+SetCompressor lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.0.1
+!define VERSION 1.0.2
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -197,7 +200,9 @@ Function AppendConfig
     ${EndIf}
     FileRead $0 $2
   ${LoopUntil} 1 = 0
-  
+
+  FileSeek  $0 0 END
+
   ClearErrors
   FileOpen $1 "${DIR}\${APPENDIX}" r
   ${DoUntil} ${Errors}
@@ -350,6 +355,8 @@ function WriteConfig
         ${EndIf}
       ${EndIf}
 FunctionEnd
+
+ReserveFile "setup.ini"
 
 # Sections
 Section /o -UninstallCurrent SEC_UNINSTALL
@@ -576,25 +583,23 @@ FunctionEnd
 
 Function leaveComponents
 FunctionEnd
- 
+
 Function CustomSettings
+
   !insertmacro MUI_HEADER_TEXT "${S_SETTINGS_TEXT}" "${S_SETTINGS_SUBTEXT}"
-  ReserveFile "setup.ini"
   !insertmacro INSTALLOPTIONS_EXTRACT "setup.ini"
   
   ${If} $SelectedHome != ""
     !insertmacro INSTALLOPTIONS_WRITE "setup.ini" "Field 5" "State" $SelectedHome
   ${Else}
-    ReadRegStr $0 HKCU \
-             "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" \
-             Personal
+    ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
     !insertmacro INSTALLOPTIONS_WRITE "setup.ini" "Field 5" "State" "$0\rho-emacs"
   ${EndIf}
   
   !insertmacro INSTALLOPTIONS_DISPLAY "setup.ini"  
 
 FunctionEnd
- 
+
 Function leaveCustomSettings
 
   !insertmacro INSTALLOPTIONS_READ $0 "setup.ini" "Settings" "State"
