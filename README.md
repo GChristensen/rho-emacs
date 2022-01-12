@@ -5,9 +5,8 @@ This is a development page. Please, see the main page at: https://gchristensen.g
 
 Changes
 
-#### 2021-05-18 v1.0.2
+#### 2022-01-12 v1.0.3
 
-* Updated to Emacs 27.2.
-* Disabled solid compression in the installer to make it more responsive.
+* Fixed bundled grep.
 
 [Full changelog](changelog.md)

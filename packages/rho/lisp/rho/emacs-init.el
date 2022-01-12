@@ -16,8 +16,8 @@
 
 (require 's)
 
-(setq find-program (concat rho--root-dir "/utils/gnu/find.exe"))
-(setq grep-program (concat rho--root-dir "/utils/gnu/grep.exe"))
+(setq find-program (concat "\"" rho--root-dir "/utils/gnu/find.exe\""))
+(setq grep-program (concat "\"" rho--root-dir "/utils/gnu/grep.exe\""))
 
 (add-to-list 'exec-path (concat rho--root-dir "/utils/aspell/bin"))
 (custom-set-variables '(ispell-personal-dictionary (expand-file-name "~/.aspell")))

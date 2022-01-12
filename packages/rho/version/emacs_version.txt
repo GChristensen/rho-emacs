@@ -1,2 +1,2 @@
-Package: 1.0.2
+Package: 1.0.3
 Emacs: 27.2 (64-bit)
