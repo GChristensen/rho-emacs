@@ -6,14 +6,14 @@ Unicode True
 Name "Rho Emacs"
 !define STEM "rho"
 !define _SUFFIX ""
-!define COPYRIGHT "(C) 2021 g/christensen"
+!define COPYRIGHT "(C) 2022 g/christensen"
 
 
 SetCompressor lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.0.3
+!define VERSION 1.1.0
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"

@@ -5,8 +5,8 @@ This is a development page. Please, see the main page at: https://gchristensen.g
 
 Changes
 
-#### 2022-01-12 v1.0.3
+#### 2022-04-06 v1.1.0
 
-* Fixed bundled grep.
+* Updated to Emacs 28.1
 
 [Full changelog](changelog.md)

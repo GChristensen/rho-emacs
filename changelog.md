@@ -1,3 +1,7 @@
+#### 2022-04-06 v1.1.0
+
+* Updated to Emacs 28.1
+
 #### 2022-01-12 v1.0.3
 
 * Fixed bundled grep.
