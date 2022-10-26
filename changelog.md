@@ -1,10 +1,14 @@
+#### 2022-10-26 v1.2.0
+
+* Added the org-roam package.
+
 #### 2022-04-06 v1.1.0
 
-* Updated to Emacs 28.1
+* Updated to Emacs 28.1.
 
 #### 2022-01-12 v1.0.3
 
-* Fixed bundled grep.
+* Fixed the bundled grep.
 
 #### 2021-05-18 v1.0.2
 

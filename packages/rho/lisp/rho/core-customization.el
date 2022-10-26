@@ -75,7 +75,7 @@
 	 (img (create-image image-file))
 	 (image-width (and img (car (image-size img))))
 	 (window-width (window-width (selected-window)))
-     (year (number-to-string (nth 2 (calendar-current-date))))
+     (year (format-time-string "%Y"))
      (rho-version-string
           (format " v%s"
                   (with-temp-buffer

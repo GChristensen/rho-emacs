@@ -1,6 +1,8 @@
 ;; package:ConvKit ; please do not remove or edit these comments
 ;; Basic Convenience Kit setup ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define-key minibuffer-local-completion-map (kbd "SPC") 'self-insert-command)
+
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/bookmarks"))
 (require 'bookmark+)
 

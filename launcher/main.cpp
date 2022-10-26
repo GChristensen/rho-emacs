@@ -211,7 +211,9 @@ int entry(HINSTANCE hInstance, std::vector<tstring> argv) {
             tstring argHome = s.substr(6);
             if (!argHome.empty())
                 homeDir = argHome;
-            break;
+        }
+        else if (s == _T("/GUEST")) {
+            SetEnvironmentVariable(_T("RHO_GUEST"), _T("t"));
         }
     }
 

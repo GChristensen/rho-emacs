@@ -16,10 +16,12 @@
 (defun rho--replace-in-string (what with in)
   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
 
-(defconst rho--emacs-dir (concat rho--root-dir "/bin/emacs/"))
+(defconst rho--emacs-dir (concat rho--root-dir "/emacs/"))
 
-(setenv "EMACS_DIR" rho--emacs-dir)
-(setenv "EMACSDIR" rho--emacs-dir)
+(defconst rho--guest? (string= "t" (getenv "RHO_GUEST")))
+
+;(setenv "EMACS_DIR" rho--emacs-dir)
+;(setenv "EMACSDIR" rho--emacs-dir)
 (setenv "RHO_DIR" rho--root-dir)
 
 (defconst rho--home-dir (getenv "HOME"))
@@ -41,13 +43,13 @@
 (cd rho--home-dir)
 
 (setenv "PATH" (concat rho--root-dir ";" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/bin/emacs/bin;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/bin/utils;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/bin/utils/gnu;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/bin/utils/arc;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/bin/utils/iconv/bin;" (getenv "PATH")))
+(setenv "PATH" (concat rho--root-dir "/emacs/bin;" (getenv "PATH")))
+(setenv "PATH" (concat rho--root-dir "/utils;" (getenv "PATH")))
+(setenv "PATH" (concat rho--root-dir "/utils/gnu;" (getenv "PATH")))
+(setenv "PATH" (concat rho--root-dir "/utils/arc;" (getenv "PATH")))
+(setenv "PATH" (concat rho--root-dir "/utils/iconv/bin;" (getenv "PATH")))
 
-(add-to-list 'exec-path (concat rho--root-dir "/bin/utils"))
+(add-to-list 'exec-path (concat rho--root-dir "/utils"))
 
 (defvar rho--win-version-string (shell-command-to-string "ver"))
 (string-match "\\[.*? \\([0-9][0-9]?\\)\\.\\([0-9][0-9]?\\)" rho--win-version-string)

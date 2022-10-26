@@ -13,7 +13,7 @@ SetCompressor lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.1.0
+!define VERSION 1.2.0
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -443,6 +443,13 @@ SectionGroup "Org tools"
         File /r "packages\orgwiki\"
         File /r "elc\orgwiki\"
     SectionEnd
+
+    Section /o "org-roam" SEC_orgroam
+        SetOutPath "$INSTDIR\"
+        File /r "packages\orgroam\"
+
+        !insertmacro APPEND_CONFIG orgroam emacs-init.el "$INSTDIR\lisp\${STEM}"
+    SectionEnd
 SectionGroupEnd
 
 
@@ -511,7 +518,7 @@ Section -post SEC_post
     !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
 #    !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" URLInfoAbout "${URL}"
-    !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayIcon $INSTDIR\uninstall.exe
+    !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayIcon $INSTDIR\images\emacs.ico
     !insertmacro REG_STR HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" UninstallString $INSTDIR\uninstall.exe
     WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoModify 1
     WriteRegDWORD HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" NoRepair 1
@@ -693,6 +700,7 @@ FunctionEnd
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Tabbar} "Buffer grouping tab bar with mouse scroll support"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgprotocol} "Make org-protocol:// links to open in Rho Emacs"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgwiki} "Install and configure the org-wiki package"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgroam} "Install and configure the org-roam and org-roam-ui packages"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_ThemeNOP} "Do not activate any themes"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SpacemacsDark} "Enables the selected theme by default"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SpacemacsLight} "Enables the selected theme by default"

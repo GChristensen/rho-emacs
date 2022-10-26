@@ -23,4 +23,11 @@
 
 (rho--create-default-get-version 'orgwiki)
 
+(defun rho--browse-org-wiki-docs ()
+ (interactive)
+ (browse-url "https://caiorss.github.io/org-wiki/"))
+
+(easy-menu-add-item  nil '("((" "Browse Documentation")
+   ["Org-wiki" rho--browse-org-wiki-docs t])
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; orgwiki ;;
