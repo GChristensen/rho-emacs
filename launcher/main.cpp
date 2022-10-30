@@ -219,25 +219,6 @@ int entry(HINSTANCE hInstance, std::vector<tstring> argv) {
 
     SetEnvironmentVariable(_T("HOME"), homeDir.c_str());
 
-    tstring firstFile;
-
-    for (const auto &s : argv) {
-        if (!s.starts_with(_T("/")) && !s.starts_with(_T("-"))) {
-            firstFile = s;
-            break;
-        }
-    }
-
-    tstring fullFile = firstFile;
-
-    if (!fullFile.empty() && fullFile.find_first_of(_T(':')) == tstring::npos) {
-        tstring curDir = GetStringFromWindowsApi<TCHAR>([](TCHAR* buffer, int size) {
-            return GetCurrentDirectory(size, buffer);
-        }, MAX_PATH);
-
-        fullFile = curDir + _T('/') + fullFile;
-    }
-
     tstring argsToPass = GetStringFromWindowsApi<TCHAR>([configPath, targetKey](TCHAR* buffer, int size) {
         return GetPrivateProfileString(ARGUMENTS_SECTION, targetKey.c_str(), NULL, buffer, size, configPath.c_str());
     });
@@ -247,19 +228,9 @@ int entry(HINSTANCE hInstance, std::vector<tstring> argv) {
             return GetPrivateProfileString(ARGUMENTS_SECTION, _T(":FALLBACK"), NULL, buffer, size, configPath.c_str());
         });
 
-    if (!firstFile.empty()) {
-        auto pos = argsToPass.find(_T("%1"));
-        if (pos != tstring::npos)
-            argsToPass.replace(pos, 2, fullFile);
-    }
-    else {
-        auto pos = argsToPass.find(_T("%1"));
-        if (pos != tstring::npos)
-            argsToPass.replace(pos, 4, _T(""));
-    }
 
-    auto argFilter = [firstFile, moduleName](tstring s)
-            {return !s.starts_with(_T("/")) && !iequals(s, firstFile);};
+    auto argFilter = [moduleName](tstring s)
+            {return !s.starts_with(_T("/"));};
     auto restArgs = argv | std::views::filter(argFilter);
 
     for (const auto &s : restArgs)
@@ -294,10 +265,11 @@ int _tWinMain(HINSTANCE hInstance,
     int argc = 0;
     LPTSTR *args = CommandLineToArgvW(GetCommandLine(), &argc);
 
-    std::vector<tstring> argv(argc);
+    std::vector<tstring> argv(argc - 1);
 
-    for (int i = 1; i < argc; ++i)
-        argv[i] = args[i];
+    for (int i = 1; i < argc; ++i) {
+        argv[i - 1] = args[i];
+    }
 
     return entry(hInstance, argv);
 }

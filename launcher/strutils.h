@@ -44,4 +44,6 @@ std::basic_string<TChar> GetStringFromWindowsApi( TStringGetterFunc stringGetter
 
 bool iequals(const tstring& a, const tstring& b);
 
+tstring trim_copy(tstring s);
+
 #endif //RHO_STRUTILS_H
