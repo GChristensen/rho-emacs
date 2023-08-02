@@ -1,2 +1,2 @@
-Package: 1.1.1
-Emacs: 28.2 (64-bit)
+Package: 1.1.2
+Emacs: 29.1 (64-bit)

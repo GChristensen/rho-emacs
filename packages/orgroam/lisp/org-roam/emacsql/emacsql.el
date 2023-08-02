@@ -6,7 +6,7 @@
 ;; Maintainer: Jonas Bernoulli <jonas@bernoul.li>
 ;; Homepage: https://github.com/magit/emacsql
 
-;; Package-Version: 3.1.1-git
+;; Package-Version: 3.1.1.50-git
 ;; Package-Requires: ((emacs "25.1"))
 ;; SPDX-License-Identifier: Unlicense
 
@@ -66,13 +66,14 @@
 (require 'cl-lib)
 (require 'cl-generic)
 (require 'eieio)
+
 (require 'emacsql-compiler)
 
 (defgroup emacsql nil
   "The EmacSQL SQL database front-end."
   :group 'comm)
 
-(defconst emacsql-version "3.1.1-git")
+(defconst emacsql-version "3.1.1.50-git")
 
 (defvar emacsql-global-timeout 30
   "Maximum number of seconds to wait before bailing out on a SQL command.
@@ -85,8 +86,11 @@ If nil, wait forever.")
 ;;; Database connection
 
 (defclass emacsql-connection ()
-  ((process :initarg :process
-            :accessor emacsql-process)
+  ((handle :initarg :handle
+           :documentation "Internal connection handler.
+The value is a record-like object and should not be accessed
+directly.  Depending on the concrete implementation, `type-of'
+may return `process', `user-ptr' or `sqlite' for this value.")
    (log-buffer :type (or null buffer)
                :initarg :log-buffer
                :initform nil
@@ -97,7 +101,7 @@ If nil, wait forever.")
           :initform nil
           :reader emacsql-types
           :documentation "Maps EmacSQL types to SQL types."))
-  (:documentation "A connection to a SQL database.")
+  "A connection to a SQL database."
   :abstract t)
 
 (cl-defgeneric emacsql-close (connection)
@@ -108,7 +112,7 @@ If nil, wait forever.")
 
 (cl-defmethod emacsql-live-p ((connection emacsql-connection))
   "Return non-nil if CONNECTION is still alive and ready."
-  (not (null (process-live-p (emacsql-process connection)))))
+  (not (null (process-live-p (oref connection handle)))))
 
 (cl-defgeneric emacsql-types (connection)
   "Return an alist mapping EmacSQL types to database types.
@@ -119,7 +123,7 @@ SQL expression.")
 
 (cl-defmethod emacsql-buffer ((connection emacsql-connection))
   "Get process buffer for CONNECTION."
-  (process-buffer (emacsql-process connection)))
+  (process-buffer (oref connection handle)))
 
 (cl-defmethod emacsql-enable-debugging ((connection emacsql-connection))
   "Enable debugging on CONNECTION."
@@ -138,6 +142,29 @@ MESSAGE should not have a newline on the end."
         (goto-char (point-max))
         (princ (concat message "\n") buffer)))))
 
+(cl-defgeneric emacsql-process (this)
+  "Access internal `handle' slot directly, which you shouldn't do.
+Using this function to do it anyway, means additionally using a
+misnamed and obsolete accessor function."
+  (and (slot-boundp this 'handle)
+       (eieio-oref this 'handle)))
+(cl-defmethod (setf emacsql-process) (value (this emacsql-connection))
+  (eieio-oset this 'handle value))
+(make-obsolete 'emacsql-process "underlying slot is for internal use only."
+               "Emacsql 4.0.0")
+
+(cl-defmethod slot-missing ((connection emacsql-connection)
+                            slot-name operation &optional new-value)
+  "Treat removed `process' slot-name as an alias for internal `handle' slot."
+  (pcase (list operation slot-name)
+    ('(oref process)
+     (message "EmacSQL: Slot `process' is obsolete")
+     (oref connection handle))
+    ('(oset process)
+     (message "EmacSQL: Slot `process' is obsolete")
+     (oset connection handle new-value))
+    (_ (cl-call-next-method))))
+
 ;;; Sending and receiving
 
 (cl-defgeneric emacsql-send-message (connection message)
@@ -148,7 +175,7 @@ MESSAGE should not have a newline on the end."
   (emacsql-log connection message))
 
 (cl-defmethod emacsql-clear ((connection emacsql-connection))
-  "Clear the process buffer for CONNECTION-SPEC."
+  "Clear the connection buffer for CONNECTION-SPEC."
   (let ((buffer (emacsql-buffer connection)))
     (when (and buffer (buffer-live-p buffer))
       (with-current-buffer buffer
@@ -164,7 +191,7 @@ MESSAGE should not have a newline on the end."
     (while (and (or (null real-timeout) (< (float-time) end))
                 (not (emacsql-waiting-p connection)))
       (save-match-data
-        (accept-process-output (emacsql-process connection) real-timeout)))
+        (accept-process-output (oref connection handle) real-timeout)))
     (unless (emacsql-waiting-p connection)
       (signal 'emacsql-timeout (list "Query timed out" real-timeout)))))
 
@@ -189,21 +216,23 @@ MESSAGE should not have a newline on the end."
 
 ;;; Helper mixin class
 
-(defclass emacsql-protocol-mixin ()
-  ()
-  (:documentation
-   "A mixin for back-ends following the EmacSQL protocol.
+(defclass emacsql-protocol-mixin () ()
+  "A mixin for back-ends following the EmacSQL protocol.
 The back-end prompt must be a single \"]\" character. This prompt
 value was chosen because it is unreadable. Output must have
 exactly one row per line, fields separated by whitespace. NULL
-must display as \"nil\".")
+must display as \"nil\"."
   :abstract t)
 
 (cl-defmethod emacsql-waiting-p ((connection emacsql-protocol-mixin))
-  "Return true if the end of the buffer has a properly-formatted prompt."
-  (with-current-buffer (emacsql-buffer connection)
-    (and (>= (buffer-size) 2)
-         (string= "#\n" (buffer-substring (- (point-max) 2) (point-max))))))
+  "Return t if the end of the buffer has a properly-formatted prompt.
+Also return t if the connection buffer has been killed."
+  (let ((buffer (emacsql-buffer connection)))
+    (or (not (buffer-live-p buffer))
+        (with-current-buffer buffer
+          (and (>= (buffer-size) 2)
+               (string= "#\n"
+                        (buffer-substring (- (point-max) 2) (point-max))))))))
 
 (cl-defmethod emacsql-handle ((_ emacsql-protocol-mixin) code message)
   "Signal a specific condition for CODE from CONNECTION.
@@ -395,59 +424,6 @@ A prefix argument causes the SQL to be printed into the current buffer."
             (emacsql-show-sql sql)))
       (user-error "Invalid SQL: %S" sexp))))
 
-;;; Common SQLite values
-
-(defconst emacsql-sqlite-reserved
-  '( ABORT ACTION ADD AFTER ALL ALTER ANALYZE AND AS ASC ATTACH
-     AUTOINCREMENT BEFORE BEGIN BETWEEN BY CASCADE CASE CAST CHECK
-     COLLATE COLUMN COMMIT CONFLICT CONSTRAINT CREATE CROSS
-     CURRENT_DATE CURRENT_TIME CURRENT_TIMESTAMP DATABASE DEFAULT
-     DEFERRABLE DEFERRED DELETE DESC DETACH DISTINCT DROP EACH ELSE END
-     ESCAPE EXCEPT EXCLUSIVE EXISTS EXPLAIN FAIL FOR FOREIGN FROM FULL
-     GLOB GROUP HAVING IF IGNORE IMMEDIATE IN INDEX INDEXED INITIALLY
-     INNER INSERT INSTEAD INTERSECT INTO IS ISNULL JOIN KEY LEFT LIKE
-     LIMIT MATCH NATURAL NO NOT NOTNULL NULL OF OFFSET ON OR ORDER
-     OUTER PLAN PRAGMA PRIMARY QUERY RAISE RECURSIVE REFERENCES REGEXP
-     REINDEX RELEASE RENAME REPLACE RESTRICT RIGHT ROLLBACK ROW
-     SAVEPOINT SELECT SET TABLE TEMP TEMPORARY THEN TO TRANSACTION
-     TRIGGER UNION UNIQUE UPDATE USING VACUUM VALUES VIEW VIRTUAL WHEN
-     WHERE WITH WITHOUT)
-  "List of all of SQLite's reserved words.
-Also see http://www.sqlite.org/lang_keywords.html.")
-
-(defconst emacsql-sqlite-error-codes
-  '((1  SQLITE_ERROR      emacsql-error      "SQL logic error")
-    (2  SQLITE_INTERNAL   emacsql-internal   nil)
-    (3  SQLITE_PERM       emacsql-access     "access permission denied")
-    (4  SQLITE_ABORT      emacsql-error      "query aborted")
-    (5  SQLITE_BUSY       emacsql-locked     "database is locked")
-    (6  SQLITE_LOCKED     emacsql-locked     "database table is locked")
-    (7  SQLITE_NOMEM      emacsql-memory     "out of memory")
-    (8  SQLITE_READONLY   emacsql-access     "attempt to write a readonly database")
-    (9  SQLITE_INTERRUPT  emacsql-error      "interrupted")
-    (10 SQLITE_IOERR      emacsql-access     "disk I/O error")
-    (11 SQLITE_CORRUPT    emacsql-corruption "database disk image is malformed")
-    (12 SQLITE_NOTFOUND   emacsql-error      "unknown operation")
-    (13 SQLITE_FULL       emacsql-access     "database or disk is full")
-    (14 SQLITE_CANTOPEN   emacsql-access     "unable to open database file")
-    (15 SQLITE_PROTOCOL   emacsql-access     "locking protocol")
-    (16 SQLITE_EMPTY      emacsql-corruption nil)
-    (17 SQLITE_SCHEMA     emacsql-error      "database schema has changed")
-    (18 SQLITE_TOOBIG     emacsql-error      "string or blob too big")
-    (19 SQLITE_CONSTRAINT emacsql-constraint "constraint failed")
-    (20 SQLITE_MISMATCH   emacsql-error      "datatype mismatch")
-    (21 SQLITE_MISUSE     emacsql-error      "bad parameter or other API misuse")
-    (22 SQLITE_NOLFS      emacsql-error      "large file support is disabled")
-    (23 SQLITE_AUTH       emacsql-access     "authorization denied")
-    (24 SQLITE_FORMAT     emacsql-corruption nil)
-    (25 SQLITE_RANGE      emacsql-error      "column index out of range")
-    (26 SQLITE_NOTADB     emacsql-corruption "file is not a database")
-    (27 SQLITE_NOTICE     emacsql-warning    "notification message")
-    (28 SQLITE_WARNING    emacsql-warning    "warning message"))
-  "Alist mapping SQLite error codes to EmacSQL conditions.
-Elements have the form (ERRCODE SYMBOLIC-NAME EMACSQL-ERROR
-ERRSTR).  Also see https://www.sqlite.org/rescode.html.")
-
 ;;; Fix Emacs' broken vector indentation
 
 (defun emacsql--inside-vector-p ()
@@ -460,18 +436,18 @@ ERRSTR).  Also see https://www.sqlite.org/rescode.html.")
           (goto-char containing-sexp)
           (looking-at "\\["))))))
 
-(defadvice calculate-lisp-indent (around emacsql-vector-indent disable)
+(defun emacsql--calculate-vector-indent (fn &optional parse-start)
   "Don't indent vectors in `emacs-lisp-mode' like lists."
   (if (save-excursion (beginning-of-line) (emacsql--inside-vector-p))
       (let ((lisp-indent-offset 1))
-        ad-do-it)
-    ad-do-it))
+        (funcall fn parse-start))
+    (funcall fn parse-start)))
 
 (defun emacsql-fix-vector-indentation ()
   "When called, advise `calculate-lisp-indent' to stop indenting vectors.
-Once activate, vector contents no longer indent like lists."
+Once activated, vector contents no longer indent like lists."
   (interactive)
-  (ad-enable-advice 'calculate-lisp-indent 'around 'emacsql-vector-indent)
-  (ad-activate 'calculate-lisp-indent))
+  (advice-add 'calculate-lisp-indent :around
+              #'emacsql--calculate-vector-indent))
 
 ;;; emacsql.el ends here

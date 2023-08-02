@@ -5,8 +5,8 @@ This is a development page. Please, see the main page at: https://gchristensen.g
 
 Changes
 
-#### 2022-10-26 v1.2.0
+#### 2023-08-02 v1.2.1
 
-* Added the org-roam package.
+* Updated to Emacs 29.1.
 
 [Full changelog](changelog.md)

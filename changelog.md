@@ -1,3 +1,7 @@
+#### 2023-08-02 v1.2.1
+
+* Updated to Emacs 29.1.
+
 #### 2022-10-26 v1.2.0
 
 * Added the org-roam package.
