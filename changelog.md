@@ -1,3 +1,7 @@
+#### 2023-10-15 v1.2.2
+
+* Fixed about buffer issue.
+
 #### 2023-08-02 v1.2.1
 
 * Updated to Emacs 29.1.

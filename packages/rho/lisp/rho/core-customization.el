@@ -129,7 +129,7 @@
       ('error nil)))
     (unless (when (fboundp 'salty) (salty))
       (rho--about-content))
-    (toggle-read-only)))
+    (read-only-mode)))
                                                                       
 (easy-menu-add-item  nil '("Help") '("--"))
 
