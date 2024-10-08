@@ -6,7 +6,7 @@
 
 ;; Author: Donald Ephraim Curtis <dcurtis@milkbox.net>
 ;; URL: http://github.com/milkypostman/powerline/
-;; Version: 2.4
+;; Version: 2.5
 ;; Keywords: mode-line
 ;; Package-Requires: ((cl-lib "0.2"))
 
@@ -77,7 +77,7 @@
 
 Valid Values: alternate, arrow, arrow-fade, bar, box, brace,
 butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag,
-utf-8."
+slant, utf-8."
   :group 'powerline
   :type '(choice (const alternate)
                  (const arrow)
@@ -92,6 +92,7 @@ utf-8."
                  (const rounded)
                  (const roundstub)
                  (const slant)
+                 (const smooth-slant)
                  (const wave)
                  (const zigzag)
                  (const utf-8)
@@ -138,17 +139,9 @@ This is needed to make sure that text is properly aligned."
   :group 'powerline
   :type 'boolean)
 
-(defcustom powerline-image-apple-rgb nil
-  "When t, Use Apple RGB colors for image generation.
-
-On MacOS, sRGB colors are used for all GUI elements, except for image generation
-which uses Apple RGB color space.  When this option is set, theme colors are
-converted to equivalent Apple RGB colors before image generation."
-  :group 'powerline
-  :type 'boolean)
-
 (defcustom powerline-gui-use-vcs-glyph nil
-  "Display a unicode character to represent a version control system. Not always supported in GUI."
+  "Display a unicode character to represent a version control system.
+Not always supported in GUI."
   :group 'powerline
   :type 'boolean)
 
@@ -158,7 +151,8 @@ converted to equivalent Apple RGB colors before image generation."
   :type 'string)
 
 (defun pl/create-or-get-cache ()
-  "Return a frame-local hash table that acts as a memoization cache for powerline. Create one if the frame doesn't have one yet."
+  "Return a frame-local hash table that acts as a memoization cache for powerline.
+Create one if the frame doesn't have one yet."
   (let ((table (frame-parameter nil 'powerline-cache)))
     (if (hash-table-p table) table (pl/reset-cache))))
 
@@ -190,7 +184,8 @@ converted to equivalent Apple RGB colors before image generation."
   (set-frame-parameter frame 'powerline-cache nil))
 
 (defun powerline-desktop-save-delete-cache ()
-  "Set all caches to nil unless `frameset-filter-alist' has :never for powerline-cache."
+  "Set all caches to nil.
+This is not done if `frameset-filter-alist' has :never for powerline-cache."
   (unless (and (boundp 'frameset-filter-alist)
                (eq (cdr (assq 'powerline-cache frameset-filter-alist))
                    :never))
@@ -253,6 +248,8 @@ The memoization cache is frame-local."
   (pl/memoize (pl/roundstub right))
   (pl/memoize (pl/slant left))
   (pl/memoize (pl/slant right))
+  (pl/memoize (pl/smooth-slant left))
+  (pl/memoize (pl/smooth-slant right))
   (pl/memoize (pl/wave left))
   (pl/memoize (pl/wave right))
   (pl/memoize (pl/zigzag left))
@@ -266,7 +263,8 @@ The memoization cache is frame-local."
 (powerline-reset)
 
 (defun pl/make-xpm (name color1 color2 data)
-  "Return an XPM image with NAME using COLOR1 for enabled and COLOR2 for disabled bits specified in DATA."
+  "Return an XPM image with NAME using COLOR1 and COLOR2 bits specified in DATA.
+COLOR1 signifies enabled, and COLOR2 signifies disabled."
   (when window-system
     (create-image
      (concat
@@ -298,11 +296,12 @@ static char * %s[] = {
                                 "\"};"
                               "\",\n")))
                        data))))
-     'xpm t :ascent 'center)))
+     'xpm t :scale 1 :ascent 'center)))
 
 (defun pl/percent-xpm
-  (height pmax pmin winend winstart width color1 color2)
-  "Generate percentage xpm of HEIGHT for PMAX to PMIN given WINEND and WINSTART with WIDTH and COLOR1 and COLOR2."
+    (height pmax pmin winend winstart width color1 color2)
+  "Generate percentage xpm of HEIGHT for PMAX to PMIN given WINEND and WINSTART.
+Use WIDTH and COLOR1 and COLOR2."
   (let* ((height- (1- height))
          (fillstart (round (* height- (/ (float winstart) (float pmax)))))
          (fillend (round (* height- (/ (float winend) (float pmax)))))
@@ -322,7 +321,7 @@ static char * %s[] = {
 
 ;;;###autoload
 (defun powerline-hud (face1 face2 &optional width)
-  "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
+  "Return XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
   (unless width (setq width 2))
   (let ((color1 (if face1 (face-background face1) "None"))
         (color2 (if face2 (face-background face2) "None"))
@@ -371,7 +370,7 @@ static char * %s[] = {
 (defmacro defpowerline (name body)
   "Create function NAME by wrapping BODY with powerline padding an propetization."
   `(defun ,name
-     (&optional face pad)
+       (&optional face pad)
      (powerline-raw ,body face pad)))
 
 (defun pl/property-substrings (str prop)
@@ -400,7 +399,8 @@ static char * %s[] = {
 
 ;;;###autoload
 (defun powerline-raw (str &optional face pad)
-  "Render STR as mode-line data using FACE and optionally PAD import on left (l) or right (r)."
+  "Render STR as mode-line data using FACE and optionally PAD import.
+PAD can be left (`l') or right (`r')."
   (when str
     (let* ((rendered-str (format-mode-line str))
            (padded-str (concat
@@ -426,7 +426,8 @@ static char * %s[] = {
               'face face))
 
 (defun powerline-fill-center (face reserve)
-  "Return empty space using FACE to the center of remaining space leaving RESERVE space on the right."
+  "Return empty space using FACE to center of remaining space.
+Leave RESERVE space on the right."
   (unless reserve
     (setq reserve 20))
   (when powerline-text-scale-factor
@@ -486,10 +487,10 @@ static char * %s[] = {
 (defpowerline powerline-vc
   (when (and (buffer-file-name (current-buffer)) vc-mode)
     (if (and window-system (not powerline-gui-use-vcs-glyph))
-	(format-mode-line '(vc-mode vc-mode))
+        (format-mode-line '(vc-mode vc-mode))
       (format " %s%s"
-	      (char-to-string #xe0a0)
-	      (format-mode-line '(vc-mode vc-mode))))))
+              (char-to-string #xe0a0)
+              (format-mode-line '(vc-mode vc-mode))))))
 
 ;;;###autoload (autoload 'powerline-encoding "powerline")
 (defpowerline powerline-encoding
@@ -515,16 +516,15 @@ static char * %s[] = {
 ;;;###autoload (autoload 'powerline-buffer-id "powerline")
 (defun powerline-buffer-id (&optional face pad)
   (powerline-raw
-   (format-mode-line
-    (concat " " (propertize
-		 (format-mode-line mode-line-buffer-identification)
-		 'face face
-		 'mouse-face 'mode-line-highlight
-		 'help-echo "Buffer name\n\ mouse-1: Previous buffer\n\ mouse-3: Next buffer"
-		 'local-map (let ((map (make-sparse-keymap)))
-			      (define-key map [mode-line mouse-1] 'mode-line-previous-buffer)
-			      (define-key map [mode-line mouse-3] 'mode-line-next-buffer)
-			      map))))
+   '(" " (:propertize
+          mode-line-buffer-identification
+          'face face
+          'mouse-face 'mode-line-highlight
+          'help-echo "Buffer name\n\ mouse-1: Previous buffer\n\ mouse-3: Next buffer"
+          'local-map (let ((map (make-sparse-keymap)))
+                       (define-key map [mode-line mouse-1] 'mode-line-previous-buffer)
+                       (define-key map [mode-line mouse-3] 'mode-line-next-buffer)
+                       map)))
    face pad))
 
 ;;;###autoload (autoload 'powerline-process "powerline")
@@ -555,36 +555,40 @@ static char * %s[] = {
 
 (add-hook 'minibuffer-exit-hook 'pl/minibuffer-exit)
 
-(defvar powerline-selected-window (frame-selected-window))
+(defvar powerline-selected-window (frame-selected-window)
+  "Selected window.")
+
 (defun powerline-set-selected-window ()
-  "sets the variable `powerline-selected-window` appropriately"
+  "Set the variable `powerline-selected-window' appropriately."
   (when (not (minibuffer-window-active-p (frame-selected-window)))
     (setq powerline-selected-window (frame-selected-window))
     (force-mode-line-update)))
 
 (defun powerline-unset-selected-window ()
-  "Unsets the variable `powerline-selected-window` and updates the modeline"
+  "Unset the variable `powerline-selected-window' and update the mode line."
   (setq powerline-selected-window nil)
   (force-mode-line-update))
 
 (add-hook 'window-configuration-change-hook 'powerline-set-selected-window)
 
-;; focus-in-hook was introduced in emacs v24.4.
-;; Gets evaluated in the last frame's environment.
-(add-hook 'focus-in-hook 'powerline-set-selected-window)
-
-;; focus-out-hook was introduced in emacs v24.4.
-(add-hook 'focus-out-hook 'powerline-unset-selected-window)
+;; Watch focus changes
+(if (boundp 'after-focus-change-function)
+  (add-function :after after-focus-change-function
+		(lambda ()
+                  (if (frame-focus-state)
+                      (powerline-set-selected-window)
+                    (powerline-unset-selected-window))))
+  (with-no-warnings
+    (add-hook 'focus-in-hook 'powerline-set-selected-window)
+    (add-hook 'focus-out-hook 'powerline-unset-selected-window)))
 
 ;; Executes after the window manager requests that the user's events
 ;; be directed to a different frame.
-(defadvice handle-switch-frame
-    (after powerline-set-selected-window-after-switch-frame activate)
+(defadvice handle-switch-frame (after powerline-handle-switch-frame activate)
+  "Call `powerline-set-selected-window'."
   (powerline-set-selected-window))
 
-(defadvice select-window (after powerline-select-window activate)
-  "makes powerline aware of window changes"
-  (powerline-set-selected-window))
+(add-hook 'buffer-list-update-hook #'powerline-set-selected-window)
 
 ;;;###autoload (autoload 'powerline-selected-window-active "powerline")
 (defun powerline-selected-window-active ()

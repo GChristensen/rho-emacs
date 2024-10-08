@@ -20,6 +20,7 @@
       (if (not (file-exists-p org-roam-dir))
         (make-directory org-roam-dir))
 
+      (setq org-roam-database-connector 'sqlite-builtin)
       (use-package org-roam
         :after org
         :init (setq org-roam-v2-ack t)

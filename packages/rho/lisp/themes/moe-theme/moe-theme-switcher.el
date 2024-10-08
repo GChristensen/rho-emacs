@@ -1,13 +1,30 @@
 ;; moe-theme-switcher.el
+
+;; Copyright (C) 2013-2022 kuanyui
+
 ;; Author: kuanyui (azazabc123@gmail.com)
 ;; Date: 2013/05/11 11:39
 ;;
-;; This file is not a part of GNU Emacs,
-;; but this file is released under GPL v3.
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;; TODO: This program need to be refactored.
 (require 'moe-dark-theme)
 (require 'moe-light-theme)
 (require 'moe-theme)
+(require 'solar)
 
 (defvar moe-theme-switch-by-sunrise-and-sunset t
 "Automatically switch between dark and light moe-theme.
@@ -105,12 +122,12 @@ Take Keelung, Taiwan(25N,121E) for example, you can set like this:
                    (> (car now) (car 24h/sunrise))
                    (and
                     (= (car now) (car 24h/sunrise))
-                    (>= (second now) (second 24h/sunrise))))
+                    (>= (cadr now) (cadr 24h/sunrise))))
                   (or
                    (< (car now) (car 24h/sunset))
                    (and
                     (= (car now) (car 24h/sunset))
-                    (< (second now) (second 24h/sunset)))))
+                    (< (cadr now) (cadr 24h/sunset)))))
              (moe-load-theme 'light)
            (moe-load-theme 'dark)
            ))))))
@@ -128,7 +145,6 @@ Take Keelung, Taiwan(25N,121E) for example, you can set like this:
      (boundp 'calendar-latitude)
      (eql moe-theme-switch-by-sunrise-and-sunset t))
     (progn
-      (convert-time-format-of-sunrise-and-sunset)
       (run-with-timer 0 (* 60 60 24) 'convert-time-format-of-sunrise-and-sunset))
   ()
   )
@@ -139,7 +155,5 @@ Take Keelung, Taiwan(25N,121E) for example, you can set like this:
 (defun moe-theme-switcher-disable ()
   (interactive)
   (cancel-timer moe-timer))
-
-(moe-theme-auto-switch)
 
 (provide 'moe-theme-switcher)

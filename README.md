@@ -5,8 +5,8 @@ This is a development page. Please, see the main page at: https://gchristensen.g
 
 Changes
 
-#### 2023-08-02 v1.2.1
+#### 2024-10-8 v1.2.3
 
-* Updated to Emacs 29.1.
+* Updated to Emacs 29.4.
 
 [Full changelog](changelog.md)

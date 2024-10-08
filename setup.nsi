@@ -6,14 +6,14 @@ Unicode True
 Name "Rho Emacs"
 !define STEM "rho"
 !define _SUFFIX ""
-!define COPYRIGHT "(C) 2022 g/christensen"
+!define COPYRIGHT "(C) 2024 g/christensen"
 
 
 SetCompressor lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.2.2
+!define VERSION 1.2.3
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"
@@ -447,7 +447,7 @@ SectionGroup "Org tools"
     Section /o "org-roam" SEC_orgroam
         SetOutPath "$INSTDIR\"
         File /r "packages\orgroam\"
-
+    
         !insertmacro APPEND_CONFIG orgroam emacs-init.el "$INSTDIR\lisp\${STEM}"
     SectionEnd
 SectionGroupEnd
@@ -707,7 +707,7 @@ FunctionEnd
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MoeDark} "Enables the selected theme by default"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_MoeLight} "Enables the selected theme by default"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Arjen} "Enables the selected theme by default"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_CollectBackups} "Store all backups in ~/emscs.d/backups"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_CollectBackups} "Store all backups in ~/emacs.d/backups"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CUA} "Enable CUA mode"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 

@@ -8,7 +8,8 @@
 
 (setq moe-theme-highlight-buffer-id t)
 
-(moe-theme-set-color 'purple)
+(setq moe-theme-modeline-color 'purple)
+(setq moe-theme-highlight-buffer-id t)
 
 (moe-light)
 (powerline-moe-theme)

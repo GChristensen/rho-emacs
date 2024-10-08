@@ -23,6 +23,7 @@
 (require 'cl-generic)
 (require 'eieio)
 (require 'emacsql)
+(require 'emacsql-sqlite-common)
 
 (emacsql-register-reserved emacsql-sqlite-reserved)
 
