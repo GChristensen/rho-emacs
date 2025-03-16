@@ -13,7 +13,7 @@ SetCompressor lzma
 RequestExecutionLevel admin
 
 # General Symbol Definitions
-!define VERSION 1.2.3
+!define VERSION 1.2.5
 !define VERSION_SUFFIX ${VERSION}
 !define REGKEY "SOFTWARE\$(^Name)"
 BrandingText "$(^Name) v${VERSION}"

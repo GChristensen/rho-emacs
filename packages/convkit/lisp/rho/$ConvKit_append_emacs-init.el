@@ -30,7 +30,7 @@
          ))
   (add-hook hook (lambda ()
                    (interactive)
-                   (linum-mode t)
+                   (display-line-numbers-mode t)
                    (show-paren-mode 1)
                  ))) 
 
