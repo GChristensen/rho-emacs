@@ -1,9 +1,9 @@
+;; -*- no-byte-compile: t; lexical-binding: t; -*-
+
 ;; This file is a part of RHO Emacs installation
 ;; (C) 2021 g/christensen
 
 ;; Emacs initialization file
-
-;; -*- no-byte-compile: t -*-
 
 (setq rho--exec-dir (expand-file-name (concat exec-directory "/../../../../../emacs/libexec/emacs")))
 

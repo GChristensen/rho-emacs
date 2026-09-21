@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; arjen-theme.el --- arjen theme
 
 ;; Copyright (C) 2001 -- 2008  Arjen Wiersma
@@ -26,6 +28,7 @@
 ;; Port of arjen theme from `color-themes'
 
 ;;; Code:
+
 
 (deftheme arjen
   "arjen theme")

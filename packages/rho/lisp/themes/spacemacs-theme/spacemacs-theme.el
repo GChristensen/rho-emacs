@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; spacemacs-theme.el --- Color theme with a dark and light versions.
 
 ;; Copyright (C) 2015-2018 Nasser Alshammari
@@ -33,6 +35,7 @@
 ;; a 256 color terminal.
 
 ;;; Code:
+
 
 (defgroup spacemacs-theme nil
   "Spacemacs-theme options."

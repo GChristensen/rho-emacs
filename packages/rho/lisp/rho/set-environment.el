@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t -*-
+;; -*- no-byte-compile: t; lexical-binding: t; -*-
 
 ;; This file is a part of RHO Emacs installation
 ;; (C) 2021 g/christensen

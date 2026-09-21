@@ -1,3 +1,7 @@
+#### 2026-09-5 v1.2.6
+
+* Updated to Emacs 31.1.
+
 #### 2024-10-8 v1.2.3
 
 * Updated to Emacs 29.4.
