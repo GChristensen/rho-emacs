@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ρEmacs — a lightweight Emacs for Org, on Windows</title>
+<meta name="description" content="ρEmacs is a preconfigured GNU Emacs distribution for Windows: a sane default setup, a client-server launcher, and Org mode ready to go — org-wiki, org-roam and capture included.">
+<link rel="icon" type="image/svg+xml" href="img/logo.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="rho-emacs home">
+    <img src="img/logo.svg" width="32" height="32" alt="">
+    <span class="brand__name"><i>ρ</i>Emacs</span>
+  </a>
+  <nav class="site-nav">
+    <a href="#org">org</a>
+    <a href="#launcher">launcher</a>
+    <a href="#included">what's inside</a>
+    <a class="btn" href="https://github.com/GChristensen/rho-emacs/releases">Download</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <p class="hero__prompt"><span>~ $</span>rho notes.org</p>
+  <h1 class="hero__title">A lightweight Emacs,<br>built around <em>Org.</em></h1>
+
+  <div class="hero__row">
+    <p class="hero__lede">ρEmacs is a preconfigured GNU Emacs distribution for Windows. A sane
+      default setup, a client-server launcher that starts in the background, and Org mode wired up
+      end to end — wiki, roam and capture included.</p>
+    <div class="hero__actions">
+      <a class="btn btn--lg" id="app-link" href="https://github.com/GChristensen/rho-emacs/releases">Download for Windows</a>
+      <a class="btn btn--lg btn--ghost" href="https://github.com/GChristensen/rho-emacs">View on GitHub</a>
+    </div>
+  </div>
+
+  <figure class="hero__figure">
+    <div class="emacs" role="img" aria-label="A mockup of the rho-emacs editor showing an Org mode outline titled index, with sections for Getting Started, Knowledge Base and the command line.">
+      <div class="emacs__titlebar">
+        <img class="emacs__titlebar-icon" src="img/logo.svg" alt="">
+        index.org — ρEmacs
+        <span class="emacs__titlebar-controls">&#8211;&nbsp;&#9633;&nbsp;&times;</span>
+      </div>
+      <div class="emacs__menubar">
+        <span>File</span><span>Edit</span><span>Options</span><span>Buffers</span><span>Tools</span><b class="is-active">Org</b><span>Text</span><span>Help</span>
+      </div>
+      <div class="emacs__tabs">
+        <span class="emacs__tab is-current">index.org</span><span class="emacs__tab">wiki/emacs.org</span><span class="emacs__tab">roam/20260311.org</span><span class="emacs__tab">capture.org</span><span class="emacs__tab">*scratch*</span>
+      </div>
+      <div class="emacs__body">
+        <div class="org-meta">#+TITLE: <b>index</b></div>
+        <div class="org-meta">#+STARTUP: content</div>
+        <div class="org-blank"></div>
+        <div class="org-h1"><span class="bullet">&#9679;</span> Getting Started</div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> run the installer, pick a home directory</div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> first launch starts the Emacs server</div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> <b>C-c c</b> to capture from anywhere</div>
+        <div class="org-blank"></div>
+        <div class="org-h1"><span class="bullet">&#9679;</span> Knowledge Base <span class="org-tag">:wiki:roam:</span></div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> org-wiki — a local wiki in plain org files</div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> org-roam — backlinks, <b>C-c n f</b> to find a node</div>
+        <div class="org-h2"><span class="bullet">&#9675;</span> org-protocol — capture from the browser</div>
+        <div class="org-blank"></div>
+        <div class="org-h1"><span class="bullet">&#9679;</span> On the Command Line</div>
+        <div class="org-h3"><span class="bullet">&#9632;</span> <b>rho</b> notes.org &#8594; opens in the running server</div>
+        <div class="org-h3"><span class="bullet">&#9632;</span> <b>rhoc</b> notes.org &#8594; same, from a terminal</div>
+      </div>
+      <div class="emacs__modeline">
+        <span>-:**-</span><span>index.org</span><span class="is-lit">Org</span><span>(Wrap)</span><span style="margin-left:auto">rho-server</span><span>Top</span>
+      </div>
+    </div>
+  </figure>
+</section>
+
+<!-- WHAT IT IS -->
+<section class="section section--alt split">
+  <p class="eyebrow split__aside"><span class="eyebrow__num">01</span>what-it-is</p>
+  <div class="split__main">
+    <p class="statement">Emacs targets everything, so out of the box it targets nothing in particular.
+      <span>ρEmacs picks a lane: a fast default configuration, a launcher that behaves like a normal
+      Windows program, and Org mode set up as a real knowledge base instead of an empty outline.</span></p>
+    <p class="statement-note">Install it, point it at a home directory, and start capturing notes —
+      there is no fifty-file <code>init.el</code> to assemble first. You can still fall back to a
+      bare configuration and build your own if you'd rather.</p>
+  </div>
+</section>
+
+<!-- ORG MODE TOOLS -->
+<section class="section" id="org">
+  <div class="tools-head">
+    <div class="section-head">
+      <p class="eyebrow"><span class="eyebrow__num">02</span>org mode</p>
+      <h2 class="section-title">The tedious parts, already wired up.</h2>
+      <p class="lede"><a class="text-link" href="https://github.com/caiorss/org-wiki">org-wiki</a>,
+        <a class="text-link" href="https://www.orgroam.com/">org-roam</a> and
+        <a class="text-link" href="https://orgmode.org/manual/Protocols.html">org-protocol</a> capture
+        are each a small project to configure by hand. ρEmacs ships them working, with sensible
+        default locations.</p>
+    </div>
+  </div>
+
+  <div class="tool-table">
+    <span class="mono-label tool-table__label">Preconfigured</span>
+
+    <div class="tool-row">
+      <span class="tool-row__name">org-wiki</span>
+      <code class="tool-row__where">~/org/wiki</code>
+      <span class="tool-row__desc">A personal wiki in plain org files, linked to each other. Its
+        clip.jar helper — and the Java runtime it needs — ships in the distribution, so pasting
+        a screenshot into a page just works.</span>
+    </div>
+
+    <div class="tool-row">
+      <span class="tool-row__name">org-roam</span>
+      <code class="tool-row__where">~/org-roam</code>
+      <span class="tool-row__desc">Non-hierarchical notes, Zettelkasten-style, with backlinks and a
+        precompiled SQLite backend — no local compiler needed to get it running.</span>
+    </div>
+
+    <div class="tool-row">
+      <span class="tool-row__name">capture</span>
+      <code class="tool-row__where">~/org/capture.org</code>
+      <span class="tool-row__desc">org-protocol is one checkbox in the installer. Pair it with the
+        Org Capture browser extension and links or selections land straight in your notes.</span>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCHER -->
+<section class="section section--alt launcher" id="launcher">
+  <div class="launcher__text">
+    <p class="eyebrow"><span class="eyebrow__num">03</span>launcher</p>
+    <h2 class="section-title">One command, three letters.</h2>
+    <p><b>rho</b> starts Emacs in server mode the first time, then quietly behaves like
+      <b>emacsclient</b> on every call after that — so opening a file from the command line, a
+      shortcut, or a file manager is always instant.</p>
+    <p>The home directory is not tied to your Windows profile: it can be a dedicated folder, a
+      portable directory next to the install, or set per-launch with <code>/HOME:path</code>.
+      Use <b>rhoc</b> when you want the same thing from a terminal that waits for the buffer to close.</p>
+    <div class="launcher__links">
+      <a class="link-arrow" href="https://github.com/GChristensen/rho-emacs#readme">read the docs &#8594;</a>
+    </div>
+  </div>
+
+  <div class="launcher__panel">
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="terminal__dot"></span><span class="terminal__dot"></span><span class="terminal__dot"></span>
+        <span class="terminal__name">cmd.exe</span>
+      </div>
+      <div class="terminal__body">
+        <div class="t-line"><span class="t-prompt">&gt;</span>rho notes.org</div>
+        <div class="t-out">no server running &#8594; starting one, then opening the file</div>
+        <div class="t-line"><span class="t-prompt">&gt;</span>rho todo.org</div>
+        <div class="t-out">server already up &#8594; opened in under a second</div>
+        <div class="t-line"><span class="t-prompt">&gt;</span>rho /HOME:d:/rho-home notes.org</div>
+        <div class="t-out">runs against a different ρEmacs home directory</div>
+        <div class="t-line"><span class="t-prompt">&gt;</span>rhoc todo.org</div>
+        <div class="t-comment">— opens in the terminal, exits when you close the buffer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="section included" id="included">
+  <div class="section-head included__head">
+    <p class="eyebrow"><span class="eyebrow__num">04</span>what's inside</p>
+    <h2 class="section-title">Configured, not decided for you.</h2>
+    <p class="lede">Everything below is on by default and easy to turn off — ρEmacs is a starting
+      point, not a framework you have to work around.</p>
+  </div>
+
+  <div class="included__col">
+    <span class="mono-label">Runs light</span>
+    <div class="additions">
+      <p class="addition">Hack typeface by default — fast font-lock, no lag on large files.</p>
+      <p class="addition">find, grep and aspell bundled, no separate install required.</p>
+      <p class="addition">MELPA is preconfigured for anything you want to add yourself.</p>
+      <p class="addition">A portable install is available if you don't want a system footprint.</p>
+    </div>
+  </div>
+
+  <div class="included__col">
+    <span class="mono-label">Comes configured</span>
+    <div class="additions">
+      <p class="addition">ido, ibuffer, uniquify, save-place and desktop-save, switched on.</p>
+      <p class="addition">tabbar and org-bullets for a buffer list and outline that read at a glance.</p>
+      <p class="addition">Spacemacs, Moe or Arjen themes offered by the installer to start from.</p>
+      <p class="addition">A single option installs with none of the above, if you'd rather configure it yourself.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta">
+  <h2 class="cta__title">Open a file.<br><em>That's the whole setup.</em></h2>
+  <div class="cta__actions">
+    <a class="btn btn--xl" href="https://github.com/GChristensen/rho-emacs/releases">Download for Windows</a>
+    <a class="btn btn--xl btn--ghost" href="https://github.com/GChristensen/rho-emacs">View on GitHub</a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <a class="brand" href="#top" aria-label="rho-emacs home">
+    <img src="img/logo.svg" width="32" height="32" alt="">
+    <span class="brand__name"><i>ρ</i>Emacs</span>
+  </a>
+  <nav>
+    <a href="https://github.com/GChristensen/rho-emacs#readme">Docs</a>
+    <a href="https://github.com/GChristensen/rho-emacs/blob/main/changelog.md">Changelog</a>
+    <a href="https://github.com/GChristensen/rho-emacs">GitHub</a>
+    <a href="https://github.com/GChristensen/rho-emacs/issues">Report a bug</a>
+    <span>See also:
+      <a class="text-link" href="https://gchristensen.github.io/enso-portable/">Enso Launcher</a>,
+      <a class="text-link" href="https://gchristensen.github.io/scrapyard/">Scrapyard</a></span>
+  </nav>
+  <span>&copy; g/christensen</span>
+</footer>
+
+<script src="/js/gh-pages.js"></script>
+<script>
+  getLatestGHRelease("retreat", function (release) {
+    setDownloadLink(release, ".exe", "app-link");
+  });
+</script>
+<script src="main.js"></script>
+</body>
+</html>
