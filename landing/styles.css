@@ -234,6 +234,17 @@ h1, h2, h3, p, figure, pre { margin: 0; }
 
 .hero__figure { margin-top: 56px; }
 
+.hero__caption {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+.bullet-sample {
+  font-family: var(--font-mono);
+  letter-spacing: .2em;
+  color: var(--ink-2);
+}
+
 /* ---------- the Emacs mockup ---------- */
 
 .emacs {
