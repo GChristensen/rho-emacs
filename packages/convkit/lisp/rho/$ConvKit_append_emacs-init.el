@@ -93,7 +93,13 @@
 ;; org-modern and its compat dependency are bundled
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/compat"))
 (add-to-list 'load-path (concat rho--root-dir "/lisp/base/org-modern"))
-(setq org-modern-star '("◉" "○" "■" "□" "▲"))
+;; Headings look like they did with org-bullets: the last star of a heading is
+;; replaced by a bullet (cycled by level), the leading stars stay as blanks of
+;; the same width so deeper headings keep their indentation.
+(setq org-modern-star 'replace
+      org-modern-replace-stars "◉○■□▲"
+      org-modern-hide-stars " "
+      org-modern-cycle-stars t)
 (with-eval-after-load 'org
   (require 'org-modern)
   (global-org-modern-mode 1))
