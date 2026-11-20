@@ -15,7 +15,6 @@ SectionEnd
 Section "Tabbar" SEC_Tabbar
     SetOutPath "$INSTDIR\"
     File /r "packages\tabbar\"
-    File /r "elc\tabbar\"
 
     !insertmacro INSTALL_PACKAGE tabbar 0
 SectionEnd

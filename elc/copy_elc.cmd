@@ -8,7 +8,6 @@ copy /y D:\software\editors\rho\lisp\themes\moe-theme\*.elc .\rho\lisp\themes\mo
 copy /y D:\software\editors\rho\lisp\themes\spacemacs-theme\*.elc .\rho\lisp\themes\spacemacs-theme
 
 copy /y D:\software\editors\rho\lisp\base\dash.elc .\convkit\lisp\base
-copy /y D:\software\editors\rho\lisp\base\org-bullets.elc .\convkit\lisp\base
 copy /y D:\software\editors\rho\lisp\base\bookmarks\*.elc .\convkit\lisp\base\bookmarks
 copy /y D:\software\editors\rho\lisp\base\powerline\*.elc .\convkit\lisp\base\powerline
 copy /y D:\software\editors\rho\lisp\base\spaceline\*.elc .\convkit\lisp\base\spaceline
