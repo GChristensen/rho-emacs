@@ -4,3 +4,4 @@ software
 *.exe
 landing/node_modules
 landing/package-lock.json
+/.claudeignore

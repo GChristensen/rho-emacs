@@ -38,12 +38,29 @@ following three options are available:
 ## ρEmacs launcher
 
 **ρEmacs** could be launched using a shortcut from **Windows** Start Menu, but the launcher is also accessible
-in the command line as the `rho` command. It passes any arguments that do not start with a slash (`/`) to the
-underlying program which may be `emacs` if **Emacs** is not running, or `emacsclient` otherwise. The `/HOME`
-command-line argument allows to specify the home directory of **ρEmacs** in the following form
-`/HOME:path/to/the/directory`, for example: `/HOME:d:/rho-home`. This may be convenient for use in **Windows** shortcuts.
+in the command line as the `rho` command. It checks whether the **Emacs** server of the selected home directory
+is reachable and passes all arguments except the launcher switches below to `emacs` (server not running) or to
+`emacsclient` (server running). Launches that arrive while **Emacs** is still starting wait for the server instead of
+starting a second instance. When the server is running, the launcher also shows and focuses an **Emacs** frame.
 
-Use `rhoc` command to run **Emacs** in the terminal (it will act as `emacsclient` if **Emacs** is already running).
+Launcher switches (case-insensitive; `--` ends them, so that the following arguments are always passed through):
+
+| Switch | Meaning |
+|---|---|
+| `/HOME:path` | Home directory of **ρEmacs**, for example `/HOME:d:/rho-home`. Convenient in **Windows** shortcuts. |
+| `/GUEST` | Sets `RHO_GUEST=t` for the configuration. |
+| `/TARGET:name` | Run the program configured under `TARGET:name` in `rho.conf` (for example `ORG_PROTOCOL`). |
+| `/NEWFRAME` | Open a new frame instead of reusing an existing one. |
+| `/SHOW` | Show the console window of the program. |
+| `/WAIT` | Wait until the program exits and return its exit code. |
+
+Other arguments, including paths such as `/c/file.txt`, are passed on. Positions in the form `file:line[:col]` and
+`file:///` URLs are converted to the `+LINE[:COL] file` syntax. Use `rhoc` command to run **Emacs** in the terminal
+(it will act as `emacsclient` if **Emacs** is already running).
+
+Optional `[GENERAL]` keys of `rho.conf`: `FRAME` (`reuse`, `new` or `none`; default `reuse`), `FOCUS` (`1`/`0`),
+`SERVER_TIMEOUT_MS` (default `15000`). Set the `RHO_LOG` environment variable to a file name to log the launcher
+activity. Errors are reported in a message box (`rho`) or on stderr (`rhoc`).
 
 ## ρEmacs enhancement libraries
 

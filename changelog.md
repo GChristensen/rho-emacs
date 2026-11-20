@@ -1,3 +1,8 @@
+#### Unreleased
+
+* Rewrote the launcher: it waits for the Emacs server instead of racing with its startup, reports errors,
+  quotes arguments correctly, raises the Emacs frame, and understands `file:line:col` arguments.
+
 #### 2026-09-5 v1.2.6
 
 * Updated to Emacs 31.1.

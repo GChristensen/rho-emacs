@@ -1,0 +1,51 @@
+# Build the rho (GUI) and rhoc (console) launchers.
+#
+#   just            build debug and release
+#   just debug      build both executables with debug info, no optimization
+#   just release    build both executables optimized and stripped
+#   just package    build release and copy rho.exe, rhoc.exe to ../packages/rho
+#   just test       build and run the unit tests
+#   just clean      remove the build directories
+#
+# The MinGW and CMake locations can be overridden from the environment, e.g.
+#   $env:MINGW_BIN = "C:\msys64\mingw64\bin"; just release
+
+set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile", "-Command"]
+
+mingw_bin := env("MINGW_BIN", "D:/software/dev/ide/clion/bin/mingw/bin")
+cmake_bin := env("CMAKE_BIN", "D:/software/dev/ide/clion/bin/cmake/win/x64/bin")
+
+export PATH := mingw_bin + ";" + cmake_bin + ";" + env("PATH")
+
+# The directory names match the cmake-build* pattern of .gitignore.
+debug_dir := "cmake-build-just-debug"
+release_dir := "cmake-build-just-release"
+
+default: debug release
+
+[private]
+configure type dir *flags:
+    cmake -S . -B {{dir}} -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE={{type}} -DCMAKE_MAKE_PROGRAM="{{mingw_bin}}/mingw32-make.exe" {{flags}}
+
+# rho.exe and rhoc.exe, debug build
+debug: (configure "Debug" debug_dir)
+    cmake --build {{debug_dir}} --target rho rhoc --parallel
+    @echo "-> {{debug_dir}}/rho.exe, {{debug_dir}}/rhoc.exe"
+
+# rho.exe and rhoc.exe, release build
+release: (configure "Release" release_dir)
+    cmake --build {{release_dir}} --target rho rhoc --parallel
+    @echo "-> {{release_dir}}/rho.exe, {{release_dir}}/rhoc.exe"
+
+# build and run the unit tests (debug)
+test: (configure "Debug" debug_dir "-DRHO_BUILD_TESTS=ON")
+    cmake --build {{debug_dir}} --target rho_tests --parallel
+    ./{{debug_dir}}/rho_tests.exe
+
+# build the release versions and copy them to ../packages/rho
+package: release
+    cmake -E copy {{release_dir}}/rho.exe {{release_dir}}/rhoc.exe ../packages/rho
+    @echo "-> copied rho.exe and rhoc.exe to ../packages/rho"
+
+clean:
+    cmake -E rm -rf {{debug_dir}} {{release_dir}}
