@@ -7,8 +7,19 @@
 
 (defconst rho--skip-regexp
   (concat "\\(?:/\\.dir-locals\\.el\\|-autoloads\\.el\\|-pkg\\.el"
-          "\\|/\\$[^/]*_append_emacs-init\\.el\\|/tests\\.el\\)\\'")
-  "Files that are not meant to be byte-compiled.")
+          "\\|/\\$[^/]*_append_emacs-init\\.el\\|/tests\\.el"
+          "\\|/core-customization\\.el\\)\\'")
+  "Files that are not meant to be byte-compiled.
+core-customization.el is always loaded from source (see site-start.el).")
+
+(defconst rho--remove-elc
+  '("packages/rho/lisp/rho/core-customization.elc")
+  "Compiled files that must not exist, they are deleted before compiling.")
+
+(dolist (elc rho--remove-elc)
+  (when (file-exists-p elc)
+    (delete-file elc)
+    (message "Removed %s" elc)))
 
 (let* ((root (expand-file-name "packages"))
        (files (seq-remove (lambda (f) (string-match-p rho--skip-regexp f))

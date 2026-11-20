@@ -696,7 +696,7 @@ FunctionEnd
 # Section Descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Shortcuts} "Create desktop shortcuts"
-!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Enables the following modes: ido, fido, iswithcb, ibuffer, uniquify, save-place, desktop-save, bookmark+, org-bullets"
+!insertmacro MUI_DESCRIPTION_TEXT ${SEC_ConvKit} "Enables the following modes: ido, fido, ibuffer, uniquify, save-place, desktop-save, bookmark+, org-modern"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_Tabbar} "Buffer grouping tab bar with mouse scroll support"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgprotocol} "Make org-protocol:// links to open in Rho Emacs"
 !insertmacro MUI_DESCRIPTION_TEXT ${SEC_orgwiki} "Install and configure the org-wiki package"

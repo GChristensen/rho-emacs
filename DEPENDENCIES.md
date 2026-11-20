@@ -101,3 +101,73 @@ Notes:
 - The upstream projects are https://github.com/emacs-helm/helm,
   https://github.com/jwiegley/emacs-async and
   https://github.com/thierryvolpiatto/wfnames.
+
+## convkit: org-modern and compat
+
+Location: `packages/convkit/lisp/base/`
+
+| Directory    | Source                               | Bundled version | Needed by    |
+|--------------|--------------------------------------|-----------------|--------------|
+| `org-modern` | MELPA `org-modern`                   | 20261116.739    | ConvKit      |
+| `compat`     | GNU ELPA `compat` (not on MELPA)     | 31.1.0.0        | `org-modern` |
+
+`org-modern` replaces `org-bullets`. Its Emacs requirement (29.1) and Org
+requirement (9.6) are satisfied by the bundled Emacs. The `compat` here is
+independent of the older copy bundled with org-roam
+(`packages/orgroam/lisp/org-roam/compat`, 28.1.2.2); the newer one is backward
+compatible.
+
+Wiring: `packages/convkit/lisp/rho/$ConvKit_append_emacs-init.el` adds both
+directories to `load-path` and enables `global-org-modern-mode` after Org loads.
+
+### Update route
+
+Run from the repository root in Git Bash. Retry any `curl` that fails with
+`Connection was reset`.
+
+1. Find the current versions and the dependency list:
+
+   ```sh
+   curl -sSf https://melpa.org/packages/archive-contents | grep -m1 "^ (org-modern \."
+   curl -sSf https://elpa.gnu.org/packages/archive-contents | grep -A1 "^ (compat$"
+   ```
+
+   MELPA shows `(YYYYMMDD HHMM)`, so the tarball version is `YYYYMMDD.HHMM`
+   (no leading zeros in `HHMM`). GNU ELPA shows `(31 1 0 0)`, which is
+   `31.1.0.0`. If `org-modern` requires a newer `compat` or `org`, bump compat
+   first.
+
+2. Download:
+
+   ```sh
+   mkdir -p /tmp/omdl && cd /tmp/omdl
+   curl -sSfL -o org-modern.tar https://melpa.org/packages/org-modern-VERSION.tar
+   curl -sSfL -o compat.tar     https://elpa.gnu.org/packages/compat-VERSION.tar
+   ```
+
+3. Replace the bundled copies:
+
+   ```sh
+   cd /d/dev/rho/packages/convkit/lisp/base
+   rm -rf org-modern compat
+   tar -xf /tmp/omdl/org-modern.tar -C . && mv org-modern-* org-modern
+   tar -xf /tmp/omdl/compat.tar     -C . && mv compat-*     compat
+   rm -rf compat/compat.info compat/dir compat/news compat/NEWS.org
+   ```
+
+4. Update the table above.
+
+5. Verify from the repository root:
+
+   ```sh
+   software/emacs-x64/bin/emacs.exe -Q --batch --eval '(progn
+     (add-to-list (quote load-path) (expand-file-name "packages/convkit/lisp/base/compat"))
+     (add-to-list (quote load-path) (expand-file-name "packages/convkit/lisp/base/org-modern"))
+     (require (quote org))
+     (require (quote org-modern))
+     (message "OK org-modern %s" (featurep (quote org-modern))))'
+   ```
+
+   Expected last line: `OK org-modern t`.
+
+6. Review and commit (`git status packages/convkit`, then `git add` and commit).

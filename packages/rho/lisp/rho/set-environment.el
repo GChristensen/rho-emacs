@@ -24,7 +24,7 @@
 ;(setenv "EMACSDIR" rho--emacs-dir)
 (setenv "RHO_DIR" rho--root-dir)
 
-(defconst rho--home-dir (getenv "HOME"))
+(defconst rho--home-dir (or (getenv "HOME") (expand-file-name "~")))
 
 (if (not (file-exists-p rho--home-dir))
   (make-directory rho--home-dir))
@@ -42,19 +42,24 @@
 
 (cd rho--home-dir)
 
-(setenv "PATH" (concat rho--root-dir ";" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/emacs/bin;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/utils;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/utils/gnu;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/utils/arc;" (getenv "PATH")))
-(setenv "PATH" (concat rho--root-dir "/utils/iconv/bin;" (getenv "PATH")))
+;; Rho directories go first in PATH
+(setenv "PATH"
+        (mapconcat #'identity
+                   (append
+                    (mapcar (lambda (dir) (concat rho--root-dir dir))
+                            '("/utils/iconv/bin"
+                              "/utils/arc"
+                              "/utils/gnu"
+                              "/utils"
+                              "/emacs/bin"
+                              ""))
+                    (list (getenv "PATH")))
+                   path-separator))
 
 (add-to-list 'exec-path (concat rho--root-dir "/utils"))
 
-(defvar rho--win-version-string (shell-command-to-string "ver"))
-(string-match "\\[.*? \\([0-9][0-9]?\\)\\.\\([0-9][0-9]?\\)" rho--win-version-string)
-
+;; Windows version, (0 0) when not running on Windows
 (defconst rho--win-ver-major
-          (string-to-number (match-string 1 rho--win-version-string)))
+  (if (fboundp 'w32-version) (nth 0 (w32-version)) 0))
 (defconst rho--win-ver-minor
-          (string-to-number (match-string 2 rho--win-version-string)))
+  (if (fboundp 'w32-version) (nth 1 (w32-version)) 0))

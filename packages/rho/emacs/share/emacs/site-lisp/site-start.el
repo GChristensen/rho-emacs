@@ -5,9 +5,10 @@
 
 ;; Emacs initialization file
 
-(setq rho--exec-dir (expand-file-name (concat exec-directory "/../../../../../emacs/libexec/emacs")))
+(defconst rho--exec-dir
+  (expand-file-name "../../../../../emacs/libexec/emacs" exec-directory))
 
-(defconst rho--root-dir (expand-file-name (concat rho--exec-dir "/../../..")))
+(defconst rho--root-dir (expand-file-name "../../.." rho--exec-dir))
 
 (defconst rho--name "rho")
 

@@ -66,12 +66,11 @@ activity. Errors are reported in a message box (`rho`) or on stderr (`rhoc`).
 
 [ido](https://emacswiki.org/emacs/InteractivelyDoThings),
 [fido](https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html),
-[iswitchb](https://www.emacswiki.org/emacs/IswitchBuffers),
 [ibuffer](https://www.emacswiki.org/emacs/IbufferMode),
 [uniquify](https://www.emacswiki.org/emacs/uniquify),
 [save-place](https://www.emacswiki.org/emacs/SavePlace),
 [desktop-save](https://www.gnu.org/software/emacs/manual/html_node/elisp/Desktop-Save-Mode.html),
-[org-bullets](https://github.com/sabof/org-bullets),
+[org-modern](https://github.com/minad/org-modern),
 [tabbar](https://www.emacswiki.org/emacs/TabBarMode) and
 [bookmark+](https://www.emacswiki.org/emacs/BookmarkPlus) modes could be enabled by default.
 

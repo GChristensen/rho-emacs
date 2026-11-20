@@ -2,6 +2,7 @@
 ;; orgprotocol ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (unless rho--precomp?
+  (require 'org-capture)
   (require 'org-protocol)
   (require 'org-protocol-capture-html)
 
@@ -12,16 +13,17 @@
 
 
   (defun rho-decode-capture-component (c)
-    (decode-coding-string (plist-get org-store-link-plist c) 
-                           locale-coding-system))
+    (let ((value (plist-get org-store-link-plist c)))
+      (if value
+          (decode-coding-string value locale-coding-system)
+        "")))
 
-
-  (setq org-capture-templates '())
-    (add-to-list 'org-capture-templates
-                 '("p" "Protocol" entry (file "")
-                   "* %?[[%(rho-decode-capture-component :link)][%(rho-decode-capture-component :description)]] %U\n%(rho-decode-capture-component :initial)\n" :prepend t))
-    (add-to-list 'org-capture-templates
-                 '("L" "Protocol Link" entry (file "")
-                   "* %?[[%(rho-decode-capture-component :link)][%(rho-decode-capture-component :description)]] %U\n" :prepend t)))
+  ;; add the templates without discarding the user's own ones
+  (setf (alist-get "p" org-capture-templates nil nil #'equal)
+        '("Protocol" entry (file "")
+          "* %?[[%(rho-decode-capture-component :link)][%(rho-decode-capture-component :description)]] %U\n%(rho-decode-capture-component :initial)\n" :prepend t))
+  (setf (alist-get "L" org-capture-templates nil nil #'equal)
+        '("Protocol Link" entry (file "")
+          "* %?[[%(rho-decode-capture-component :link)][%(rho-decode-capture-component :description)]] %U\n" :prepend t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; orgprotocol ;;

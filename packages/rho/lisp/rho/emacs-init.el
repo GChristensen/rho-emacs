@@ -40,7 +40,9 @@
 
 (when (not rho--precomp?)
   (require 'server)
-  (defun server-ensure-safe-dir (dir) t)
+  ;; do not check the server socket directory ownership (Windows)
+  (with-eval-after-load 'server
+    (defun server-ensure-safe-dir (_dir) t))
   (or (eq (server-running-p) t)
       (server-start)))
 
@@ -48,21 +50,20 @@
 (rho--create-default-get-version 'pandoc)
 
 ;; fix org-protocol URL on Windows
-(defun advice-org-protocol-check-filename (orig-fun &rest args)
-  (let ((fname (car args)))
-    (let ((correct-url
-           (replace-regexp-in-string (regexp-quote "/?")
-                                     "?" fname nil 'literal)))
-      (apply orig-fun (cons correct-url (cdr args))))))
-  
-(advice-add 'org-protocol-check-filename-for-protocol
-            :around #'advice-org-protocol-check-filename) 
+(defun rho--advice-org-protocol-check-filename (args)
+  (cons (replace-regexp-in-string (regexp-quote "/?") "?" (car args) nil 'literal)
+        (cdr args)))
 
-(setq custom-theme-directory (concat rho--root-dir "/lisp/themes/"))
+(advice-add 'org-protocol-check-filename-for-protocol
+            :filter-args #'rho--advice-org-protocol-check-filename)
+
+(setq custom-theme-directory (expand-file-name "lisp/themes/" rho--root-dir))
+
+;; Bundled themes are loaded without confirmation. Setting this to nil would
+;; make Emacs ask for every bundled theme on first start.
 (setq custom-safe-themes t)
 
-(add-to-list 'custom-theme-load-path (concat custom-theme-directory "/spacemacs-theme/"))
-(add-to-list 'load-path (concat custom-theme-directory "/spacemacs-theme/"))
-
-(add-to-list 'custom-theme-load-path (concat custom-theme-directory "/moe-theme/"))
-(add-to-list 'load-path (concat custom-theme-directory "/moe-theme/"))
+(dolist (theme-dir '("spacemacs-theme" "moe-theme"))
+  (let ((dir (expand-file-name theme-dir custom-theme-directory)))
+    (add-to-list 'custom-theme-load-path dir)
+    (add-to-list 'load-path dir)))

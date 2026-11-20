@@ -11,12 +11,13 @@
 
 
 (defface rho--default-face
-  '((t :family "Tahoma"
+  `((t :family ,(if (find-font (font-spec :name "Tahoma")) "Tahoma" "Sans Serif")
        :slant normal))
   "")
 
 (defun rho--do-browse-refcard (card)
- (browse-url (concat "file://" rho--root-dir "/docs/refcards/" card)))
+  (browse-url-of-file
+   (expand-file-name card (concat rho--root-dir "/docs/refcards/"))))
 
 (defmacro rho--browse-refcard (card)
   `(lambda () (interactive) (rho--do-browse-refcard ,card)))
@@ -54,7 +55,9 @@
                     ["Quit" save-buffers-kill-terminal t])
 
 ;; About menu and buffer
-(defvar version-getters '())
+
+;; alist of (COMPONENT . GETTER-FUNCTION), in display order
+(defvar rho--version-getters '())
 
 (defun rho--get-version-info (component skip-lines)
   (with-temp-buffer
@@ -65,18 +68,20 @@
     (buffer-substring (point) (point-max))))
 
 (defun rho--create-default-get-version (component)
-  (let ((component component))
-    (setf version-getters
-          (append version-getters
-                  (list (lambda () (rho--get-version-info component 1)))))))
+  (unless (assq component rho--version-getters)
+    (let ((component component))
+      (setq rho--version-getters
+            (append rho--version-getters
+                    (list (cons component
+                                (lambda () (rho--get-version-info component 1)))))))))
 
 (defun rho--about-content ()
   (let* ((image-file (concat rho--root-dir "/images/logo.png"))
-	 (img (create-image image-file))
-	 (image-width (and img (car (image-size img))))
-	 (window-width (window-width (selected-window)))
-     (year (format-time-string "%Y"))
-     (rho-version-string
+         (img (create-image image-file))
+         (image-width (and img (car (image-size img))))
+         (window-width (window-width (selected-window)))
+         (year (format-time-string "%Y"))
+         (rho-version-string
           (format " v%s"
                   (with-temp-buffer
                     (insert-file-contents (concat rho--root-dir "/version/version.txt"))
@@ -88,12 +93,12 @@
         (make-button (prog1 (point) (insert-image img)) (point)
                      'face 'default
                      'help-echo "https://gchristensen.github.io/rho-emacs"
-                     'action (lambda (button) (browse-url "https://gchristensen.github.io/rho-emacs"))
+                     'action (lambda (_button) (browse-url "https://gchristensen.github.io/rho-emacs"))
                      'follow-link t)
         (insert "\n\n")))
     (insert-button "Rho Emacs"
                    'face (list 'link 'rho--default-face)
-                   'action '(lambda (arg) (browse-url "https://gchristensen.github.io/rho-emacs"))
+                   'action (lambda (_arg) (browse-url "https://gchristensen.github.io/rho-emacs"))
                    'help-echo "https://gchristensen.github.io/rho-emacs"
                    'follow-link t)
     (insert (propertize (concat rho-version-string "") 'face 'rho--default-face))
@@ -101,39 +106,43 @@
     (insert (propertize (concat "(C) 2010-" year " g/christensen (") 'face 'rho--default-face))
     (insert-button "gchristnsn@gmail.com"
                    'face (list 'link 'rho--default-face)
-                   'action '(lambda (arg) (browse-url "mailto:gchristnsn@gmail.com"))
+                   'action (lambda (_arg) (browse-url "mailto:gchristnsn@gmail.com"))
                    'help-echo "mailto:gchristnsn@gmail.com"
                    'follow-link t)
     (insert (propertize ")\n" 'face 'rho--default-face))
     (insert (propertize "\nRho home directory: " 'face 'rho--default-face))
     (insert-button rho--home-dir
                    'face (list 'link 'rho--default-face)
-                   'action '(lambda (arg) (dired rho--home-dir))
+                   'action (lambda (_arg) (dired rho--home-dir))
                    'help-echo rho--home-dir
                    'follow-link t)
     (insert (propertize "\n\nInstalled components:\n\n" 'face 'rho--default-face))
-    (dolist (getter version-getters)
-      (insert (propertize (concat "\u25A0 " (s-join "\n\u25A0 " (s-split "\n" (funcall getter)))) 'face 'rho--default-face))
-      (insert (propertize "\n")))
+    (dolist (entry rho--version-getters)
+      (insert (propertize (concat "■ "
+                                  (string-join
+                                   (split-string (funcall (cdr entry)) "\n")
+                                   "\n■ "))
+                          'face 'rho--default-face))
+      (insert "\n"))
     (goto-char (point-min))
-    (forward-line))) 
+    (forward-line)))
 
 (defun rho--show-about-buffer ()
   (interactive)
-  (let ((about-buffer (get-buffer-create "*About Rho*"))
-        (face 'variable-pitch))
+  (let ((about-buffer (get-buffer-create "*About Rho*")))
     (switch-to-buffer about-buffer)
     (delete-other-windows)
-    (when (not (fboundp 'salty))
-	  (condition-case nil (load "salty")
-      ('error nil)))
-    (unless (when (fboundp 'salty) (salty))
-      (rho--about-content))
-    (read-only-mode)))
-                                                                      
+    (unless (fboundp 'salty)
+      (load "salty" t t))
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (unless (when (fboundp 'salty) (salty))
+        (rho--about-content)))
+    (read-only-mode 1)))
+
 (easy-menu-add-item  nil '("Help") '("--"))
 
-(easy-menu-add-item  nil '("Help") 
+(easy-menu-add-item  nil '("Help")
   ["About Rho" rho--show-about-buffer t])
 
 
@@ -147,4 +156,3 @@
       (delete-file desktop-lock)))
   (setq kill-emacs-hook nil)
   (kill-emacs))
-

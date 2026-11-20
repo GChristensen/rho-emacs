@@ -18,7 +18,7 @@
 (require 'spaceline-config)
 (spaceline-emacs-theme)
 
-(defun spacemacs-org-mode-hook ()
+(defun rho--spacemacs-org-faces ()
   (set-face-attribute 'org-level-1 nil :height 1.0)
   (set-face-attribute 'org-level-2 nil :height 1.0)
   (set-face-attribute 'org-level-3 nil :height 1.0)
@@ -26,7 +26,7 @@
   (set-face-attribute 'org-agenda-date-today nil :height 1.1)
   (set-face-attribute 'org-table nil :foreground "#008787"))
 
-(add-hook 'org-mode-hook 'spacemacs-org-mode-hook)
+(add-hook 'org-mode-hook #'rho--spacemacs-org-faces)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Additional modes ;;
 
