@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t -*-
+;; -*- lexical-binding: t; no-byte-compile: t -*-
 ;;; Tabbar.el --- Display a tab bar in the header line
 
 ;; Copyright (C) 2003, 2004, 2005 David Ponce
@@ -1377,7 +1377,7 @@ When it is a button number, return symbol `mouse-<EVENT-TYPE>'."
     (if (eq 'mouse-wheel x)
         (< (car (cdr (cdr event))) 0)   ;; Emacs 21.3
       ;; Emacs > 21.3
-      (eq x tabbar--mwheel-up-event))))
+      (memq x (list tabbar--mwheel-up-event 'wheel-down)))))
 
 ;;; Basic commands
 ;;
@@ -1568,22 +1568,26 @@ Returns non-nil if the new state is enabled.
         ;; Use one generic mouse wheel event
         (define-key km [A-mouse-wheel]
           'tabbar-mwheel-switch-group)
-      ;; Use separate up/down mouse wheel events
-      (let ((up   (tabbar--mwheel-key tabbar--mwheel-up-event))
-            (down (tabbar--mwheel-key tabbar--mwheel-down-event)))
-        (define-key km `[header-line ,down]
-          'tabbar-mwheel-backward-group)
-        (define-key km `[header-line ,up]
-          'tabbar-mwheel-forward-group)
-        (define-key km `[header-line (control ,down)]
-          'tabbar-mwheel-backward-tab)
-        (define-key km `[header-line (control ,up)]
-          'tabbar-mwheel-forward-tab)
-        (define-key km `[header-line (shift ,down)]
-          'tabbar-mwheel-backward)
-        (define-key km `[header-line (shift ,up)]
-          'tabbar-mwheel-forward)
-        ))
+      ;; Use separate up/down mouse wheel events.  Emacs 28+ delivers
+      ;; `wheel-up'/`wheel-down' (w32, ns, pgtk, xinput2) while
+      ;; `mouse-wheel-up-event' may still be the legacy `mouse-5'/`mouse-4',
+      ;; so bind both.  `wheel-down' == `mouse-5' == "up" (forward).
+      (dolist (pair `((,(tabbar--mwheel-key tabbar--mwheel-up-event)
+                       . ,(tabbar--mwheel-key tabbar--mwheel-down-event))
+                      (wheel-down . wheel-up)))
+        (let ((up (car pair)) (down (cdr pair)))
+          (define-key km `[header-line ,down]
+            'tabbar-mwheel-backward-group)
+          (define-key km `[header-line ,up]
+            'tabbar-mwheel-forward-group)
+          (define-key km `[header-line (control ,down)]
+            'tabbar-mwheel-backward-tab)
+          (define-key km `[header-line (control ,up)]
+            'tabbar-mwheel-forward-tab)
+          (define-key km `[header-line (shift ,down)]
+            'tabbar-mwheel-backward)
+          (define-key km `[header-line (shift ,up)]
+            'tabbar-mwheel-forward))))
     km)
   "Keymap to use in Tabbar-Mwheel mode.")
 
